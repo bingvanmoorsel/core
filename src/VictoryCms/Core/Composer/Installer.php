@@ -189,11 +189,10 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Bind the Laravel bootstrappers
         $app->bootstrapWith($this->bootstrappers);
 
-        if($app->getProvider($this->provider) === null)
-        {
-            // Register the Victory Core service provider
-            $app->register($this->provider);
-        }
+        // Register the Victory Core service provider
+        $app->register($this->provider, [
+            'victory.boot' => false
+        ]);
 
         $app->loadDeferredProviders();
 
@@ -203,7 +202,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $artisan = new Artisan($app, $app['events']);
 
         // Create the missing artisan binding
-        $app->singleton('Illuminate\Contracts\Console\Kernel', function($app) use ($artisan)
+        $app->singleton('Illuminate\Contracts\Console\Kernel', function() use ($artisan)
         {
             return $artisan;
         });
