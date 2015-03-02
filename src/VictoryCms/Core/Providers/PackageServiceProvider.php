@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
-use VictoryCms\Installer\Models\Package;
+use VictoryCms\Core\Models\Package;
 
 /**
  * Class PackageServiceProvider

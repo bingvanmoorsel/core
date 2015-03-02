@@ -1,5 +1,6 @@
 {
     "name": "victory-cms/core",
+    "type": "composer-plugin",
     "description": "",
     "authors": [
         {
@@ -16,6 +17,9 @@
         "psr-0": {
             "VictoryCms\\Core": "src/"
         }
+    },
+    "extra": {
+      "class": "VictoryCms\\Core\\Composer\\Plugin"
     },
     "minimum-stability": "stable"
 }
