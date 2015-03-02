@@ -4,12 +4,13 @@
     "authors": [
         {
             "name": "Julian Rantwijk",
-            "email": "julianrantwijk@hotmail.com"
+            "email": "jrantwijk@swis.nl"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.*"
+        "composer-plugin-api": "~1.0",
+        "laravel/framework": "5.0.*"
     },
     "autoload": {
         "psr-0": {
