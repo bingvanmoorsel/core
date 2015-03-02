@@ -44,7 +44,10 @@ abstract class Scope
      */
     public function map(Closure $closure)
     {
-        $this->router->group(['prefix' => $this->prefix, 'middleware' => array_keys($this->middleware)], $closure);
+        $this->router->group([
+            'prefix' => $this->prefix,
+            'middleware' => array_keys($this->middleware)
+        ], $closure);
     }
 
     /**

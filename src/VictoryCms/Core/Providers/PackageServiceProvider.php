@@ -12,7 +12,7 @@ class PackageServiceProvider extends ServiceProvider
     /**
      *
      */
-    public function register()
+    public function boot()
     {
         foreach(Package::all() as $package)
         {
@@ -25,4 +25,9 @@ class PackageServiceProvider extends ServiceProvider
             }
         }
     }
+
+    /**
+     *
+     */
+    public function register(){}
 }

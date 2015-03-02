@@ -1,7 +1,7 @@
 {
     "name": "victory-cms/core",
     "type": "composer-plugin",
-    "description": "",
+    "description": "Victory CMS core functionality",
     "authors": [
         {
             "name": "Julian Rantwijk",

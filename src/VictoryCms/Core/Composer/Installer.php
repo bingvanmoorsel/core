@@ -210,6 +210,8 @@ class Installer extends LibraryInstaller implements InstallerInterface
             return $artisan;
         });
 
+        $app->singleton('artisan', 'Illuminate\Contracts\Console\Kernel');
+
         // Run the installer migrations
         $artisan->call('migrate', [
             '--path' => 'vendor/victory-cms/installer/database/migrations'
@@ -232,26 +234,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param Application $app
-     */
-    protected function registerLaravelProviders(Application $app)
-    {
-        $app->register('Illuminate\Foundation\Providers\ArtisanServiceProvider');
-        $app->register('Illuminate\Foundation\Providers\ConsoleSupportServiceProvider');
-        $app->register('Illuminate\Database\DatabaseServiceProvider');
-        $app->register('Illuminate\Filesystem\FilesystemServiceProvider');
-
-    }
-
-    /**
-     * @param Application $app
-     */
-    protected function registerVictoryProviders(Application $app)
-    {
-        $app->register('VictoryCms\Core\Providers\CoreServiceProvider');
     }
 
     /**
