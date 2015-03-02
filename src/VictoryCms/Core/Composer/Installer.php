@@ -10,6 +10,7 @@ use Composer\Repository\InstalledRepositoryInterface;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Foundation\Application;
 use VictoryCms\Core\Models\Package;
+use VictoryCms\Core\Providers\CoreServiceProvider;
 
 /**
  * Class Installer
@@ -43,18 +44,14 @@ class Installer extends LibraryInstaller implements InstallerInterface
         'Illuminate\Foundation\Bootstrap\ConfigureLogging',
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
+        'Illuminate\Foundation\Bootstrap\RegisterProviders',
+        'Illuminate\Foundation\Bootstrap\BootProviders',
     ];
 
     /**
-     * @var array
+     * @var string
      */
-    protected $providers = [
-        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-        'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-        'Illuminate\Database\DatabaseServiceProvider',
-        'Illuminate\Filesystem\FilesystemServiceProvider',
-        'VictoryCms\Core\Providers\CoreServiceProvider'
-    ];
+    protected $provider = CoreServiceProvider::class;
 
     /**
      * @var Application
@@ -189,12 +186,13 @@ class Installer extends LibraryInstaller implements InstallerInterface
             realpath($this->vendorDir.'/../')
         );
 
-        // Register the bootstrappers and service providers
+        // Bind the Laravel bootstrappers
         $app->bootstrapWith($this->bootstrappers);
 
-        foreach($this->providers as $provider)
+        if($app->getProvider($this->provider) === null)
         {
-            $app->register($provider);
+            // Register the Victory Core service provider
+            $app->register($this->provider);
         }
 
         $app->loadDeferredProviders();
@@ -209,8 +207,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
         {
             return $artisan;
         });
-
-        $app->singleton('artisan', 'Illuminate\Contracts\Console\Kernel');
 
         // Run the installer migrations
         $artisan->call('migrate', [

@@ -1,6 +1,6 @@
 <?php namespace VictoryCms\Core\Providers;
 
-use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -31,10 +31,12 @@ class BusServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the service provider.
      *
+     * @return void
      */
     public function register()
     {
-
+        //
     }
 }

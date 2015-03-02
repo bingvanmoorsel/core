@@ -14,6 +14,7 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Register and boot all the Victory packages
         foreach(Package::all() as $package)
         {
             $namespace = studly_case($package->vendor) . '\\' . studly_case($package->name);
@@ -27,7 +28,9 @@ class PackageServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the service provider.
      *
+     * @return void
      */
     public function register(){}
 }
