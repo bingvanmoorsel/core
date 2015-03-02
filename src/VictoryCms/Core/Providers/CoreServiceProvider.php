@@ -34,7 +34,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(ScopeServiceProvider::class);
         $this->app->register(PackageServiceProvider::class);
 
-        $this->app['victory.boot'] = $this->app['victory.boot'] ?: true;
+        $this->app['victory.boot'] = true;
 	}
 
 	/**
