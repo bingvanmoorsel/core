@@ -14,6 +14,8 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(!$this->app['victory.boot']) return;
+
         // Register and boot all the Victory packages
         foreach(Package::all() as $package)
         {
@@ -32,5 +34,8 @@ class PackageServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register(){}
+    public function register()
+    {
+        //
+    }
 }

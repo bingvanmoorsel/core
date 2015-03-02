@@ -19,6 +19,8 @@ class BusServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $dispatcher)
     {
+        if(!$this->app['victory.boot']) return;
+
         // Bind some command handlers
         $dispatcher->pipeThrough($this->pipeTrough);
 

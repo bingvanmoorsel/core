@@ -18,8 +18,7 @@ class CoreServiceProvider extends ServiceProvider
 	 */
 	protected $defer = false;
 
-	/**
-	 * Register the service provider.
+	/**	 * Register the service provider.
 	 *
 	 * @return void
 	 */
