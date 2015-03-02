@@ -210,7 +210,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
 
         // Run the installer migrations
         $artisan->call('migrate', [
-            '--path' => 'vendor/victory-cms/installer/database/migrations'
+            '--path' => 'vendor/victory-cms/core/database/migrations'
         ]);
 
         return (self::$laravel = $app);
