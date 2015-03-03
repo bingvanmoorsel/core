@@ -50,6 +50,12 @@ class Victory
     {
         if($this->isInstalled()) return;
 
+        // Check if the storage directory exists
+        if(!is_dir($this->storagePath))
+        {
+            mkdir($this->storagePath, 0777);
+        }
+
         $artisan = $this->app->make('Illuminate\Contracts\Console\Application');
 
         // Run the installer migrations
