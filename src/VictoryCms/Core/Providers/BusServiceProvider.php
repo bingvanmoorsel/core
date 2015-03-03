@@ -19,6 +19,7 @@ class BusServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $dispatcher)
     {
+        echo 'bus';
         // Bind some command handlers
         $dispatcher->pipeThrough($this->pipeTrough);
 
