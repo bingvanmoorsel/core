@@ -56,7 +56,7 @@ class Victory
             mkdir($this->storagePath, 0777);
         }
 
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Application');
+        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
 
         // Run the installer migrations
         $artisan->call('migrate', [
