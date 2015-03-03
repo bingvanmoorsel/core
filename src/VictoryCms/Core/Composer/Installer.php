@@ -11,6 +11,7 @@ use Illuminate\Console\Application as Artisan;
 use Illuminate\Foundation\Application;
 use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Providers\CoreServiceProvider;
+use VictoryCms\Core\Providers\MigrationServiceProvider;
 
 /**
  * Class Installer
@@ -47,11 +48,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
         'Illuminate\Foundation\Bootstrap\BootProviders',
     ];
-
-    /**
-     * @var string
-     */
-    protected $provider = CoreServiceProvider::class;
 
     /**
      * @var Application
@@ -186,19 +182,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
             realpath($this->vendorDir.'/../')
         );
 
-        // Bind the Laravel bootstrappers
-        $app->bootstrapWith($this->bootstrappers);
-
-        // Register the Victory Core service provider
-        $app->register($this->provider, [
-            'victory.boot' => false
-        ]);
-
-        $app->loadDeferredProviders();
-
-        // Boot the application (Laravel)
-        $app->boot();
-
         $artisan = new Artisan($app, $app['events']);
 
         // Create the missing artisan binding
@@ -207,10 +190,16 @@ class Installer extends LibraryInstaller implements InstallerInterface
             return $artisan;
         });
 
-        // Run the installer migrations
-        $artisan->call('migrate', [
-            '--path' => 'vendor/victory-cms/core/database/migrations'
-        ]);
+        // Bind the Laravel bootstrappers
+        $app->bootstrapWith($this->bootstrappers);
+
+        $app->register(MigrationServiceProvider::class);
+        $app->register(CoreServiceProvider::class);
+
+        $app->loadDeferredProviders();
+
+        // Boot the application
+        $app->boot();
 
         return (self::$laravel = $app);
     }
@@ -254,21 +243,10 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $file      = $this->getProviderFile($package);
         $class     = $namespace.'\\PackageServiceProvider';
 
-        if(!class_exists($class))
-        {
-            if(!file_exists($file))
-            {
-                return false;
-            }
+        if(!class_exists($class) && !file_exists($file)) return false;
 
-            // Require the service provider
-            require $file;
-        }
-
-        if(!class_exists($class))
-        {
-            return false;
-        }
+        // Require the service provider
+        require $file;
 
         // Build the provider instance
         return new $class($this->app);

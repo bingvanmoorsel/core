@@ -33,8 +33,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(BusServiceProvider::class);
         $this->app->register(ScopeServiceProvider::class);
         $this->app->register(PackageServiceProvider::class);
-
-        $this->app['victory.boot'] = true;
 	}
 
 	/**
