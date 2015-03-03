@@ -51,8 +51,7 @@ class Victory
         if($this->isInstalled()) return;
 
         // Check if the storage directory exists
-        if(!is_dir($this->storagePath))
-        {
+        if(!is_dir($this->storagePath)) {
             mkdir($this->storagePath, 0777);
         }
 

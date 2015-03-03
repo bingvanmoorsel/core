@@ -31,8 +31,7 @@ class CoreServiceProvider extends ServiceProvider
 	public function register()
 	{
         // Bind the main entry point of Victory CMS
-        $this->app->singleton('victory', function(Application $app)
-        {
+        $this->app->singleton('victory', function(Application $app) {
             return new Victory($app);
         });
 	}
@@ -43,16 +42,14 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
-        if($this->app->runningInConsole() && !$victory->isInstalled())
-        {
+        if($this->app->runningInConsole()) {
             $victory->install();
         }
 
         // Bind some command handlers
         $dispatcher->pipeThrough($this->pipeTrough);
 
-        $dispatcher->mapUsing(function($command)
-        {
+        $dispatcher->mapUsing(function($command) {
             return Dispatcher::simpleMapping(
                 $command, 'VictoryCms\Core\Commands', 'VictoryCms\Core\Handlers\Commands'
             );
@@ -70,13 +67,11 @@ class CoreServiceProvider extends ServiceProvider
         );
 
         // Register and boot all the Victory packages
-        foreach(Package::all() as $package)
-        {
+        foreach(Package::all() as $package) {
             $namespace = studly_case($package->vendor) . '\\' . studly_case($package->name);
             $provider = $namespace . '\\PackageServiceProvider';
 
-            if(class_exists($provider))
-            {
+            if(class_exists($provider)) {
                 $this->app->register($provider);
             }
         }

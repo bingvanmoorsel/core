@@ -9,6 +9,7 @@ use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Foundation\Application;
+use Symfony\Component\Console\Input\ArgvInput;
 use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Providers\CoreServiceProvider;
 
@@ -44,6 +45,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         'Illuminate\Foundation\Bootstrap\ConfigureLogging',
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
+        'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
     ];
 
@@ -105,8 +107,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         ]);
 
         // Run the custom install logic
-        if($this->call($this->getProviderClass($package), 'install') !== false)
-        {
+        if($this->call($this->getProviderClass($package), 'install') !== false) {
             $this->io->write('Calling '.$package->getPrettyName().' -> install [<info>OK</info>]');
         }
     }
@@ -132,8 +133,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $record->touch();
 
         // Run the custom update logic
-        if($this->call($this->getProviderClass($initial), 'update') !== false)
-        {
+        if($this->call($this->getProviderClass($initial), 'update') !== false) {
             $this->io->write('Calling '.$initial->getPrettyName().' -> update [<info>OK</info>]');
         }
     }
@@ -147,8 +147,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $name = $package->getPrettyName();
 
         // Run the custom update logic
-        if($this->call($this->getProviderClass($package), 'destroy') !== false)
-        {
+        if($this->call($this->getProviderClass($package), 'destroy') !== false) {
             $this->io->write('Calling '.$name.' -> destroy [<info>OK</info>]');
         }
 
@@ -173,30 +172,20 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $this->initializeVendorDir();
 
         // Require the composer autoloader
-        require $this->vendorDir.'/autoload.php';
+        require $this->vendorDir.'/../bootstrap/autoload.php';
 
-        // Get the application
-        $app = new Application(
-            realpath($this->vendorDir.'/../')
+        $app = require $this->vendorDir.'/../bootstrap/app.php';
+
+        // Overwrite the console kernel
+        $app->singleton(
+            'Illuminate\Contracts\Console\Kernel',
+            'VictoryCms\Core\Composer\Kernel'
         );
 
-        // Create the missing artisan binding
-        $app->singleton('Illuminate\Contracts\Console\Kernel', function(Application $app)
-        {
-            return new Artisan($app, $app['events']);
-        });
+        /** @var Kernel $kernel */
+        $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
 
-        // Bind the Laravel bootstrappers
-        $app->bootstrapWith($this->bootstrappers);
-
-        // Register the core provider
-        $app->register(CoreServiceProvider::class);
-
-        // Load the deferred providers
-        $app->loadDeferredProviders();
-
-        // Boot the application
-        $app->boot();
+        $kernel->bootstrap();
 
         return (self::$laravel = $app);
     }
@@ -209,8 +198,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     protected function call($class, $method, $parameters = [])
     {
-        if(method_exists($class, $method))
-        {
+        if(method_exists($class, $method)) {
             return $this->app->call([$class, $method], $parameters);
         }
 
