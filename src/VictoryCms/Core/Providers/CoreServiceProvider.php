@@ -29,14 +29,14 @@ class CoreServiceProvider extends ServiceProvider
         {
             return new Victory($app);
         });
-
-        $this->app->register(BusServiceProvider::class);
-        $this->app->register(ScopeServiceProvider::class);
-        $this->app->register(PackageServiceProvider::class);
 	}
 
     public function boot()
     {
+        $this->app->register(BusServiceProvider::class);
+        $this->app->register(ScopeServiceProvider::class);
+        $this->app->register(PackageServiceProvider::class);
+
         echo 'core';
     }
 
