@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Victory;
 
 /**
@@ -18,6 +19,11 @@ class CoreServiceProvider extends ServiceProvider
 	 */
 	protected $defer = false;
 
+    /**
+     * @var array
+     */
+    protected $pipeTrough = [];
+
 	/**	 * Register the service provider.
 	 *
 	 * @return void
@@ -31,13 +37,39 @@ class CoreServiceProvider extends ServiceProvider
         });
 	}
 
-    public function boot()
+    public function boot(Dispatcher $dispatcher)
     {
-        $this->app->register(BusServiceProvider::class);
-        $this->app->register(ScopeServiceProvider::class);
-        $this->app->register(PackageServiceProvider::class);
+        // Bind some command handlers
+        $dispatcher->pipeThrough($this->pipeTrough);
 
-        echo 'core';
+        $dispatcher->mapUsing(function($command)
+        {
+            return Dispatcher::simpleMapping(
+                $command, 'VictoryCms\Core\Commands', 'VictoryCms\Core\Handlers\Commands'
+            );
+        });
+
+        $this->app->singleton(
+            'VictoryCms\Core\Contracts\Scope\Backend',
+            'VictoryCms\Core\Scopes\Backend'
+        );
+
+        $this->app->singleton(
+            'VictoryCms\Core\Contracts\Scope\Frontend',
+            'VictoryCms\Core\Scopes\Frontend'
+        );
+
+        // Register and boot all the Victory packages
+        foreach(Package::all() as $package)
+        {
+            $namespace = studly_case($package->vendor) . '\\' . studly_case($package->name);
+            $provider = $namespace . '\\PackageServiceProvider';
+
+            if(class_exists($provider))
+            {
+                $this->app->register($provider);
+            }
+        }
     }
 
 	/**

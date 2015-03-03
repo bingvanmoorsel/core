@@ -14,6 +14,7 @@ class MigrationServiceProvider extends ServiceProvider
      */
     public function boot(Application $artisan)
     {
+        echo 'migrate';
         // Run the installer migrations
         $artisan->call('migrate', [
             '--path' => 'vendor/victory-cms/core/database/migrations'
