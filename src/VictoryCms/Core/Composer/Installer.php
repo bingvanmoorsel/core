@@ -190,9 +190,10 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Bind the Laravel bootstrappers
         $app->bootstrapWith($this->bootstrappers);
 
-        $app->register(MigrationServiceProvider::class);
+        // Register the core provider
         $app->register(CoreServiceProvider::class);
 
+        // Load the deferred providers
         $app->loadDeferredProviders();
 
         // Boot the application
