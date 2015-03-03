@@ -11,7 +11,6 @@ use Illuminate\Console\Application as Artisan;
 use Illuminate\Foundation\Application;
 use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Providers\CoreServiceProvider;
-use VictoryCms\Core\Providers\MigrationServiceProvider;
 
 /**
  * Class Installer
