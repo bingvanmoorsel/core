@@ -43,9 +43,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
-        var_dump($this->app->runningInConsole(), $victory->isInstalled());
-
-        if($this->app->runningInConsole() && $victory->isInstalled())
+        if($this->app->runningInConsole() && !$victory->isInstalled())
         {
             $victory->install();
         }
