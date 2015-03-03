@@ -34,6 +34,6 @@ class CreateVictoryPackagesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('packages');
+		Schema::drop('victory_packages');
 	}
 }

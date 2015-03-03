@@ -37,8 +37,17 @@ class CoreServiceProvider extends ServiceProvider
         });
 	}
 
-    public function boot(Dispatcher $dispatcher)
+    /**
+     * @param Victory $victory
+     * @param Dispatcher $dispatcher
+     */
+    public function boot(Victory $victory, Dispatcher $dispatcher)
     {
+        if($this->app->runningInConsole() && $victory->isInstalled())
+        {
+            $victory->install();
+        }
+
         // Bind some command handlers
         $dispatcher->pipeThrough($this->pipeTrough);
 
@@ -49,6 +58,7 @@ class CoreServiceProvider extends ServiceProvider
             );
         });
 
+        // Bind the CMS scopes
         $this->app->singleton(
             'VictoryCms\Core\Contracts\Scope\Backend',
             'VictoryCms\Core\Scopes\Backend'
