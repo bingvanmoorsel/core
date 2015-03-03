@@ -181,12 +181,10 @@ class Installer extends LibraryInstaller implements InstallerInterface
             realpath($this->vendorDir.'/../')
         );
 
-        $artisan = new Artisan($app, $app['events']);
-
         // Create the missing artisan binding
-        $app->singleton('Illuminate\Contracts\Console\Kernel', function() use ($artisan)
+        $app->singleton('Illuminate\Contracts\Console\Kernel', function(Application $app)
         {
-            return $artisan;
+            return new Artisan($app, $app['events']);
         });
 
         // Bind the Laravel bootstrappers

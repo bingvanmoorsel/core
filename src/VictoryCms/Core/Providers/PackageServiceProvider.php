@@ -15,6 +15,8 @@ class PackageServiceProvider extends ServiceProvider
     public function boot()
     {
         echo 'package';
+
+        return;
         // Register and boot all the Victory packages
         foreach(Package::all() as $package)
         {

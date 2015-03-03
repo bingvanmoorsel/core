@@ -35,6 +35,11 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(PackageServiceProvider::class);
 	}
 
+    public function boot()
+    {
+        echo 'core';
+    }
+
 	/**
 	 * Get the services provided by the provider.
 	 *
