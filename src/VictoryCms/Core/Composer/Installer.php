@@ -46,7 +46,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
-        'Illuminate\Foundation\Bootstrap\BootProviders',
     ];
 
     /**
