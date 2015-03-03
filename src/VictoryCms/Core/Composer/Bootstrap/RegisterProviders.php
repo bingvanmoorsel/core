@@ -1,6 +1,5 @@
 <?php namespace VictoryCms\Core\Composer\Bootstrap;
 
-use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
 use VictoryCms\Core\Providers\CoreServiceProvider;
 
@@ -12,16 +11,16 @@ class RegisterProviders
 {
     /**
      * @param Application $app
-     * @param Repository $config
      */
-    public function bootstrap(Application $app, Repository $config)
+    public function bootstrap(Application $app)
     {
-        echo 'bootstrap';
-        $providers = $config['app.providers'];
+        $providers = $app['config']['app.providers'];
 
         if(!in_array(CoreServiceProvider::class, $providers)) {
-            $providers[] = CoreServiceProvider::class;
+            array_push($providers, CoreServiceProvider::class);
         }
+
+        var_dump($app['config']['app.providers']);
 
         $app->registerConfiguredProviders();
     }
