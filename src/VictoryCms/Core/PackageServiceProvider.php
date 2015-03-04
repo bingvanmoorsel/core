@@ -93,7 +93,9 @@ class PackageServiceProvider extends ServiceProvider
             mkdir($path, 0777);
         }
 
-        $this->app->call('migrate', [
+        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
+
+        $artisan->call('migrate', [
             '--path' => 'vendor/victory-cms/core/database/migrations'
         ]);
 
