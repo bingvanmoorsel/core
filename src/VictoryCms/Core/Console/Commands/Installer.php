@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 4-3-2015
- * Time: 13:01
- */
-
-namespace VictoryCms\Core\Console\Commands;
+<?php namespace VictoryCms\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 
@@ -14,21 +6,21 @@ use Illuminate\Console\Command;
  * Class Install
  * @package VictoryCms\Core\Console\Commands
  */
-class Update extends Command
+class Installer extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'victory:package-update';
+    protected $name = 'victory:installer';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Display an inspiring quote';
+    protected $description = 'Victory CMS package installer';
 
     /**
      * Execute the console command.
@@ -44,9 +36,9 @@ class Update extends Command
             'PackageServiceProvider'
         ]);
 
-        dd('Update ' . $package);
+        dd('Install ' . $package);
     }
-    
+
     /**
      * @param $package
      * @return string
