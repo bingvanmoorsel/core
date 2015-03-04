@@ -93,10 +93,7 @@ class Installer extends Command
      */
     protected function getProviderClass($package)
     {
-        $class = vsprintf('%s\%s', [
-            $this->getNamespace($package),
-            'PackageServiceProvider'
-        ]);
+        $class = sprintf('%s\%s', $this->getProviderNamespace($package), 'PackageServiceProvider');
 
         if(!class_exists($class)) return false;
 
