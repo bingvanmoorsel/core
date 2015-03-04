@@ -27,4 +27,12 @@ class Package extends Model
     {
         $query->where('name', 'LIKE', "%$name%");
     }
+
+    /**
+     * @return string
+     */
+    public function getProviderAttribute()
+    {
+        return studly_case($this->vendor) . '\\' . studly_case($this->name) . '\\PackageServiceProvider';
+    }
 }

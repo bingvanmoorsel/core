@@ -171,13 +171,8 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Require the composer autoloader
         require $this->vendorDir.'/../bootstrap/autoload.php';
 
+        /** @var Application $app */
         $app = require $this->vendorDir.'/../bootstrap/app.php';
-
-        // Overwrite the console kernel
-        $app->singleton(
-            'Illuminate\Contracts\Console\Kernel',
-            'VictoryCms\Core\Console\Kernel'
-        );
 
         /** @var Kernel $kernel */
         $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
@@ -185,10 +180,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Bootstrap the kernel
         $kernel->bootstrap();
 
-        $kernel->call('victory:installer', [
-            'action' => 'install',
-            'package' => 'victory-cms/core'
-        ]);
+        $app->register('VictoryCms/Core/PackageServiceProvider');
 
         return (self::$laravel = $app);
     }

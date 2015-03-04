@@ -23,12 +23,21 @@ class PackageServiceProvider extends ServiceProvider
      */
     protected $pipeTrough = [];
 
-	/**	 * Register the service provider.
+    /**
+     * @var array
+     */
+    protected $commands = [
+        'VictoryCms\Core\Console\Commands\Installer'
+    ];
+
+    /**	 * Register the service provider.
 	 *
 	 * @return void
 	 */
 	public function register()
 	{
+        $this->commands($this->commands);
+
         // Bind the main entry point of Victory CMS
         $this->app->singleton('victory', function(Application $app) {
             return new Victory($app);
@@ -41,10 +50,8 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
-        return;
-
-        if($this->app->runningInConsole()) {
-            $victory->install();
+        if(!$victory->isInstalled()) {
+            return $this->install();
         }
 
         // Bind some command handlers
@@ -68,20 +75,29 @@ class PackageServiceProvider extends ServiceProvider
         );
 
         // Register and boot all the Victory packages
-        foreach(Package::all() as $package) {
-            $namespace = studly_case($package->vendor) . '\\' . studly_case($package->name);
-            $provider = $namespace . '\\PackageServiceProvider';
+        $packages = Package::all();
 
-            if(class_exists($provider)) {
-                $this->app->register($provider);
-            }
+        foreach($packages as $package) {
+            var_dump($packages->provider);
         }
     }
 
+    /**
+     *
+     */
     public function install()
     {
         echo 'install';
     }
+
+    /**
+     * @return bool
+     */
+    public function isInstalled()
+    {
+        return file_exists($this->app['path.storage'].'/victory/installed');
+    }
+
 
 	/**
 	 * Get the services provided by the provider.

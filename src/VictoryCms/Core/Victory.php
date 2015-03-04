@@ -47,7 +47,7 @@ class Victory
      */
     public function install()
     {
-//        if($this->isInstalled()) return;
+        echo 'install';
 //
 //        // Check if the storage directory exists
 //        if(!is_dir($this->storagePath)) {
