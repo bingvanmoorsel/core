@@ -14,10 +14,11 @@ class RegisterProviders
      */
     public function bootstrap(Application $app)
     {
-        $providers = $app['config']['app.providers'];
+        $providers = $app['config']->get('app.providers');
 
         if(!in_array(CoreServiceProvider::class, $providers)) {
             array_push($providers, CoreServiceProvider::class);
+            $app['config']->set('app.providers', $providers);
         }
 
         var_dump($app['config']['app.providers']);
