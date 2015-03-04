@@ -187,6 +187,9 @@ class Installer extends LibraryInstaller implements InstallerInterface
 
         $kernel->bootstrap();
 
+        // Install Victory
+        $app['victory']->install();
+
         return (self::$laravel = $app);
     }
 

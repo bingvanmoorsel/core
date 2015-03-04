@@ -37,15 +37,10 @@ class CoreServiceProvider extends ServiceProvider
 	}
 
     /**
-     * @param Victory $victory
      * @param Dispatcher $dispatcher
      */
-    public function boot(Victory $victory, Dispatcher $dispatcher)
+    public function boot(Dispatcher $dispatcher)
     {
-        if($this->app->runningInConsole()) {
-            $victory->install();
-        }
-
         // Bind some command handlers
         $dispatcher->pipeThrough($this->pipeTrough);
 

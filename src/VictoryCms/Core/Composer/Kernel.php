@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 3-3-2015
- * Time: 11:40
- */
-
-namespace VictoryCms\Core\Composer;
+<?php namespace VictoryCms\Core\Composer;
 
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
