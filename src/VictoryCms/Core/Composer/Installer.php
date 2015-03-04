@@ -176,7 +176,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Overwrite the console kernel
         $app->singleton(
             'Illuminate\Contracts\Console\Kernel',
-            'VictoryCms\Core\Composer\Kernel'
+            'VictoryCms\Core\Console\Kernel'
         );
 
         /** @var Kernel $kernel */

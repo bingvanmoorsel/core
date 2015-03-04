@@ -51,7 +51,7 @@ class Victory
 //
 //        // Check if the storage directory exists
 //        if(!is_dir($this->storagePath)) {
-//            mkdir($this->storagePath, 0777);
+//            mkdir($this->storagePath, 0777)
 //        }
 //
 //        /** @var \Illuminate\Console\Application $artisan */
