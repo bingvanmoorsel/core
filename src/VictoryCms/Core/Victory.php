@@ -2,7 +2,6 @@
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
-use VictoryCms\Core\Composer\Kernel;
 use VictoryCms\Core\Scopes\Scope;
 
 /**
@@ -32,7 +31,6 @@ class Victory
     public function __construct(Application $app)
     {
         $this->app = $app;
-
         $this->storagePath = $this->app->storagePath().'/victory';
     }
 
@@ -49,22 +47,22 @@ class Victory
      */
     public function install()
     {
-        if($this->isInstalled()) return;
-
-        // Check if the storage directory exists
-        if(!is_dir($this->storagePath)) {
-            mkdir($this->storagePath, 0777);
-        }
-
-        /** @var \Illuminate\Console\Application $artisan */
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel')->getArtisan();
-
-        // Run the installer migrations
-        $artisan->call('migrate', [
-            '--path' => 'vendor/victory-cms/core/database/migrations'
-        ]);
-
-        touch($this->storagePath.'/installed');
+//        if($this->isInstalled()) return;
+//
+//        // Check if the storage directory exists
+//        if(!is_dir($this->storagePath)) {
+//            mkdir($this->storagePath, 0777);
+//        }
+//
+//        /** @var \Illuminate\Console\Application $artisan */
+//        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel')->getArtisan();
+//
+//        // Run the installer migrations
+//        $artisan->call('migrate', [
+//            '--path' => 'vendor/victory-cms/core/database/migrations'
+//        ]);
+//
+//        touch($this->storagePath.'/installed');
     }
 
     /**
