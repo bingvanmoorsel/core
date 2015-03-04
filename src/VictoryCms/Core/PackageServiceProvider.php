@@ -87,7 +87,17 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function install()
     {
-        echo 'install';
+        $path = $this->storagePath();
+
+        if(!is_dir($path)) {
+            mkdir($path, 0777);
+        }
+
+        $this->app->call('migrate', [
+            '--path' => 'vendor/victory-cms/core/database/migrations'
+        ]);
+
+        touch($path.'/installed');
     }
 
     /**
@@ -95,9 +105,16 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function isInstalled()
     {
-        return file_exists($this->app['path.storage'].'/victory/installed');
+        return file_exists($this->storagePath().'/installed');
     }
 
+    /**
+     * @return string
+     */
+    public function storagePath()
+    {
+        return $this->app['path.storage'].'/victory/';
+    }
 
 	/**
 	 * Get the services provided by the provider.
