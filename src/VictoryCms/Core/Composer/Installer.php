@@ -9,6 +9,7 @@ use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Illuminate\Foundation\Application;
 use VictoryCms\Core\Models\Package;
+use VictoryCms\Core\PackageServiceProvider;
 
 /**
  * Class Installer
@@ -180,7 +181,8 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Bootstrap the kernel
         $kernel->bootstrap();
 
-        $app->register('VictoryCms/Core/PackageServiceProvider');
+        // Register the core provider
+        $app->register(PackageServiceProvider::class);
 
         return (self::$laravel = $app);
     }
