@@ -104,8 +104,8 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        // We will not install composer plugins
-        if($this->isComposerPlugin($package)) return;
+        // Only install the Victory core (composer-plugin) and packages
+        if($this->isComposerPlugin($package) && !$this->isCore($package)) return;
 
         parent::install($repo, $package);
 
@@ -115,17 +115,19 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Split the name to get the vendor and project name
         list($vendor, $project) = explode('/', $name);
 
-        // Temporarily unguard the model
-        Package::unguard();
+        if(!$this->isCore($package)) {
+            // Temporarily unguard the model
+            Package::unguard();
 
-        Package::create([
-            'name'        => $name,
-            'vendor'      => $vendor,
-            'project'     => $project,
-            'version'     => $package->getPrettyVersion(),
-            'source'      => $package->getSourceUrl(),
-            'released_at' => $package->getReleaseDate()->getTimestamp(),
-        ]);
+            Package::create([
+                'name'        => $name,
+                'vendor'      => $vendor,
+                'project'     => $project,
+                'version'     => $package->getPrettyVersion(),
+                'source'      => $package->getSourceUrl(),
+                'released_at' => $package->getReleaseDate()->getTimestamp(),
+            ]);
+        }
 
         // Run the custom install logic
         $this->call('install', $name);
@@ -225,7 +227,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         /** @var Kernel $kernel */
         $kernel = $this->app->make('Illuminate\Contracts\Console\Kernel');
 
-        $this->io->write('[victory:installer] -> <info>'.$action. '</info>');
+        $this->io->write('[victory:installer] -> <info>'.$action.'</info>');
 
         return $kernel->call('victory:installer', [
             'action'    => $action,
