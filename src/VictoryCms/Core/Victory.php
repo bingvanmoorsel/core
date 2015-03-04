@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
+use VictoryCms\Core\Composer\Kernel;
 use VictoryCms\Core\Scopes\Scope;
 
 /**
@@ -55,7 +56,8 @@ class Victory
             mkdir($this->storagePath, 0777);
         }
 
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
+        /** @var \Illuminate\Console\Application $artisan */
+        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel')->getArtisan();
 
         // Run the installer migrations
         $artisan->call('migrate', [

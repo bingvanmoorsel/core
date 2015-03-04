@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core\Composer;
 
+use Illuminate\Console\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 /**
@@ -22,4 +23,15 @@ class Kernel extends ConsoleKernel
         'VictoryCms\Core\Composer\Bootstrap\RegisterProviders',
         'Illuminate\Foundation\Bootstrap\BootProviders',
     ];
+
+    /**
+     * Make this function public so it is possible to call
+     * commands without bootstrapping
+     *
+     * @return Application
+     */
+    public function getArtisan()
+    {
+        return parent::getArtisan();
+    }
 }
