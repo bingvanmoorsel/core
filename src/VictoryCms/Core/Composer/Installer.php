@@ -75,8 +75,25 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function supports($type)
     {
-        var_dump($type);
-        return $type === 'victory-package';
+        return $type === 'victory-package' || $type === 'composer-plugin';
+    }
+
+    /**
+     * @param PackageInterface $package
+     * @return bool
+     */
+    public function isCore(PackageInterface $package)
+    {
+        return $package->getPrettyName() === 'victory-cms/core';
+    }
+
+    /**
+     * @param PackageInterface $package
+     * @return bool
+     */
+    public function isComposerPlugin(PackageInterface $package)
+    {
+        return $package->getType() === 'composer-plugin';
     }
 
     /**
@@ -87,6 +104,9 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
+        // We will not install composer plugins
+        if($this->isComposerPlugin($package)) return;
+
         parent::install($repo, $package);
 
         // Get the package name
@@ -122,6 +142,9 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
+        // Only update the Victory core (composer-plugin) and packages
+        if($this->isComposerPlugin($initial) && !$this->isCore($initial)) return;
+
         parent::update($repo, $initial, $target);
 
         $name = $initial->getPrettyName();
@@ -129,14 +152,16 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Run the custom update logic
         $this->call('update', $name);
 
-        // Get the package model
-        $package = Package::where('name', $name)->first();
+        if(!$this->isCore($initial)) {
+            // Get the package model
+            $package = Package::where('name', $name)->first();
 
-        // Update the version
-        $package->version = $target->getPrettyVersion();
+            // Update the version
+            $package->version = $target->getPrettyVersion();
 
-        // Save the model
-        $package->save();
+            // Save the model
+            $package->save();
+        }
     }
 
     /**
@@ -145,14 +170,19 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
+        // Only remove the Victory core (composer-plugin) and packages
+        if($this->isComposerPlugin($package) && !$this->isCore($package)) return;
+
         // Get the package name
         $name = $package->getPrettyName();
 
         // Call the installer destroy command
         $this->call('destroy', $name);
 
-        // Get the first package record by name
-        Package::where('name', $name)->delete();
+        if(!$this->isCore($package)) {
+            // Get the first package record by name
+            Package::where('name', $name)->delete();
+        }
 
         parent::uninstall($repo, $package);
     }

@@ -42,6 +42,17 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->singleton('victory', function(Application $app) {
             return new Victory($app);
         });
+
+        // Bind the CMS scopes
+        $this->app->singleton(
+            'VictoryCms\Core\Contracts\Scope\Backend',
+            'VictoryCms\Core\Scopes\Backend'
+        );
+
+        $this->app->singleton(
+            'VictoryCms\Core\Contracts\Scope\Frontend',
+            'VictoryCms\Core\Scopes\Frontend'
+        );
 	}
 
     /**
@@ -62,17 +73,6 @@ class PackageServiceProvider extends ServiceProvider
                 $command, 'VictoryCms\Core\Commands', 'VictoryCms\Core\Handlers\Commands'
             );
         });
-
-        // Bind the CMS scopes
-        $this->app->singleton(
-            'VictoryCms\Core\Contracts\Scope\Backend',
-            'VictoryCms\Core\Scopes\Backend'
-        );
-
-        $this->app->singleton(
-            'VictoryCms\Core\Contracts\Scope\Frontend',
-            'VictoryCms\Core\Scopes\Frontend'
-        );
 
         // Register and boot all the Victory packages
         $packages = Package::all();
@@ -97,9 +97,17 @@ class PackageServiceProvider extends ServiceProvider
 
         $artisan->call('migrate', [
             '--path' => 'vendor/victory-cms/core/database/migrations'
-        ]); 
+        ]);
 
         touch($path.'/installed');
+    }
+
+    /**
+     *
+     */
+    public function update()
+    {
+        echo 'update!!!';
     }
 
     /**
