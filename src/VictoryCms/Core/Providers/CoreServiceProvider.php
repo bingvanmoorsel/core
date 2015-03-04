@@ -1,6 +1,6 @@
 <?php namespace VictoryCms\Core\Providers;
 
-use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
