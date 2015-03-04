@@ -97,7 +97,7 @@ class PackageServiceProvider extends ServiceProvider
 
         $artisan->call('migrate', [
             '--path' => 'vendor/victory-cms/core/database/migrations'
-        ]);
+        ]); 
 
         touch($path.'/installed');
     }
