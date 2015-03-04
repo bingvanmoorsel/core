@@ -75,6 +75,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function supports($type)
     {
+        var_dump($type);
         return $type === 'victory-package';
     }
 
