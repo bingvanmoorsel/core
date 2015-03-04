@@ -1,10 +1,9 @@
-<?php namespace VictoryCms\Core\Providers;
+<?php namespace VictoryCms\Core;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
-use VictoryCms\Core\Victory;
 
 /**
  * Class CoreServiceProvider
@@ -42,6 +41,8 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
+        return;
+
         if($this->app->runningInConsole()) {
             $victory->install();
         }
@@ -75,6 +76,21 @@ class CoreServiceProvider extends ServiceProvider
                 $this->app->register($provider);
             }
         }
+    }
+
+    public static function install()
+    {
+        echo 'install';
+    }
+
+    public static function update()
+    {
+        echo 'update';
+    }
+
+    public static function destroy()
+    {
+        echo 'destroy';
     }
 
 	/**

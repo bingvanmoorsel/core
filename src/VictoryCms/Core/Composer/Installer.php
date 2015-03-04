@@ -182,7 +182,10 @@ class Installer extends LibraryInstaller implements InstallerInterface
         /** @var Kernel $kernel */
         $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
 
+        // Bootstrap the kernel
         $kernel->bootstrap();
+
+        $kernel->call('victory:package-install');
 
         return (self::$laravel = $app);
     }

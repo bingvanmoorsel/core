@@ -1,4 +1,4 @@
-<?php namespace VictoryCms\Core\Composer;
+<?php namespace VictoryCms\Core\Console;
 
 use Illuminate\Console\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -12,7 +12,10 @@ class Kernel extends ConsoleKernel
     /**
      * @var array
      */
-    protected $commands = [];
+    protected $commands = [
+        'VictoryCms\Core\Console\Commands\Install',
+        'VictoryCms\Core\Console\Commands\Update',
+    ];
 
     /**
      * Overwrite the provider registration provider
@@ -25,18 +28,7 @@ class Kernel extends ConsoleKernel
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
         'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-        'VictoryCms\Core\Composer\Bootstrap\RegisterProviders',
+        'Illuminate\Foundation\Bootstrap\RegisterProviders',
         'Illuminate\Foundation\Bootstrap\BootProviders',
     ];
-
-    /**
-     * Make this function public so it is possible to call
-     * commands without bootstrapping
-     *
-     * @return Application
-     */
-    public function getArtisan()
-    {
-        return parent::getArtisan();
-    }
 }
