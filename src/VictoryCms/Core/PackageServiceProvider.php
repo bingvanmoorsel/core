@@ -78,7 +78,7 @@ class PackageServiceProvider extends ServiceProvider
         $packages = Package::all();
 
         foreach($packages as $package) {
-            var_dump($packages->provider);
+            ///var_dump($packages->provider);
         }
     }
 
