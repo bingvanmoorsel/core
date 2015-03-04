@@ -2,27 +2,21 @@
 
 use Illuminate\Contracts\Foundation\Application;
 use VictoryCms\Core\Providers\CoreServiceProvider;
+use Illuminate\Foundation\Bootstrap\RegisterFacades as Provider;
 
 /**
  * Class RegisterProviders
  * @package VictoryCms\Core\Composer\Bootstrap
  */
-class RegisterProviders
+class RegisterProviders extends Provider
 {
     /**
      * @param Application $app
      */
     public function bootstrap(Application $app)
     {
-        $providers = $app['config']->get('app.providers');
+        parent::bootstrap($app);
 
-        if(!in_array(CoreServiceProvider::class, $providers)) {
-            array_push($providers, CoreServiceProvider::class);
-            $app['config']->set('app.providers', $providers);
-        }
-
-        var_dump($app['config']['app.providers']);
-
-        $app->registerConfiguredProviders();
+        $app->register(CoreServiceProvider::class);
     }
 }
