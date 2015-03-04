@@ -83,16 +83,6 @@ class PackageServiceProvider extends ServiceProvider
         echo 'install';
     }
 
-    public static function update()
-    {
-        echo 'update';
-    }
-
-    public static function destroy()
-    {
-        echo 'destroy';
-    }
-
 	/**
 	 * Get the services provided by the provider.
 	 *

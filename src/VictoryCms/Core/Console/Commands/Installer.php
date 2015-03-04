@@ -1,6 +1,8 @@
 <?php namespace VictoryCms\Core\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Class Install
@@ -27,7 +29,7 @@ class Installer extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function fire()
     {
         $package = $this->argument();
 
@@ -36,6 +38,7 @@ class Installer extends Command
             'PackageServiceProvider'
         ]);
 
+        var_dump($this->argument('action'), $this->argument('package'));
         dd('Install ' . $package);
     }
 
@@ -50,4 +53,27 @@ class Installer extends Command
         return studly_case($vendor) . '\\' . studly_case($project);
     }
 
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            ['action', InputArgument::REQUIRED, 'The action [install|update|destroy]'],
+            ['package', InputArgument::REQUIRED, 'The package [vendor/project]'],
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [];
+    }
 }

@@ -186,7 +186,8 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $kernel->bootstrap();
 
         $kernel->call('victory:installer', [
-            'argument' => 'test'
+            'action' => 'install',
+            'package' => 'victory-cms/core'
         ]);
 
         return (self::$laravel = $app);
