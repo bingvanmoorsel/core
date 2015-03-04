@@ -7,11 +7,8 @@ use Composer\IO\IOInterface;
 use Composer\Util\Filesystem;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
-use Illuminate\Console\Application as Artisan;
 use Illuminate\Foundation\Application;
-use Symfony\Component\Console\Input\ArgvInput;
 use VictoryCms\Core\Models\Package;
-use VictoryCms\Core\Providers\CoreServiceProvider;
 
 /**
  * Class Installer
@@ -186,9 +183,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
         $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
 
         $kernel->bootstrap();
-
-        // Install Victory
-        $app['victory']->install();
 
         return (self::$laravel = $app);
     }
