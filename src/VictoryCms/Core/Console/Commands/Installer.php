@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use VictoryCms\Core\Models\Package;
 
 /**
  * Class Install
@@ -82,7 +83,7 @@ class Installer extends Command
 
         $result =  $this->laravel->call([$provider, $method], $parameters);
 
-        $this->comment(sprintf('[%s] -> %s', $package, $method));
+        $this->comment(sprintf('[%s] -> <info>%s</info>', $package, $method));
 
         return $result;
     }

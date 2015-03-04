@@ -8,6 +8,7 @@ use Composer\Util\Filesystem;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Illuminate\Foundation\Application;
+use VictoryCms\Core\Console\Kernel;
 use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\PackageServiceProvider;
 
@@ -93,6 +94,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         // Split the name to get the vendor and project name
         list($vendor, $project) = explode('/', $name);
 
+        // Temporarily unguard the model
         Package::unguard();
 
         Package::create([
@@ -105,9 +107,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
         ]);
 
         // Run the custom install logic
-        if($this->call($this->getProviderClass($package), 'install') !== false) {
-            $this->io->write('Calling '.$package->getPrettyName().' -> install [<info>OK</info>]');
-        }
+        $this->call('install', $name);
     }
 
     /**
@@ -123,17 +123,19 @@ class Installer extends LibraryInstaller implements InstallerInterface
     {
         parent::update($repo, $initial, $target);
 
-        // Get the first package record by name
-        $record = Package::where('name', $initial->getName())
-            ->first();
-
-        // Update the updated_at field
-        $record->touch();
+        $name = $initial->getPrettyName();
 
         // Run the custom update logic
-        if($this->call($this->getProviderClass($initial), 'update') !== false) {
-            $this->io->write('Calling '.$initial->getPrettyName().' -> update [<info>OK</info>]');
-        }
+        $this->call('update', $name);
+
+        // Get the package model
+        $package = Package::where('name', $name)->first();
+
+        // Update the version
+        $package->version = $target->getPrettyVersion();
+
+        // Save the model
+        $package->save();
     }
 
     /**
@@ -142,18 +144,14 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
+        // Get the package name
         $name = $package->getPrettyName();
 
-        // Run the custom update logic
-        if($this->call($this->getProviderClass($package), 'destroy') !== false) {
-            $this->io->write('Calling '.$name.' -> destroy [<info>OK</info>]');
-        }
+        // Call the installer destroy command
+        $this->call('destroy', $name);
 
         // Get the first package record by name
-        $record = Package::where('name', $name)
-            ->first();
-
-        $record->delete();
+        Package::where('name', $name)->delete();
 
         parent::uninstall($repo, $package);
     }
@@ -188,60 +186,19 @@ class Installer extends LibraryInstaller implements InstallerInterface
     }
 
     /**
-     * @param $class
-     * @param $method
-     * @param array $parameters
-     * @return bool|mixed
-     */
-    protected function call($class, $method, $parameters = [])
-    {
-        if(method_exists($class, $method)) {
-            return $this->app->call([$class, $method], $parameters);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param PackageInterface $package
-     * @return string
-     */
-    protected function getProviderFile(PackageInterface $package)
-    {
-        $base = $this->getPackageBasePath($package);
-        $namespace = $this->getProviderNamespace($package);
-
-        return $base.'/src/'.str_replace('\\', '/', $namespace).'/PackageServiceProvider.php';
-    }
-
-    /**
-     * @param PackageInterface $package
+     * @param $action
      * @return mixed
-     * @throws \Illuminate\Container\BindingResolutionException
      */
-    protected function getProviderClass(PackageInterface $package)
+    protected function call($action, $package)
     {
-        $namespace = $this->getProviderNamespace($package);
-        $file      = $this->getProviderFile($package);
-        $class     = $namespace.'\\PackageServiceProvider';
+        /** @var Kernel $kernel */
+        $kernel = $this->app->make('Illuminate\Contracts\Console\Kernel');
 
-        if(!class_exists($class) && !file_exists($file)) return false;
+        $this->io->write('[victory:installer] -> <info>'.$action. '</info>');
 
-        // Require the service provider
-        require $file;
-
-        // Build the provider instance
-        return new $class($this->app);
-    }
-
-    /**
-     * @param PackageInterface $package
-     * @return string
-     */
-    protected function getProviderNamespace(PackageInterface $package)
-    {
-        list($vendor, $project) = explode('/', $package->getPrettyName());
-
-        return studly_case($vendor).'\\'.studly_case($project);
+        return $kernel->call('victory:installer', [
+            'action'    => $action,
+            'package'   => $package
+        ]);
     }
 }
