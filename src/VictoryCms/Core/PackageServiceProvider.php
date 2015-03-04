@@ -78,7 +78,7 @@ class PackageServiceProvider extends ServiceProvider
         }
     }
 
-    public static function install()
+    public function install()
     {
         echo 'install';
     }

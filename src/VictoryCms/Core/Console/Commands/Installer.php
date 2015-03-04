@@ -31,12 +31,12 @@ class Installer extends Command
      */
     public function fire()
     {
-        $package = $this->argument();
-
-        $class = vsprintf('%s\%s', [
-            $this->getNamespace($package),
-            'PackageServiceProvider'
-        ]);
+//        $package = $this->argument();
+//
+//        $class = vsprintf('%s\%s', [
+//            $this->getNamespace($package),
+//            'PackageServiceProvider'
+//        ]);
 
         var_dump($this->argument('action'), $this->argument('package'));
         dd('Install ' . $package);
