@@ -31,22 +31,83 @@ class Installer extends Command
      */
     public function fire()
     {
-//        $package = $this->argument();
-//
-//        $class = vsprintf('%s\%s', [
-//            $this->getNamespace($package),
-//            'PackageServiceProvider'
-//        ]);
+        $action  = strtolower($this->argument('action'));
+        $package = strtolower($this->argument('package'));
 
-        var_dump($this->argument('action'), $this->argument('package'));
-        dd('Install ' . $package);
+        switch($action)
+        {
+            case 'install':
+                $this->install($package);
+                break;
+
+            case 'update':
+                $this->update($package);
+                break;
+
+            default:
+                $this->error('Invalid action: ' . $action);
+        }
+    }
+
+    /**
+     * @param $package
+     * @return mixed
+     */
+    protected function install($package)
+    {
+        return $this->invoke($package, 'install');
+    }
+
+    /**
+     * @param $package
+     * @return mixed
+     */
+    protected function update($package)
+    {
+        return $this->invoke($package, 'update');
+    }
+
+    /**
+     * @param $package
+     * @param $method
+     * @param array $parameters
+     * @return mixed
+     */
+    protected function invoke($package, $method, $parameters = [])
+    {
+        if(($provider = $this->getProviderClass($package)) === false)
+        {
+            $this->error('Unable to instantiate package service provider');
+        }
+
+        $result =  $this->laravel->call([$provider, $method], $parameters);
+
+        $this->comment(sprintf('[%s] -> %s', $package, $method));
+
+        return $result;
+    }
+
+    /**
+     * @param $package
+     * @return bool
+     */
+    protected function getProviderClass($package)
+    {
+        $class = vsprintf('%s\%s', [
+            $this->getNamespace($package),
+            'PackageServiceProvider'
+        ]);
+
+        if(!class_exists($class)) return false;
+
+        return new $class($this->laravel);
     }
 
     /**
      * @param $package
      * @return string
      */
-    protected function getNamespace($package)
+    protected function getProviderNamespace($package)
     {
         list($vendor, $project) = explode('/', $package);
 
