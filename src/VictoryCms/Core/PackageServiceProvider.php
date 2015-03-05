@@ -103,7 +103,6 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function install(Victory $victory)
     {
-        echo '[CORE INSTALL]';
         $storage = $victory->storagePath();
 
         if(!is_dir($storage)) {
