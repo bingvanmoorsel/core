@@ -115,7 +115,7 @@ abstract class Base extends LibraryInstaller
     {
         $provider = $this->resolve($package);
 
-        $this->io->write('[<comment>'.get_class($package).'</comment>] -> <info>'.$method.'</info>');
+        $this->io->write('[<comment>'.get_class($provider).'</comment>] -> <info>'.$method.'</info>');
 
         if(!method_exists($provider, $method)) return false;
 

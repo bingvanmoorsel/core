@@ -75,7 +75,7 @@ class Package extends Base
         $record->released_at = $package->getReleaseDate()
             ->format('Y-m-d H:i:s');
 
-        return $package->save();
+        return $record->save();
     }
 
     /**
