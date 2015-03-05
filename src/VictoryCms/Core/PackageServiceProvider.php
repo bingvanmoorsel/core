@@ -87,6 +87,9 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function install()
     {
+        echo 'install!!';
+
+        return;
         $path = $this->storagePath();
 
         if(!is_dir($path)) {
@@ -111,7 +114,7 @@ class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return bool
+     * @return bool 
      */
     public function isInstalled()
     {

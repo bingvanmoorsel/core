@@ -3,6 +3,8 @@
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
+use VictoryCms\Core\Composer\Installers\Plugin as PluginInstaller;
+use VictoryCms\Core\Composer\Installers\Package as PackageInstaller;
 
 /**
  * Class Plugin
@@ -16,9 +18,9 @@ class Plugin implements PluginInterface
      */
     public function activate(Composer $composer, IOInterface $io)
     {
-        $installer = new Installer($io, $composer);
-
         $manager = $composer->getInstallationManager();
-        $manager->addInstaller($installer);
+
+        $manager->addInstaller(new PluginInstaller($io, $composer));
+        $manager->addInstaller(new PackageInstaller($io, $composer));
     }
 }

@@ -31,8 +31,24 @@ class Package extends Model
     /**
      * @return string
      */
+    public function getVendorAttribute()
+    {
+        return head(explode('/', $this->name));
+    }
+
+    /**
+     * @return string
+     */
+    public function getProjectAttribute()
+    {
+        return last(explode('/', $this->name));
+    }
+
+    /**
+     * @return string
+     */
     public function getProviderAttribute()
     {
-        return studly_case($this->vendor) . '\\' . studly_case($this->name) . '\\PackageServiceProvider';
+        return studly_case($this->vendor) . '\\' . studly_case($this->project) . '\\PackageServiceProvider';
     }
 }

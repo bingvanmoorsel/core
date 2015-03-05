@@ -16,8 +16,6 @@ class CreateVictoryPackagesTable extends Migration
 		{
 			$table->increments('id');
 			$table->string('name', 40);
-			$table->string('vendor', 20);
-			$table->string('project', 20);
 			$table->string('version', 10);
 			$table->string('source');
 			$table->timestamp('released_at');
