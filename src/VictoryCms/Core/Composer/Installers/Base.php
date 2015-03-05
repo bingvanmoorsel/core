@@ -128,7 +128,9 @@ abstract class Base extends LibraryInstaller
      */
     protected function resolve(PackageInterface $package)
     {
-        list($vendor, $project) = explode('/', $package->getPrettyName());
+        $name = $package->getPrettyName();
+
+        list($vendor, $project) = explode('/', $name);
 
         // Get the package namespace
         $namespace = studly_case($vendor) . '\\' . studly_case($project);
@@ -137,7 +139,9 @@ abstract class Base extends LibraryInstaller
         $class = sprintf('%s\%s', $namespace, 'PackageServiceProvider');
 
         // Make sure the class exists
-        if(!class_exists($class)) return false;
+        if(!class_exists($class)) {
+            require $this->vendorDir.'/'.$name.'/PackageServiceProvider.php';
+        }
 
         return new $class(self::$app);
     }
