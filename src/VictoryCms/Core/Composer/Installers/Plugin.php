@@ -10,6 +10,9 @@ use Composer\Repository\InstalledRepositoryInterface;
  */
 class Plugin extends Base
 {
+    /**
+     *
+     */
     const SUPPORTS = 'composer-plugin';
 
     /**
@@ -19,17 +22,6 @@ class Plugin extends Base
     public function supports($type)
     {
         return $type === self::SUPPORTS;
-    }
-
-    /**
-     * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $package
-     */
-    public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
-    {
-        if(!$this->isCore($package)) return;
-
-        parent::install($repo, $package);
     }
 
     /**
