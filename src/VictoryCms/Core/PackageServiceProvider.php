@@ -114,7 +114,7 @@ class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return bool 
+     * @return bool
      */
     public function isInstalled()
     {

@@ -42,7 +42,7 @@ abstract class Base extends LibraryInstaller
      */
     protected function boot()
     {
-        $this->io->write($this->logo);
+//        $this->io->write($this->logo);
 
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
