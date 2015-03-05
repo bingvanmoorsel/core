@@ -62,7 +62,7 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
-        if($victory->isInstalled()) {
+        if(!$victory->isInstalled()) {
             $this->app->call([$this, 'install']);
         }
 
