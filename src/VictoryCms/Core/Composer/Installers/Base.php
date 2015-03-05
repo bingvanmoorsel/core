@@ -6,6 +6,10 @@ use Composer\Util\Filesystem;
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
 use Composer\Repository\InstalledRepositoryInterface;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Application;
+use VictoryCms\Core\PackageServiceProvider;
+use VictoryCms\Core\Victory;
 
 /**
  * Class Base
@@ -42,8 +46,6 @@ abstract class Base extends LibraryInstaller
      */
     protected function boot()
     {
-//        $this->io->write($this->logo);
-
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
 
@@ -53,11 +55,18 @@ abstract class Base extends LibraryInstaller
         /** @var Application $app */
         $app = require $this->vendorDir.'/../bootstrap/app.php';
 
-        /** @var Kernel $kernel */
-        $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
+        $app->bootstrapWith([
+            'Illuminate\Foundation\Bootstrap\DetectEnvironment',
+            'Illuminate\Foundation\Bootstrap\LoadConfiguration',
+            'Illuminate\Foundation\Bootstrap\ConfigureLogging',
+            'Illuminate\Foundation\Bootstrap\HandleExceptions',
+            'Illuminate\Foundation\Bootstrap\RegisterFacades',
+            'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
+            'Illuminate\Foundation\Bootstrap\RegisterProviders'
+        ]);
 
-        // Bootstrap the kernel
-        $kernel->bootstrap();
+        $app->register(PackageServiceProvider::class);
+        $app->boot();
 
         return $app;
     }
@@ -70,7 +79,7 @@ abstract class Base extends LibraryInstaller
     {
         parent::install($repo, $package);
 
-        $this->call('install', $package->getPrettyName());
+        $this->call($package, 'install');
     }
 
     /**
@@ -82,7 +91,7 @@ abstract class Base extends LibraryInstaller
     {
         parent::update($repo, $initial, $target);
 
-        $this->call('update', $initial->getPrettyName());
+        $this->call($initial, 'update');
     }
 
     /**
@@ -93,23 +102,43 @@ abstract class Base extends LibraryInstaller
     {
         parent::uninstall($repo, $package);
 
-        $this->call('destroy', $package->getPrettyName());
+        $this->call($package, 'destroy');
     }
 
     /**
-     * @param $action
+     * @param PackageInterface $package
+     * @param $method
+     * @param array $parameters
      * @return mixed
      */
-    protected function call($action, $package)
+    protected function call(PackageInterface $package, $method, $parameters = [])
     {
-        /** @var Kernel $kernel */
-        $kernel = self::$app->make('Illuminate\Contracts\Console\Kernel');
+        $provider = $this->resolve($package);
 
-        $this->io->write('[victory:installer] -> <info>'.$action.'</info>');
+        $this->io->write('[<comment>'.get_class($package).'</comment>] -> <info>'.$method.'</info>');
 
-        return $kernel->call('victory:installer', [
-            'action'    => $action,
-            'package'   => $package
-        ]);
+        if(!method_exists($provider, $method)) return false;
+
+        return self::$app->call([$provider, $method], $parameters);
+    }
+
+    /**
+     * @param PackageInterface $package
+     * @return bool
+     */
+    protected function resolve(PackageInterface $package)
+    {
+        list($vendor, $project) = explode('/', $package->getPrettyName());
+
+        // Get the package namespace
+        $namespace = studly_case($vendor) . '\\' . studly_case($project);
+
+        // Build the provider class name
+        $class = sprintf('%s\%s', $namespace, 'PackageServiceProvider');
+
+        // Make sure the class exists
+        if(!class_exists($class)) return false;
+
+        return new $class(self::$app);
     }
 }

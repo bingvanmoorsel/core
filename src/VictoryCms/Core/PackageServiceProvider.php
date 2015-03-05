@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core;
 
+use Artisan;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -61,8 +62,8 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
-        if(!$victory->isInstalled()) {
-            return $this->install();
+        if($victory->isInstalled()) {
+            $this->app->call([$this, 'install']);
         }
 
         // Bind some command handlers
@@ -75,34 +76,45 @@ class PackageServiceProvider extends ServiceProvider
         });
 
         // Register and boot all the Victory packages
-        $packages = Package::all();
+        // We simulate the Laravel registration process
+        $providers = [];
 
-        foreach($packages as $package) {
-            ///var_dump($packages->provider);
+        // Create the provider instances
+        foreach(Package::all() as $package) {
+            $provider = $package->provider;
+            $providers[] = new $provider($this->app);
+        };
+
+        // Run the provider register logic
+        foreach($providers as $provider) {
+            $provider->register();
+        }
+
+        // Run the provider boot logic
+        foreach($providers as $provider) {
+            if(method_exists($provider, 'boot')) {
+                $this->app->call([$provider, 'boot']);
+            }
         }
     }
 
     /**
      *
      */
-    public function install()
+    public function install(Victory $victory)
     {
-        echo 'install!!';
+        echo '[CORE INSTALL]';
+        $storage = $victory->storagePath();
 
-        return;
-        $path = $this->storagePath();
-
-        if(!is_dir($path)) {
-            mkdir($path, 0777);
+        if(!is_dir($storage)) {
+            mkdir($storage, 0777);
         }
 
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
-
-        $artisan->call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'vendor/victory-cms/core/database/migrations'
         ]);
 
-        touch($path.'/installed');
+        touch($storage.'/installed');
     }
 
     /**
@@ -110,23 +122,7 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function update()
     {
-        echo 'update!!!';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInstalled()
-    {
-        return file_exists($this->storagePath().'/installed');
-    }
-
-    /**
-     * @return string
-     */
-    public function storagePath()
-    {
-        return $this->app['path.storage'].'/victory/';
+        echo '[CORE UPDATE]';
     }
 
 	/**

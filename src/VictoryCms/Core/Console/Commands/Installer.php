@@ -1,6 +1,7 @@
 <?php namespace VictoryCms\Core\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use VictoryCms\Core\Models\Package;
@@ -45,6 +46,10 @@ class Installer extends Command
                 $this->update($package);
                 break;
 
+            case 'destroy':
+                $this->destroy($package);
+                break;
+
             default:
                 $this->error('Invalid action: ' . $action);
         }
@@ -56,7 +61,7 @@ class Installer extends Command
      */
     protected function install($package)
     {
-        return $this->invoke($package, 'install');
+        $this->invoke($this->resolve($package), 'install');
     }
 
     /**
@@ -65,53 +70,49 @@ class Installer extends Command
      */
     protected function update($package)
     {
-        return $this->invoke($package, 'update');
+        $this->invoke($this->resolve($package), 'update');
     }
 
     /**
      * @param $package
+     */
+    protected function destroy($package)
+    {
+        $this->invoke($this->resolve($package), 'destroy');
+    }
+
+    /**
+     * @param ServiceProvider $provider
      * @param $method
      * @param array $parameters
      * @return mixed
      */
-    protected function invoke($package, $method, $parameters = [])
+    protected function invoke(ServiceProvider $provider, $method, $parameters = [])
     {
-        if(($provider = $this->getProviderClass($package)) === false)
-        {
-            $this->error('Unable to instantiate package service provider');
-        }
+        if(!method_exists($provider, $method)) return;
 
-        $result =  $this->laravel->call([$provider, $method], $parameters);
-
-        $this->comment(sprintf('[%s] -> <info>%s</info>', $package, $method));
-
-        return $result;
+        call_user_func_array([$provider, $method], $parameters);
     }
 
     /**
      * @param $package
      * @return bool
      */
-    protected function getProviderClass($package)
+    protected function resolve($package)
     {
-        $class = sprintf('%s\%s', $this->getProviderNamespace($package), 'PackageServiceProvider');
+        list($vendor, $project) = explode('/', $package);
 
+        // Get the package namespace
+        $namespace = studly_case($vendor) . '\\' . studly_case($project);
+
+        // Build the provider class name
+        $class = sprintf('%s\%s', $namespace, 'PackageServiceProvider');
+
+        // Make sure the class exists
         if(!class_exists($class)) return false;
 
         return new $class($this->laravel);
     }
-
-    /**
-     * @param $package
-     * @return string
-     */
-    protected function getProviderNamespace($package)
-    {
-        list($vendor, $project) = explode('/', $package);
-
-        return studly_case($vendor) . '\\' . studly_case($project);
-    }
-
 
     /**
      * Get the console command arguments.

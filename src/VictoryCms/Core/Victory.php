@@ -16,6 +16,11 @@ class Victory
     const VERSION = '0.1.0';
 
     /**
+     *
+     */
+    const PACKAGE = 'victory-cms/core';
+
+    /**
      * @var Application
      */
     protected $app;
@@ -31,7 +36,9 @@ class Victory
     public function __construct(Application $app)
     {
         $this->app = $app;
+
         $this->storagePath = $this->app->storagePath().'/victory';
+        $this->corePath = $this->app->basePath().'/vendor/'.self::PACKAGE;
     }
 
     /**
@@ -43,32 +50,35 @@ class Victory
     }
 
     /**
-     * @return void
-     */
-    public function install()
-    {
-        echo 'install';
-//
-//        // Check if the storage directory exists
-
-//
-//        /** @var \Illuminate\Console\Application $artisan */
-//        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel')->getArtisan();
-//
-//        // Run the installer migrations
-//        $artisan->call('migrate', [
-//            '--path' => 'vendor/victory-cms/core/database/migrations'
-//        ]);
-//
-//        touch($this->storagePath.'/installed');
-    }
-
-    /**
      * @return bool
      */
     public function isInstalled()
     {
         return file_exists($this->storagePath.'/installed');
+    }
+
+    /**
+     * @return string
+     */
+    public function storagePath()
+    {
+        return $this->storagePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function corePath()
+    {
+        return $this->corePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPackageName()
+    {
+        return self::PACKAGE;
     }
 
     /**
