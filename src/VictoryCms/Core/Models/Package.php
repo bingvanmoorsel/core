@@ -20,6 +20,13 @@ class Package extends Model
     public $timestamps = true;
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'version', 'source'
+    ];
+
+    /**
      * @param Builder $query
      * @param $name
      */
