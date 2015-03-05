@@ -140,7 +140,7 @@ abstract class Base extends LibraryInstaller
 
         // Make sure the class exists
         if(!class_exists($class)) {
-            require $this->vendorDir.'/'.$name.'/PackageServiceProvider.php';
+            require $this->vendorDir.'/'.$name.'/src/'.$namespace.'/PackageServiceProvider.php';
         }
 
         return new $class(self::$app);
