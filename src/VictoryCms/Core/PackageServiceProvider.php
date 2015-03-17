@@ -44,16 +44,9 @@ class PackageServiceProvider extends ServiceProvider
             return new Victory($app);
         });
 
-        // Bind the CMS scopes
-        $this->app->singleton(
-            'VictoryCms\Core\Contracts\Scope\Backend',
-            'VictoryCms\Core\Scopes\Backend'
-        );
-
-        $this->app->singleton(
-            'VictoryCms\Core\Contracts\Scope\Frontend',
-            'VictoryCms\Core\Scopes\Frontend'
-        );
+        $this->app->register('VictoryCms\Core\Providers\HeroesServiceProvider');
+        $this->app->register('VictoryCms\Core\Providers\RouteServiceProvider');
+        $this->app->register('VictoryCms\Core\Providers\ComposerServiceProvider');
 	}
 
     /**
@@ -65,6 +58,9 @@ class PackageServiceProvider extends ServiceProvider
         if(!$victory->isInstalled()) {
             $this->app->call([$this, 'install']);
         }
+
+        // Define view locations
+        $this->loadViewsFrom(__DIR__.'/../../../resources/views/', 'victory.core');
 
         // Bind some command handlers
         $dispatcher->pipeThrough($this->pipeTrough);
@@ -96,6 +92,8 @@ class PackageServiceProvider extends ServiceProvider
                 $this->app->call([$provider, 'boot']);
             }
         }
+
+
     }
 
     /**

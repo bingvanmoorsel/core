@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVictoryUsersTable extends Migration
+class CreateVictoryHeroesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateVictoryUsersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('victory_users', function(Blueprint $table)
+		Schema::create('victory_heroes', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('first_name', 50);
@@ -21,6 +21,7 @@ class CreateVictoryUsersTable extends Migration
 			$table->char('password', 60);
 			$table->timestamp('online_at');
 			$table->timestamps();
+            $table->rememberToken();
 
 			$table->unique(['email']);
 		});
@@ -33,6 +34,6 @@ class CreateVictoryUsersTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('victory_users');
+		Schema::drop('victory_heroes');
 	}
 }
