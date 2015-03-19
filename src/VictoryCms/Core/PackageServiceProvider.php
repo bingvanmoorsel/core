@@ -78,7 +78,7 @@ class PackageServiceProvider extends ServiceProvider
         // Create the provider instances
         foreach(Package::all() as $package) {
             $provider = $package->provider;
-            $providers[] = new $provider($this->app);
+            $providers[] = new $provider($this->app, $package);
         };
 
         // Run the provider register logic

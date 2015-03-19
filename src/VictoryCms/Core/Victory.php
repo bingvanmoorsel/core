@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core;
 
+use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
 use VictoryCms\Core\Scopes\Scope;
@@ -88,5 +89,10 @@ class Victory
     public function scope($name)
     {
         return $this->app->make('VictoryCms\Core\Scopes\\'.studly_case($name));
+    }
+
+    public function routes($name, Closure $closure)
+    {
+        return \Route::group(['prefix' => 'victory/'.$name], $closure);
     }
 }

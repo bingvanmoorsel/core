@@ -1,0 +1,9 @@
+<div class="victory__menu-top-spacer">
+</div>
+<div>
+    <ul class="victory__menu-nav">
+        {% for item in items %}
+            <li><a class="victory__menu-nav-link" href="{{ route('victory.auth.home') }}/{{ item.name }}" > {{ item.name }} </a></li>
+        {% endfor %}
+    </ul>
+</div>

@@ -23,7 +23,6 @@
     @include('victory.core::layout.partials.menu')
 
     <div class="victory__content-wrapper">
-        test
         @yield('content')
     </div>
 
