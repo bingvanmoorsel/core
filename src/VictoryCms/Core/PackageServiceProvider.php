@@ -3,6 +3,8 @@
 use Artisan;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
 
@@ -37,6 +39,14 @@ class PackageServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+
+        // Adding prefix to tables.
+//        Config::set('database.connections.'.Config::get('database.default').'.prefix', 'victory_');
+//        dd(Config::get('database.connections.'.Config::get('database.default').'.prefix'));
+
+
+
+
         $this->commands($this->commands);
 
         // Bind the main entry point of Victory CMS
@@ -47,6 +57,14 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->register('VictoryCms\Core\Providers\HeroesServiceProvider');
         $this->app->register('VictoryCms\Core\Providers\RouteServiceProvider');
         $this->app->register('VictoryCms\Core\Providers\ComposerServiceProvider');
+
+        $this->app->register('TwigBridge\ServiceProvider');
+        $this->app->register('Zizaco\Entrust\EntrustServiceProvider');
+
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('TwigBridge\Facade\Twig', 'Twig');
+        $loader->alias('Zizaco\Entrust\EntrustFacade', 'Entrust');
 	}
 
     /**
@@ -93,7 +111,6 @@ class PackageServiceProvider extends ServiceProvider
             }
         }
 
-
     }
 
     /**
@@ -110,6 +127,9 @@ class PackageServiceProvider extends ServiceProvider
         Artisan::call('migrate', [
             '--path' => 'vendor/victory-cms/core/database/migrations'
         ]);
+
+        Artisan::call('entrust:migration');
+        Artisan::call('migrate');
 
         touch($storage.'/installed');
     }

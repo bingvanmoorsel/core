@@ -1,8 +1,0 @@
-@if($user)
-<div class="victory__header">
-    <div class="victory__header-right">
-        <a class="victory__header-link" href="#">{{ $user->first_name }} {{ $user->last_name }}</a>
-        <a class="victory__header-link" href="{{ route('victory.auth.logout') }}">Logout</a>
-    </div>
-</div>
-@endif
