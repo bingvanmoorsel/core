@@ -12,7 +12,8 @@
         "php": ">=5.4.0",
         "composer-plugin-api": "~1.0",
         "laravel/framework": "5.0.*",
-        "rcrowe/twigbridge": "0.7.*@dev"
+        "rcrowe/twigbridge": "0.7.*@dev",
+        "zizaco/entrust": "dev-laravel-5"
     },
     "autoload": {
         "psr-0": {
