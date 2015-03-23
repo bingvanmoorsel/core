@@ -128,9 +128,6 @@ class PackageServiceProvider extends ServiceProvider
             '--path' => 'vendor/victory-cms/core/database/migrations'
         ]);
 
-        Artisan::call('entrust:migration');
-        Artisan::call('migrate');
-
         touch($storage.'/installed');
     }
 
