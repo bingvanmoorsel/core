@@ -3,6 +3,7 @@
 use Artisan;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\ClassLoader;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
 
@@ -43,6 +44,11 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->singleton('victory', function(Application $app) {
             return new Victory($app);
         });
+
+        // Autoload the workbench folder
+        if(is_dir($path = base_path('workbench'))) {
+            ClassLoader::addDirectories(compact($path));
+        }
 	}
 
     /**

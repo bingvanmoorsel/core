@@ -3,6 +3,10 @@
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
 
+/**
+ * Class ComposerServiceProvider
+ * @package VictoryCms\Core\Providers
+ */
 class ComposerServiceProvider extends ServiceProvider
 {
 
@@ -16,15 +20,16 @@ class ComposerServiceProvider extends ServiceProvider
         //
     }
 
+    /**
+     *
+     */
     public function boot()
     {
-        $this->app['view']->composer('victory.core::layout.partials.header', function($view)
-        {
+        $this->app['view']->composer('victory.core::layout.partials.header', function($view) {
            $view->user = \Auth::user();
         });
 
-        $this->app['view']->composer('victory.core::layout.partials.menu', function($view)
-        {
+        $this->app['view']->composer('victory.core::layout.partials.menu', function($view) {
             $view->items = Package::all();
         });
     }

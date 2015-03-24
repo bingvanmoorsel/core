@@ -1,8 +1,8 @@
 <?php namespace VictoryCms\Core\Models;
 
-use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
-abstract class Model extends BaseModel
+abstract class Model extends Eloquent
 {
 
 }

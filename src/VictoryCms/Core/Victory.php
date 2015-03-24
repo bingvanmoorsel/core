@@ -39,7 +39,7 @@ class Victory
         $this->app = $app;
 
         $this->storagePath = $this->app->storagePath().'/victory';
-        $this->corePath = $this->app->basePath().'/vendor/'.self::PACKAGE;
+        $this->corePath    = $this->app->basePath().'/vendor/'.self::PACKAGE;
     }
 
     /**
@@ -82,14 +82,6 @@ class Victory
         return self::PACKAGE;
     }
 
-    /**
-     * @param $name
-     * @return Scope
-     */
-    public function scope($name)
-    {
-        return $this->app->make('VictoryCms\Core\Scopes\\'.studly_case($name));
-    }
 
     public function routes($name, Closure $closure)
     {
