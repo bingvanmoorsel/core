@@ -53,8 +53,10 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->register('VictoryCms\Core\Providers\HeroesServiceProvider');
 
         // External Providers
-        $this->app->register('Zizaco\Entrust\EntrustServiceProvider');
-        $this->app->register('TwigBridge\ServiceProvider');
+        if($this->app['victory']->isInstalled()) {
+            $this->app->register('Zizaco\Entrust\EntrustServiceProvider');
+            $this->app->register('TwigBridge\ServiceProvider');
+        }
 
         // Autoload the workbench folder
         if(is_dir($path = base_path('workbench'))) {
