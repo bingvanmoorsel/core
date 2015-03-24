@@ -8,7 +8,6 @@ use VictoryCms\Core\Providers\Guard\HeroGuard;
 
 class HeroesServiceProvider extends ServiceProvider
 {
-
     /**
      * Register the service provider.
      *

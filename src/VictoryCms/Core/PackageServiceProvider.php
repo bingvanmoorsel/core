@@ -43,8 +43,6 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->singleton('victory', function(Application $app) {
             return new Victory($app);
         });
-
-
 	}
 
     /**
