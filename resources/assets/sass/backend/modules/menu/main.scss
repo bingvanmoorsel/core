@@ -1,0 +1,28 @@
+.victory__main-menu {
+  float: left;
+  width: 260px;
+//  height: 100%;
+  min-height: 100%;
+  background: #f2f4f5;
+}
+
+.victory__menu-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 60px;
+}
+
+.victory__menu-nav-link {
+  display: block;
+  width: 90%;
+  padding: 5%;
+  height: 24px;
+  line-height: 24px;
+  text-decoration: none;
+  color: #434343;
+
+  &:hover{
+    background: #d3dde1;
+  }
+}

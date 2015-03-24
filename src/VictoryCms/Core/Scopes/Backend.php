@@ -13,7 +13,7 @@ class Backend extends Scope implements \VictoryCms\Core\Contracts\Scope\Backend
      */
     function __construct()
     {
-        $this->setPrefix('admin');
+        $this->setPrefix('victory');
     }
 
     /**
