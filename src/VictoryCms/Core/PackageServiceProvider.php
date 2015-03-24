@@ -43,6 +43,17 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->singleton('victory', function(Application $app) {
             return new Victory($app);
         });
+
+        $this->loadViewsFrom(__DIR__.'/../../../resources/views/', 'victory.core');
+
+        // Core Providers
+        $this->app->register('VictoryCms\Core\Providers\RouteServiceProvider');
+        $this->app->register('VictoryCms\Core\Providers\ComposerServiceProvider');
+        $this->app->register('VictoryCms\Core\Providers\HeroesServiceProvider');
+
+        // External Providers
+        $this->app->register('Zizaco\Entrust\EntrustServiceProvider');
+        $this->app->register('TwigBridge\ServiceProvider');
 	}
 
     /**
