@@ -44,16 +44,7 @@ class PackageServiceProvider extends ServiceProvider
             return new Victory($app);
         });
 
-        // Bind the CMS scopes
-        $this->app->singleton(
-            'VictoryCms\Core\Contracts\Scope\Backend',
-            'VictoryCms\Core\Scopes\Backend'
-        );
 
-        $this->app->singleton(
-            'VictoryCms\Core\Contracts\Scope\Frontend',
-            'VictoryCms\Core\Scopes\Frontend'
-        );
 	}
 
     /**
