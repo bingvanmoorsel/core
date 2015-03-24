@@ -61,7 +61,6 @@ class PackageServiceProvider extends ServiceProvider
         $this->app->register('TwigBridge\ServiceProvider');
         $this->app->register('Zizaco\Entrust\EntrustServiceProvider');
 
-
         $loader = AliasLoader::getInstance();
         $loader->alias('TwigBridge\Facade\Twig', 'Twig');
         $loader->alias('Zizaco\Entrust\EntrustFacade', 'Entrust');

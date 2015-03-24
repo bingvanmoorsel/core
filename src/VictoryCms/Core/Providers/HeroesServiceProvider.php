@@ -27,12 +27,12 @@ class HeroesServiceProvider extends ServiceProvider
             Config::set('auth.table', 'victory_heroes');
             Config::set('auth.model', 'Hero');
 
-            Config::set('entrust.role', 'App\Role');
-            Config::set('entrust.permission', 'App\Permission');
+            Config::set('entrust.role', 'Zizaco\Entrust\EntrustRole');
+            Config::set('entrust.permission', 'Zizaco\Entrust\EntrustPermission');
             Config::set('entrust.roles_table', 'victory_roles');
             Config::set('entrust.permissions_table', 'victory_permissions');
             Config::set('entrust.permission_role_table', 'victory_permission_role');
-            Config::set('entrust.role_user_table', 'victory_role_user');
+            Config::set('entrust.role_user_table', 'victory_role_hero');
         }
     }
 }
