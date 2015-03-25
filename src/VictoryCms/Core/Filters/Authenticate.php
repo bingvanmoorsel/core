@@ -2,18 +2,40 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Redirect;
 
-class Authenticate {
-
+/**
+ * Class Authenticate
+ * @package VictoryCms\Core\Filters
+ */
+class Authenticate
+{
+    /**
+     * @var Guard
+     */
     protected $auth;
 
-    public function __construct(Guard $auth)
+    /**
+     * @var Redirector
+     */
+    protected $redirector;
+
+    /**
+     * @param Guard $auth
+     */
+    public function __construct(Guard $auth, Redirector $redirector)
     {
         $this->auth = $auth;
+        $this->redirector = $redirector;
     }
 
+    /**
+     * @param Route $route
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function filter(Route $route, Request $request)
     {
         if(!$request->is('victory/login'))
@@ -24,10 +46,8 @@ class Authenticate {
                 {
                     return response('Unauthorized.', 401);
                 }
-                else
-                {
-                    return Redirect::route('victory.auth.login');
-                }
+
+                return $this->redirector->route('victory.auth.login');
             }
         }
     }

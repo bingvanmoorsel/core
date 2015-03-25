@@ -26,23 +26,21 @@ class RouteServiceProvider extends ServiceProvider
         $router->get('victory', [
             'as' => 'victory.auth.home',
             'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@index'
-            ]);
+        ]);
 
         $router->get('victory/login', [
             'as' => 'victory.auth.login',
             'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@getLogin'
-            ]);
+        ]);
 
-        $router->post('victory/login',
-            [
-                'as' => 'victory.auth.login',
-                'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@postLogin'
-            ]);
+        $router->post('victory/login', [
+            'as' => 'victory.auth.login',
+            'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@postLogin'
+        ]);
 
         $router->get('victory/logout', [
-                'as' => 'victory.auth.logout',
-                'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@getLogout'
-            ]);
-
+            'as' => 'victory.auth.logout',
+            'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@getLogout'
+        ]);
     }
 }
