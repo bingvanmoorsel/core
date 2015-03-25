@@ -31,7 +31,7 @@ class LoginController extends Controller
 
     public function postLogin(LoginRequest $request)
     {
-        \Auth::login(Hero::find(1));
+        \Auth::attempt(['email' => $request->input()['email'], 'password' => $request->input()['password']]);
 
         return Redirect::route('victory.auth.home');
     }
