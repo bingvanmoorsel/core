@@ -24,7 +24,7 @@ class Submit extends Input
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.submit', [
+        return (string) view('resource.form.elements.submit', [
             'attributes' => $this->buildAttributes()
         ]);
     }

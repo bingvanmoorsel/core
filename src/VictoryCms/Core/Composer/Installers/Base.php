@@ -6,8 +6,8 @@ use Composer\Util\Filesystem;
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
 use Composer\Repository\InstalledRepositoryInterface;
-use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Console\Kernel;
 use VictoryCms\Core\PackageServiceProvider;
 use VictoryCms\Core\Victory;
 
@@ -49,24 +49,20 @@ abstract class Base extends LibraryInstaller
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
 
+        $basePath = realpath($this->vendorDir . DIRECTORY_SEPARATOR . '..');
+
         // Require the composer autoloader
-        require $this->vendorDir.'/../bootstrap/autoload.php';
+        require $basePath.'/bootstrap/autoload.php';
 
         /** @var Application $app */
-        $app = require $this->vendorDir.'/../bootstrap/app.php';
+        $app = require $basePath.'/bootstrap/app.php';
 
-        $app->bootstrapWith([
-            'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-            'Illuminate\Foundation\Bootstrap\LoadConfiguration',
-            'Illuminate\Foundation\Bootstrap\ConfigureLogging',
-            'Illuminate\Foundation\Bootstrap\HandleExceptions',
-            'Illuminate\Foundation\Bootstrap\RegisterFacades',
-            'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-            'Illuminate\Foundation\Bootstrap\RegisterProviders'
-        ]);
+        /** @var Kernel $kernel */
+        $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
+
+        $kernel->bootstrap();
 
         $app->register(PackageServiceProvider::class);
-        $app->boot();
 
         return $app;
     }
@@ -117,7 +113,9 @@ abstract class Base extends LibraryInstaller
 
         $this->io->write('['.get_class($provider).'] -> <info>'.$method.'</info>');
 
-        if(!method_exists($provider, $method)) return false;
+        if(!method_exists($provider, $method)) {
+            return false;
+        }
 
         return self::$app->call([$provider, $method], $parameters);
     }
@@ -140,7 +138,7 @@ abstract class Base extends LibraryInstaller
 
         // Make sure the class exists
         if(!class_exists($class)) {
-            require $this->vendorDir.'/'.$name.'/src/'.$namespace.'/PackageServiceProvider.php';
+            require_once $this->vendorDir.'/'.$name.'/src/'.$namespace.'/PackageServiceProvider.php';
         }
 
         return new $class(self::$app);

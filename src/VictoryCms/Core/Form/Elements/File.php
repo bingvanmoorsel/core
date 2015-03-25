@@ -20,8 +20,8 @@ class File extends Input
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.file', [
-            'attributes' => \Html::attributes($this->attributes)
+        return (string) view('resource.form.elements.file', [
+            'attributes' => $this->buildAttributes()
         ]);
     }
 }

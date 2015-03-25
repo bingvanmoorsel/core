@@ -25,8 +25,8 @@ class Reset extends Input
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.reset', [
-            'attributes' => \Html::attributes($this->getAttributes())
+        return (string) view('resource.form.elements.reset', [
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

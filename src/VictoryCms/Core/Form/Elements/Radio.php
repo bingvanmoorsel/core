@@ -37,6 +37,7 @@ class Radio extends Input implements Checkable
 
     /**
      * @param Element $parent
+     * @return void
      */
     public function register(Element $parent)
     {
@@ -77,8 +78,8 @@ class Radio extends Input implements Checkable
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.radio', [
-            'attributes' => \Html::attributes($this->getAttributes())
+        return (string) view('resource.form.elements.radio', [
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

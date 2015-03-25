@@ -86,7 +86,7 @@ class Select extends Element
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.select', [
+        return (string) view('resource.form.elements.select', [
             'attributes' => $this->buildAttributes(),
             'options'    => $this->getOptions(),
             'selected'   => $this->getValue(),

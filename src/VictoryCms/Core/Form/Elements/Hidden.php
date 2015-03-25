@@ -21,8 +21,8 @@ class Hidden extends Input
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.hidden', [
-            'attributes' => \Html::attributes($this->attributes)
+        return (string) view('resource.form.elements.hidden', [
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

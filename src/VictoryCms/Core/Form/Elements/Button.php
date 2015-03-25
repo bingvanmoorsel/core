@@ -25,7 +25,7 @@ class Button extends Input
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.button', [
+        return (string) view('resource.form.elements.button', [
             'attributes' => $this->buildAttributes()
         ]);
     }

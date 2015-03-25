@@ -21,7 +21,7 @@ class Text extends Input
      */
     public function render()
     {
-        return (string) view('victory.resource.form.elements.text', [
+        return (string) view('resource.form.elements.text', [
             'attributes' => $this->buildAttributes()
         ]);
     }
