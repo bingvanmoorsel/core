@@ -4,8 +4,7 @@ use VictoryCms\Core\Form\Contracts\Form;
 use VictoryCms\Core\Form\Elements\Element;
 
 /**
- * Class ChildTrait
- * @package VictoryCms\Core\Form\Traits
+ * Class ChildTrait.
  */
 trait ChildTrait
 {
@@ -29,6 +28,7 @@ trait ChildTrait
 
     /**
      * @param Element $parent
+     *
      * @return Element
      */
     public function setParent(Element $parent)
@@ -41,13 +41,13 @@ trait ChildTrait
      */
     public function getForm()
     {
-        if($this->form) {
+        if ($this->form) {
             return $this->form;
         }
 
         $element = $this;
 
-        while(!(($element = $element->getParent()) instanceof Form));
+        while (!(($element = $element->getParent()) instanceof Form));
 
         return $this->form = $element;
     }

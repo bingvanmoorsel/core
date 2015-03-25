@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Redirect;
 use VictoryCms\Core\Http\Requests\LoginRequest;
 use VictoryCms\Core\Models\Hero;
 
-class LoginController extends Controller {
-
+class LoginController extends Controller
+{
     protected $auth, $user;
 
     public function __construct()
     {
-//        $user = new Hero();
+        //        $user = new Hero();
 //        $user->first_name = 'Bing';
 //        $user->last_name = 'van Moorsel';
 //        $user->email = 'bvanmoorsel@swis.nl';
@@ -32,13 +32,14 @@ class LoginController extends Controller {
     public function postLogin(LoginRequest $request)
     {
         \Auth::login(Hero::find(1));
+
         return Redirect::route('victory.auth.home');
     }
 
     public function getLogout()
     {
         \Auth::logout();
+
         return Redirect::route('victory.auth.login');
     }
-
 }

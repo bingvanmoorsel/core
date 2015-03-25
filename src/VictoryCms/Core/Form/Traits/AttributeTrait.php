@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Form\Traits;
 
 /**
- * Class AttributesTrait
- * @package VictoryCms\Core\Form\Traits
+ * Class AttributesTrait.
  */
 trait AttributeTrait
 {
@@ -21,12 +20,13 @@ trait AttributeTrait
 
     /**
      * @param string $key
-     * @param null $default
+     * @param null   $default
+     *
      * @return mixed
      */
     public function getAttribute($key, $default = null)
     {
-        if($this->hasGetMutator($key)) {
+        if ($this->hasGetMutator($key)) {
             return $this->{'get'.studly_case($key).'Attribute'}($key);
         }
 
@@ -35,6 +35,7 @@ trait AttributeTrait
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public function hasGetMutator($key)
@@ -48,7 +49,7 @@ trait AttributeTrait
      */
     public function setAttribute($key, $value)
     {
-        if($this->hasSetMutator($key)) {
+        if ($this->hasSetMutator($key)) {
             return $this->{'set'.studly_case($key).'Attribute'}($value);
         }
 
@@ -57,6 +58,7 @@ trait AttributeTrait
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public function hasSetMutator($key)
@@ -69,7 +71,7 @@ trait AttributeTrait
      */
     public function setAttributes(array $attributes)
     {
-        foreach($attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             $this->setAttribute($key, $value);
         }
     }
@@ -84,11 +86,12 @@ trait AttributeTrait
         // For numeric keys we will assume that the key and the value are the same
         // as this will convert HTML attributes such as "required" to a correct
         // form like required="required" instead of using incorrect numerics.
-        foreach ((array) $this->attributes as $key => $value)
-        {
+        foreach ((array) $this->attributes as $key => $value) {
             $element = $this->buildAttribute($key, $value);
 
-            if ( ! is_null($element)) $html[] = $element;
+            if (! is_null($element)) {
+                $html[] = $element;
+            }
         }
 
         return count($html) > 0 ? ' '.implode(' ', $html) : '';
@@ -96,18 +99,24 @@ trait AttributeTrait
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return string
      */
     protected function buildAttribute($key, $value)
     {
-        if (is_numeric($key)) $key = $value;
+        if (is_numeric($key)) {
+            $key = $value;
+        }
 
-        if ( ! is_null($value)) return $key.'="'.e($value).'"';
+        if (! is_null($value)) {
+            return $key.'="'.e($value).'"';
+        }
     }
 
     /**
      * @param string $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -117,7 +126,7 @@ trait AttributeTrait
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set($key, $value)
     {

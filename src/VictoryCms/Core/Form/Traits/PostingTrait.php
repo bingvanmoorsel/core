@@ -1,14 +1,13 @@
 <?php namespace VictoryCms\Core\Form\Traits;
 
-/**
+/*
  * Class PostingTrait
  * @package VictoryCms\Core\Form\Traits
  */
 use Illuminate\Session\SessionManager;
 
 /**
- * Class PostingTrait
- * @package VictoryCms\Core\Form\Traits
+ * Class PostingTrait.
  */
 trait PostingTrait
 {
@@ -37,15 +36,16 @@ trait PostingTrait
 
     /**
      * @param null $default
+     *
      * @return mixed
      */
     protected function determineValue($default = null)
     {
-        if(($old = $this->getOldValue()) !== null) {
+        if (($old = $this->getOldValue()) !== null) {
             return $old;
         }
 
-        if(($value = $this->getModelAttribute()) !== null) {
+        if (($value = $this->getModelAttribute()) !== null) {
             return $value;
         }
 
@@ -54,15 +54,16 @@ trait PostingTrait
 
     /**
      * @param null $default
+     *
      * @return mixed|null
      */
     protected function getModelAttribute($default = null)
     {
-        if(is_object($this->model)) {
+        if (is_object($this->model)) {
             return object_get($this->model, $this->transformKey($this->name));
         }
 
-        if(is_array($this->model)) {
+        if (is_array($this->model)) {
             return array_get($this->model, $this->transformKey($this->name));
         }
 

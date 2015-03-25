@@ -4,8 +4,7 @@ use VictoryCms\Core\Form\Contracts\Element;
 use VictoryCms\Core\Form\Contracts\Behavior\Posting;
 
 /**
- * Class GroupTrait
- * @package VictoryCms\Core\Form\Traits
+ * Class GroupTrait.
  */
 trait GroupTrait
 {
@@ -16,13 +15,14 @@ trait GroupTrait
 
     /**
      * @param Element $element
+     *
      * @return Posting|Element
      */
     public function add(Element $element)
     {
         $element->register($this);
 
-        if($element instanceof Posting) {
+        if ($element instanceof Posting) {
             return $this->elements[$element->getName()] = $element;
         }
 
@@ -32,6 +32,7 @@ trait GroupTrait
     /**
      * @param $name
      * @param null $default
+     *
      * @return mixed
      */
     public function find($name, $default = null)

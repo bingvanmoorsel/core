@@ -1,15 +1,14 @@
 <?php namespace VictoryCms\Core\Form\Elements;
 
 /**
- * Class Button
- * @package VictoryCms\Core\Form\Elements
+ * Class Button.
  */
 class Button extends Input
 {
     /**
      * @param string $name
-     * @param null $value
-     * @param array $attributes
+     * @param null   $value
+     * @param array  $attributes
      */
     public function __construct($name = 'button', $value = null, array $attributes = [])
     {

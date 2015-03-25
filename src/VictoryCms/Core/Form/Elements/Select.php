@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Collection;
 
 /**
- * Class Select
- * @package VictoryCms\Core\Form\Elements
+ * Class Select.
  */
 class Select extends Element
 {
@@ -28,9 +27,9 @@ class Select extends Element
 
     /**
      * @param string $name
-     * @param mixed $options
-     * @param null $selected
-     * @param array $attributes
+     * @param mixed  $options
+     * @param null   $selected
+     * @param array  $attributes
      */
     public function __construct($name, $options = [], $selected = null,  array $attributes = [])
     {
@@ -53,18 +52,19 @@ class Select extends Element
     }
 
     /**
-     * @param mixed $source
+     * @param mixed  $source
      * @param string $value
      * @param string $key
+     *
      * @return $this
      */
     public function populate($source, $value = null, $key = 'id')
     {
-        if($source instanceof QueryBuilder || $source instanceof EloquentBuilder) {
+        if ($source instanceof QueryBuilder || $source instanceof EloquentBuilder) {
             $source = $source->first();
         }
 
-        if($source instanceof Collection) {
+        if ($source instanceof Collection) {
             $source = $source->lists($value, $key);
         }
 

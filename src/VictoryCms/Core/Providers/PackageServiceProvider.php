@@ -6,8 +6,7 @@ use VictoryCms\Core\Contracts\Installer;
 use VictoryCms\Core\Models\Package;
 
 /**
- * Class PackageServiceProvider
- * @package VictoryCms\Core\Providers
+ * Class PackageServiceProvider.
  */
 abstract class PackageServiceProvider extends ServiceProvider implements Installer
 {
@@ -18,7 +17,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
 
     /**
      * @param Application $app
-     * @param Package $model
+     * @param Package     $model
      */
     public function __construct(Application $app, Package $model)
     {
@@ -33,7 +32,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
     public function routes(\Closure $callback)
     {
         return $this->app['router']->group([
-            'prefix' => 'victory/'.$this->model->name
+            'prefix' => 'victory/'.$this->model->name,
         ], $callback);
     }
 
@@ -69,7 +68,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
         /** @var Migrator $migrator */
         $migrator = $this->app->make('Illuminate\Database\Migrations\Migrator');
 
-        $migrator->run($this->databasePath() . DIRECTORY_SEPARATOR . 'migrations', $pretend);
+        $migrator->run($this->databasePath().DIRECTORY_SEPARATOR.'migrations', $pretend);
     }
 
     /**
@@ -77,7 +76,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
      */
     protected function databasePath()
     {
-        return $this->basePath() . DIRECTORY_SEPARATOR . 'database';
+        return $this->basePath().DIRECTORY_SEPARATOR.'database';
     }
 
     /**
@@ -85,7 +84,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
      */
     protected function resourcePath()
     {
-        return $this->basePath() . DIRECTORY_SEPARATOR . 'resources';
+        return $this->basePath().DIRECTORY_SEPARATOR.'resources';
     }
 
     /**
@@ -93,7 +92,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
      */
     protected function configPath()
     {
-        return $this->basePath() . DIRECTORY_SEPARATOR . 'config';
+        return $this->basePath().DIRECTORY_SEPARATOR.'config';
     }
 
     /**

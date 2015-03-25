@@ -10,18 +10,14 @@ class HeroesServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        \Auth::extend('eloquent.hero', function($app)
-        {
+        \Auth::extend('eloquent.hero', function ($app) {
             return new HeroGuard(new EloquentUserProvider($app['hash'], Hero::class), $app['session.store']);
         });
 
-        if ($this->app['request']->is('victory*'))
-        {
+        if ($this->app['request']->is('victory*')) {
             Config::set('auth.driver', 'eloquent.hero');
             Config::set('auth.table', 'victory_heroes');
             Config::set('auth.model', 'Hero');

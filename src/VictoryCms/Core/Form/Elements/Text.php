@@ -1,14 +1,13 @@
 <?php namespace VictoryCms\Core\Form\Elements;
 
 /**
- * Class Text
- * @package VictoryCms\Core\Form\Elements
+ * Class Text.
  */
 class Text extends Input
 {
     /**
      * @param array $name
-     * @param null $value
+     * @param null  $value
      * @param array $attributes
      */
     public function __construct($name, $value = null, array $attributes = [])

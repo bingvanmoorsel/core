@@ -5,8 +5,7 @@ use Composer\Repository\InstalledRepositoryInterface;
 use VictoryCms\Core\Models\Package as Model;
 
 /**
- * Class Package
- * @package VictoryCms\Core\Composer\Installers
+ * Class Package.
  */
 class Package extends Base
 {
@@ -17,6 +16,7 @@ class Package extends Base
 
     /**
      * @param string $type
+     *
      * @return bool
      */
     public function supports($type)
@@ -26,7 +26,7 @@ class Package extends Base
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $package
+     * @param PackageInterface             $package
      */
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
@@ -37,8 +37,8 @@ class Package extends Base
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $initial
-     * @param PackageInterface $target
+     * @param PackageInterface             $initial
+     * @param PackageInterface             $target
      */
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
@@ -49,7 +49,7 @@ class Package extends Base
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $package
+     * @param PackageInterface             $package
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
@@ -60,12 +60,13 @@ class Package extends Base
 
     /**
      * @param PackageInterface $package
+     *
      * @return mixed
      */
     public function packageSave(PackageInterface $package)
     {
         $record = Model::firstOrNew([
-            'name' => $package->getPrettyName()
+            'name' => $package->getPrettyName(),
         ]);
 
         $record->version = $package->getPrettyVersion();
@@ -80,6 +81,7 @@ class Package extends Base
 
     /**
      * @param PackageInterface $package
+     *
      * @return mixed
      */
     public function packageDelete(PackageInterface $package)

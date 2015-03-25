@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Form\Elements;
 
 /**
- * Class Password
- * @package VictoryCms\Core\Form\Elements
+ * Class Password.
  */
 class Password extends Input
 {

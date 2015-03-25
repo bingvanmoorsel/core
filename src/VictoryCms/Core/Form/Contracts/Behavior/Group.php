@@ -3,13 +3,13 @@
 use VictoryCms\Core\Form\Contracts\Element;
 
 /**
- * Interface Group
- * @package VictoryCms\Core\Form\Contracts\Behavior
+ * Interface Group.
  */
 interface Group
 {
     /**
      * @param Element $element
+     *
      * @return Element
      */
     public function add(Element $element);
@@ -17,6 +17,7 @@ interface Group
     /**
      * @param $name
      * @param null $default
+     *
      * @return Element
      */
     public function find($name, $default = null);

@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Form\Contracts;
 
 /**
- * Interface Input
- * @package VictoryCms\Core\Form\Contracts
+ * Interface Input.
  */
 interface Input extends Element
 {

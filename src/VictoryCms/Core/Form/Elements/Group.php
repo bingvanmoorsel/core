@@ -5,8 +5,7 @@ use VictoryCms\Core\Form\Traits\ChildTrait;
 use VictoryCms\Core\Form\Traits\GroupTrait;
 
 /**
- * Class Group
- * @package VictoryCms\Core\Form\Elements
+ * Class Group.
  */
 class Group extends Element
 {
@@ -20,7 +19,7 @@ class Group extends Element
 
     /**
      * @param callable $callback
-     * @param array $attributes
+     * @param array    $attributes
      */
     public function __construct(\Closure $callback, array $attributes = [])
     {

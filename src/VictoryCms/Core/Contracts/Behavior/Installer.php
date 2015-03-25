@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Contracts;
 
 /**
- * Interface Installer
- * @package VictoryCms\Core\Contracts
+ * Interface Installer.
  */
 interface Installer
 {

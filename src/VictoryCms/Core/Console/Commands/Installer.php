@@ -3,12 +3,10 @@
 use Illuminate\Console\Command;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use VictoryCms\Core\Models\Package;
 
 /**
- * Class Install
- * @package VictoryCms\Core\Console\Commands
+ * Class Install.
  */
 class Installer extends Command
 {
@@ -36,8 +34,7 @@ class Installer extends Command
         $action  = strtolower($this->argument('action'));
         $package = strtolower($this->argument('package'));
 
-        switch($action)
-        {
+        switch ($action) {
             case 'install':
                 $this->install($package);
                 break;
@@ -51,12 +48,13 @@ class Installer extends Command
                 break;
 
             default:
-                $this->error('Invalid action: ' . $action);
+                $this->error('Invalid action: '.$action);
         }
     }
 
     /**
      * @param $package
+     *
      * @return mixed
      */
     protected function install($package)
@@ -66,6 +64,7 @@ class Installer extends Command
 
     /**
      * @param $package
+     *
      * @return mixed
      */
     protected function update($package)
@@ -84,18 +83,22 @@ class Installer extends Command
     /**
      * @param ServiceProvider $provider
      * @param $method
-     * @param array $parameters
+     * @param array           $parameters
+     *
      * @return mixed
      */
     protected function invoke(ServiceProvider $provider, $method, $parameters = [])
     {
-        if(!method_exists($provider, $method)) return;
+        if (!method_exists($provider, $method)) {
+            return;
+        }
 
         call_user_func_array([$provider, $method], $parameters);
     }
 
     /**
      * @param $package
+     *
      * @return bool
      */
     protected function resolve($package)
@@ -103,13 +106,15 @@ class Installer extends Command
         list($vendor, $project) = explode('/', $package);
 
         // Get the package namespace
-        $namespace = studly_case($vendor) . '\\' . studly_case($project);
+        $namespace = studly_case($vendor).'\\'.studly_case($project);
 
         // Build the provider class name
         $class = sprintf('%s\%s', $namespace, 'PackageServiceProvider');
 
         // Make sure the class exists
-        if(!class_exists($class)) return false;
+        if (!class_exists($class)) {
+            return false;
+        }
 
         return new $class($this->laravel);
     }

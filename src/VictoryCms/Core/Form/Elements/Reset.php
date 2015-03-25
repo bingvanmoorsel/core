@@ -1,15 +1,14 @@
 <?php namespace VictoryCms\Core\Form\Elements;
 
 /**
- * Class Reset
- * @package VictoryCms\Core\Form\Elements
+ * Class Reset.
  */
 class Reset extends Input
 {
     /**
      * @param string $name
-     * @param null $value
-     * @param array $attributes
+     * @param null   $value
+     * @param array  $attributes
      */
     public function __construct($name = null, $value = null, array $attributes = [])
     {

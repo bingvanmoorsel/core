@@ -3,8 +3,7 @@
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class Package
- * @package VictoryCms\Core
+ * Class Package.
  */
 class Package extends Model
 {
@@ -22,7 +21,7 @@ class Package extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'version', 'source'
+        'name', 'version', 'source',
     ];
 
     /**
@@ -55,6 +54,6 @@ class Package extends Model
      */
     public function getProviderAttribute()
     {
-        return studly_case($this->vendor) . '\\' . studly_case($this->project) . '\\PackageServiceProvider';
+        return studly_case($this->vendor).'\\'.studly_case($this->project).'\\PackageServiceProvider';
     }
 }

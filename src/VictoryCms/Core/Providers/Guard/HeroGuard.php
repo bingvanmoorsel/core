@@ -3,8 +3,7 @@
 use Illuminate\Auth\Guard;
 
 /**
- * Class HeroGuard
- * @package VictoryCms\Core\Providers\Guard
+ * Class HeroGuard.
  */
 class HeroGuard extends Guard
 {
