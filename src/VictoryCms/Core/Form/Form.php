@@ -215,7 +215,7 @@ class Form extends Element implements Contract
      */
     public function render()
     {
-        return (string) view('resource.form.base', [
+        return (string) view('victory.core::resource.form.base', [
             'attributes' => $this->buildAttributes(),
             'elements'   => $this->getElements(),
         ]);

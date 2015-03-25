@@ -1,1 +1,0 @@
-<label{!! $attributes !!}>{{ $label }}</label>

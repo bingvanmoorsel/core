@@ -1,0 +1,5 @@
+<select {{ attributes|raw }}>
+    {% for value, label in options %}
+        <option {% if value == selected %} selected="selected" {% endif %} value="{{ value }}">{{ label }}</option>
+    {% endfor %}
+</select>

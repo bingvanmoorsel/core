@@ -40,7 +40,7 @@ class Label extends Element
      */
     public function render()
     {
-        return (string) view('resource.form.elements.label', [
+        return (string) view('victory.core::resource.form.elements.label', [
             'attributes' => $this->buildAttributes(),
             'label'      => $this->label,
         ]);

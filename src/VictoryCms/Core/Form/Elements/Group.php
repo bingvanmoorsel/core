@@ -44,7 +44,7 @@ class Group extends Element
      */
     public function render()
     {
-        return (string) view('resource.form.elements.group', [
+        return (string) view('victory.core::resource.form.elements.group', [
             'attributes' => $this->buildAttributes(),
             'elements'   => $this->getElements(),
         ]);

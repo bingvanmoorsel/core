@@ -77,7 +77,7 @@ class Checkbox extends Input implements Checkable
      */
     public function render()
     {
-        return (string) view('resource.form.elements.checkbox', [
+        return (string) view('victory.core::resource.form.elements.checkbox', [
             'attributes' => $this->buildAttributes()
         ]);
     }

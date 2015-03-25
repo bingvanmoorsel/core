@@ -78,7 +78,7 @@ class Radio extends Input implements Checkable
      */
     public function render()
     {
-        return (string) view('resource.form.elements.radio', [
+        return (string) view('victory.core::resource.form.elements.radio', [
             'attributes' => $this->buildAttributes(),
         ]);
     }

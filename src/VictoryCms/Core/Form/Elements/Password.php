@@ -20,7 +20,7 @@ class Password extends Input
      */
     public function render()
     {
-        return (string) view('resource.form.elements.password', [
+        return (string) view('victory.core::resource.form.elements.password', [
             'attributes' => $this->buildAttributes(),
         ]);
     }

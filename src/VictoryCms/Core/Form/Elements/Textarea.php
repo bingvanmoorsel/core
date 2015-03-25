@@ -49,7 +49,7 @@ class Textarea extends Element
      */
     public function render()
     {
-        return (string) view('resource.form.elements.textarea', [
+        return (string) view('victory.core::resource.form.elements.textarea', [
             'attributes' => $this->buildAttributes(),
             'value'      => $this->getValue()
         ]);
