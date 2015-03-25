@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: bvanmoorsel
- * Date: 17-3-2015
- * Time: 15:29
- */
-
-namespace VictoryCms\Core\Providers;
+<?php namespace VictoryCms\Core\Providers;
 
 
 use Illuminate\Contracts\Foundation\Application;
