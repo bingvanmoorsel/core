@@ -1,4 +1,4 @@
-<?php namespace VictoryCms\Core\Contracts;
+<?php namespace VictoryCms\Core\Contracts\Behavior;
 
 /**
  * Interface Installer.
