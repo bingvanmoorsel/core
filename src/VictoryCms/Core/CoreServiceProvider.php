@@ -107,9 +107,10 @@ class CoreServiceProvider extends ServiceProvider
             '--path' => 'vendor/victory-cms/core/database/migrations',
         ]);
 
-        Artisan::call('db:seed', [
-            '--class' => 'VictoryDatabaseSeeder',
-        ]);
+        // TODO: fix for seeding on intsall.
+//        Artisan::call('db:seed', [
+//            '--class' => 'VictoryDatabaseSeeder',
+//        ]);
 
         touch($storage.'/installed');
     }
