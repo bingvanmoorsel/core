@@ -65,7 +65,7 @@ class Plugin extends Base
      */
     protected function process(PackageInterface $package, $hook)
     {
-        $provider = $this->resolve($package, self::PROVIDER, [self::app]);
+        $provider = $this->resolve($package, self::PROVIDER, [self::$app]);
 
         $this->call($provider, $hook);
     }
