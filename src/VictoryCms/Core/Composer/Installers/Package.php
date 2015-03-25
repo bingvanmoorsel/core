@@ -96,7 +96,7 @@ class Package extends Base
             $model->source  = $package->getSourceUrl();
 
             // Resolve the service provider
-            $provider = $this->resolve($package, self::PROVIDER, [self::app, $model]);
+            $provider = $this->resolve($package, self::PROVIDER, [self::$app, $model]);
 
             $callback = $callback->bindTo($this);
             $callback($provider, $model);
