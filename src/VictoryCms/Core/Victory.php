@@ -34,6 +34,8 @@ class Victory
     public function __construct(Application $app)
     {
         $this->app = $app;
+
+        $this->storagePath = storage_path('victory');
     }
 
     /**
@@ -63,5 +65,13 @@ class Victory
     public function routes($name, Closure $closure)
     {
         return \Route::group(['prefix' => 'victory/'.$name], $closure);
+    }
+
+    /**
+     * @return string
+     */
+    public function storagePath()
+    {
+        return $this->storagePath;
     }
 }
