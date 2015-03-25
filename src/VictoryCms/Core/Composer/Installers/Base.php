@@ -8,7 +8,7 @@ use Composer\Installer\LibraryInstaller;
 use Composer\Repository\InstalledRepositoryInterface;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel;
-use VictoryCms\Core\PackageServiceProvider;
+use VictoryCms\Core\CoreServiceProvider;
 use VictoryCms\Core\Victory;
 
 /**
@@ -62,7 +62,7 @@ abstract class Base extends LibraryInstaller
 
         $kernel->bootstrap();
 
-        $app->register(PackageServiceProvider::class);
+        $app->register(CoreServiceProvider::class);
 
         return $app;
     }
@@ -124,7 +124,7 @@ abstract class Base extends LibraryInstaller
      * @param PackageInterface $package
      * @return bool
      */
-    protected function resolve(PackageInterface $package)
+    protected function resolve(PackageInterface $package, $provider = 'PackageServiceProvider')
     {
         $name = $package->getPrettyName();
 
@@ -134,11 +134,11 @@ abstract class Base extends LibraryInstaller
         $namespace = studly_case($vendor) . '\\' . studly_case($project);
 
         // Build the provider class name
-        $class = sprintf('%s\%s', $namespace, 'PackageServiceProvider');
+        $class = sprintf('%s\%s', $namespace, $provider);
 
         // Make sure the class exists
         if(!class_exists($class)) {
-            require_once $this->vendorDir.'/'.$name.'/src/'.$namespace.'/PackageServiceProvider.php';
+            require_once $this->vendorDir.'/'.$name.'/src/'.$namespace.'/'.$provider.'.php';
         }
 
         return new $class(self::$app);

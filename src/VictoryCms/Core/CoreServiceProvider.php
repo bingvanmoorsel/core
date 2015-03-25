@@ -2,16 +2,16 @@
 
 use Artisan;
 use Illuminate\Bus\Dispatcher;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ClassLoader;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class CoreServiceProvider
  * @package VictoryCms\Core
  */
-class PackageServiceProvider extends ServiceProvider
+class CoreServiceProvider extends ServiceProvider
 {
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -27,6 +27,9 @@ class PackageServiceProvider extends ServiceProvider
         'VictoryCms\Core\Console\Commands\Installer'
     ];
 
+    /**
+     * @var array
+     */
     protected $providers =[
         'VictoryCms\Core\Providers\RouteServiceProvider',
         'VictoryCms\Core\Providers\ComposerServiceProvider',

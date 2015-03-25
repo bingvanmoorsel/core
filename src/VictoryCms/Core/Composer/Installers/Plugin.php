@@ -55,4 +55,14 @@ class Plugin extends Base
     {
         return $package->getPrettyName() === self::NAME;
     }
+
+    /**
+     * @param PackageInterface $package
+     * @param string $provider
+     * @return bool
+     */
+    protected function resolve(PackageInterface $package, $provider = 'CoreServiceProvider')
+    {
+        return parent::resolve($package, $provider);
+    }
 }
