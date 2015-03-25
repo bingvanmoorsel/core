@@ -48,7 +48,9 @@ class PackageServiceProvider extends ServiceProvider
             return new Victory($app);
         });
 
-        $this->loadViewsFrom(__DIR__.'/../../../resources/views/', 'victory.core');
+        foreach($this->providers as $provider) {
+            $this->app->register($provider);
+        }
 
         // Autoload the workbench folder
         if(is_dir($path = base_path('workbench'))) {
@@ -66,6 +68,8 @@ class PackageServiceProvider extends ServiceProvider
             $this->app->call([$this, 'install']);
         }
 
+        $this->loadViewsFrom(__DIR__.'/../../../resources/views/', 'victory.core');
+
         // Register and boot all the Victory packages
         // We simulate the Laravel registration process
         $providers = [];
@@ -78,7 +82,7 @@ class PackageServiceProvider extends ServiceProvider
 
             // Run the register logic
             $provider->register();
-        };
+        }
 
         // Run the provider boot logic
         foreach($providers as $provider) {
