@@ -4,13 +4,13 @@ use VictoryCms\Core\Form\Contracts\Behavior\Group;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Interface Form
- * @package VictoryCms\Core\Form\Contracts
+ * Interface Form.
  */
 interface Form extends Element, Group
 {
     /**
      * @param array $options
+     *
      * @return Form
      */
     public function options(array $options);

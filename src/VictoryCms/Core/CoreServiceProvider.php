@@ -8,29 +8,28 @@ use VictoryCms\Core\Models\Package;
 use Illuminate\Contracts\Foundation\Application;
 
 /**
- * Class CoreServiceProvider
- * @package VictoryCms\Core
+ * Class CoreServiceProvider.
  */
 class CoreServiceProvider extends ServiceProvider
 {
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
     /**
      * @var array
      */
     protected $commands = [
-        'VictoryCms\Core\Console\Commands\Installer'
+        'VictoryCms\Core\Console\Commands\Installer',
     ];
 
     /**
      * @var array
      */
-    protected $providers =[
+    protected $providers = [
         'VictoryCms\Core\Providers\RouteServiceProvider',
         'VictoryCms\Core\Providers\ComposerServiceProvider',
         'VictoryCms\Core\Providers\HeroesServiceProvider',
@@ -38,36 +37,35 @@ class CoreServiceProvider extends ServiceProvider
         'TwigBridge\ServiceProvider',
     ];
 
-    /**	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the service provider.
+     */
+    public function register()
+    {
         $this->commands($this->commands);
 
         // Bind the main entry point of Victory CMS
-        $this->app->singleton('victory', function(Application $app) {
+        $this->app->singleton('victory', function (Application $app) {
             return new Victory($app);
         });
 
-        foreach($this->providers as $provider) {
+        foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
 
         // Autoload the workbench folder
-        if(is_dir($path = base_path('workbench'))) {
+        if (is_dir($path = base_path('workbench'))) {
             ClassLoader::addDirectories(compact($path));
         }
-	}
+    }
 
     /**
-     * @param Victory $victory
+     * @param Victory    $victory
      * @param Dispatcher $dispatcher
      */
     public function boot(Victory $victory, Dispatcher $dispatcher)
     {
-        if(!$victory->isInstalled()) {
+        if (!$victory->isInstalled()) {
             $this->app->call([$this, 'install']);
         }
 
@@ -78,7 +76,7 @@ class CoreServiceProvider extends ServiceProvider
         $providers = [];
 
         // Create the provider instances
-        foreach(Package::all() as $package) {
+        foreach (Package::all() as $package) {
 
             // Instantiate the package provider
             $providers[] = $provider = new $package->provider($this->app, $package);
@@ -88,8 +86,8 @@ class CoreServiceProvider extends ServiceProvider
         }
 
         // Run the provider boot logic
-        foreach($providers as $provider) {
-            if(method_exists($provider, 'boot')) {
+        foreach ($providers as $provider) {
+            if (method_exists($provider, 'boot')) {
                 $this->app->call([$provider, 'boot']);
             }
         }
@@ -102,12 +100,12 @@ class CoreServiceProvider extends ServiceProvider
     {
         $storage = $victory->storagePath();
 
-        if(!is_dir($storage)) {
+        if (!is_dir($storage)) {
             mkdir($storage, 0777);
         }
 
         Artisan::call('migrate', [
-            '--path' => 'vendor/victory-cms/core/database/migrations'
+            '--path' => 'vendor/victory-cms/core/database/migrations',
         ]);
 
         touch($storage.'/installed');
@@ -121,13 +119,13 @@ class CoreServiceProvider extends ServiceProvider
         echo '[CORE UPDATE]';
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return ['victory'];
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['victory'];
+    }
 }

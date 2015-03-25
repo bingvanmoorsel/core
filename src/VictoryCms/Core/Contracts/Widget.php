@@ -1,9 +1,8 @@
 <?php namespace VictoryCms\Core\Contracts;
 
 /**
- * Interface Widget
- * @package VictoryCms\Core\Contracts
+ * Interface Widget.
  */
-interface Widget extends Component {
-
+interface Widget extends Component
+{
 }

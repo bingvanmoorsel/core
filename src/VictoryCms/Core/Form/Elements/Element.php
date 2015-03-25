@@ -4,8 +4,7 @@ use VictoryCms\Core\Form\Contracts\Element as Contract;
 use VictoryCms\Core\Form\Traits\AttributeTrait;
 
 /**
- * Class Element
- * @package VictoryCms\Core\Form\Elements
+ * Class Element.
  */
 abstract class Element implements Contract
 {
@@ -27,12 +26,14 @@ abstract class Element implements Contract
 
     /**
      * @param Contract $parent
+     *
+     * @return void
      */
     public function register(Contract $parent)
     {
         $method = 'setParent';
 
-        if(method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
             $this->{$method}($parent);
         }
     }
@@ -40,13 +41,13 @@ abstract class Element implements Contract
     /**
      * @return mixed
      */
-    abstract function render();
+    abstract public function render();
 
     /**
      * @return string
      */
     public function __toString()
     {
-        return (string)$this->render();
+        return (string) $this->render();
     }
 }

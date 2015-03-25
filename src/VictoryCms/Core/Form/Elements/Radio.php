@@ -4,8 +4,7 @@ use VictoryCms\Core\Form\Contracts\Behavior\Checkable;
 use VictoryCms\Core\Form\Contracts\Element;
 
 /**
- * Class Radio
- * @package VictoryCms\Core\Form\Elements
+ * Class Radio.
  */
 class Radio extends Input implements Checkable
 {
@@ -21,9 +20,9 @@ class Radio extends Input implements Checkable
 
     /**
      * @param string $name
-     * @param null $value
-     * @param bool $checked
-     * @param array $attributes
+     * @param null   $value
+     * @param bool   $checked
+     * @param array  $attributes
      */
     public function __construct($name, $value = null, $checked = false, array $attributes = [])
     {
@@ -37,6 +36,7 @@ class Radio extends Input implements Checkable
 
     /**
      * @param Element $parent
+     *
      * @return void
      */
     public function register(Element $parent)
@@ -47,18 +47,19 @@ class Radio extends Input implements Checkable
         // input are missing, use the initial state of the element
         $this->checked = $this->determineIsChecked($this->initialState);
 
-        if($this->checked) {
+        if ($this->checked) {
             $this->setAttribute('checked', 'checked');
         }
     }
 
     /**
      * @param bool $default
+     *
      * @return bool|mixed
      */
     protected function determineIsChecked($default = false)
     {
-        if($this->getOldValue() == $this->initialValue) {
+        if ($this->getOldValue() == $this->initialValue) {
             return true;
         }
 
@@ -66,7 +67,7 @@ class Radio extends Input implements Checkable
     }
 
     /**
-     *
+     * @return bool
      */
     public function isChecked()
     {

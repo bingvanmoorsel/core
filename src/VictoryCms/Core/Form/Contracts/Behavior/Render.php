@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Form\Contracts\Behavior;
 
 /**
- * Interface Render
- * @package VictoryCms\Core\Form\Contracts\Behavior
+ * Interface Render.
  */
 interface Render
 {

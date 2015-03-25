@@ -1,10 +1,10 @@
 <?php namespace VictoryCms\Core\Form\Elements;
+
 use VictoryCms\Core\Form\Traits\ChildTrait;
 use VictoryCms\Core\Form\Contracts\Element as Contract;
 
 /**
- * Class Label
- * @package VictoryCms\Core\Form\Elements
+ * Class Label.
  */
 class Label extends Element
 {
@@ -18,7 +18,7 @@ class Label extends Element
     /**
      * @param string $for
      * @param string $label
-     * @param array $attributes
+     * @param array  $attributes
      */
     public function __construct($for, $label, array $attributes = [])
     {
@@ -30,7 +30,7 @@ class Label extends Element
     /**
      * @param Contract $parent
      */
-    function register(Contract $parent)
+    public function register(Contract $parent)
     {
         $this->setParent($parent);
     }

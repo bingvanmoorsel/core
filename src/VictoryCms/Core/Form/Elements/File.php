@@ -1,14 +1,13 @@
 <?php namespace VictoryCms\Core\Form\Elements;
 
 /**
- * Class File
- * @package VictoryCms\Core\Form\Elements
+ * Class File.
  */
 class File extends Input
 {
     /**
      * @param string $name
-     * @param array $attributes
+     * @param array  $attributes
      */
     public function __construct($name, array $attributes = [])
     {
@@ -21,7 +20,7 @@ class File extends Input
     public function render()
     {
         return (string) view('resource.form.elements.file', [
-            'attributes' => $this->buildAttributes()
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

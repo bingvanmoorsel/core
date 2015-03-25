@@ -4,8 +4,7 @@ use VictoryCms\Core\Form\Contracts\Element;
 use VictoryCms\Core\Form\Contracts\Form;
 
 /**
- * Interface Child
- * @package VictoryCms\Core\Form\Contracts\Behavior
+ * Interface Child.
  */
 interface Child
 {
@@ -16,7 +15,6 @@ interface Child
 
     /**
      * @param Element $parent
-     * @return void
      */
     public function setParent(Element $parent);
 
@@ -27,7 +25,6 @@ interface Child
 
     /**
      * @param Form $form
-     * @return void
      */
     public function setForm(Form $form);
 }

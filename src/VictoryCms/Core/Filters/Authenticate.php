@@ -4,11 +4,9 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Redirect;
 
 /**
- * Class Authenticate
- * @package VictoryCms\Core\Filters
+ * Class Authenticate.
  */
 class Authenticate
 {
@@ -32,18 +30,16 @@ class Authenticate
     }
 
     /**
-     * @param Route $route
+     * @param Route   $route
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function filter(Route $route, Request $request)
     {
-        if(!$request->is('victory/login'))
-        {
-            if ($this->auth->guest())
-            {
-                if ($request->ajax())
-                {
+        if (!$request->is('victory/login')) {
+            if ($this->auth->guest()) {
+                if ($request->ajax()) {
                     return response('Unauthorized.', 401);
                 }
 

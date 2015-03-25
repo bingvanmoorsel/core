@@ -1,12 +1,10 @@
 <?php namespace VictoryCms\Core\Composer\Installers;
 
-
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 
 /**
- * Class Plugin
- * @package VictoryCms\Core\Composer\Installers
+ * Class Plugin.
  */
 class Plugin extends Base
 {
@@ -17,6 +15,7 @@ class Plugin extends Base
 
     /**
      * @param string $type
+     *
      * @return bool
      */
     public function supports($type)
@@ -26,29 +25,34 @@ class Plugin extends Base
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $initial
-     * @param PackageInterface $target
+     * @param PackageInterface             $initial
+     * @param PackageInterface             $target
      */
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
-        if(!$this->isCore($initial)) return;
+        if (!$this->isCore($initial)) {
+            return;
+        }
 
         parent::update($repo, $initial, $target);
     }
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $package
+     * @param PackageInterface             $package
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        if(!$this->isCore($package)) return;
+        if (!$this->isCore($package)) {
+            return;
+        }
 
         parent::uninstall($repo, $package);
     }
 
     /**
      * @param PackageInterface $package
+     *
      * @return bool
      */
     protected function isCore(PackageInterface $package)
@@ -58,7 +62,8 @@ class Plugin extends Base
 
     /**
      * @param PackageInterface $package
-     * @param string $provider
+     * @param string           $provider
+     *
      * @return bool
      */
     protected function resolve(PackageInterface $package, $provider = 'CoreServiceProvider')

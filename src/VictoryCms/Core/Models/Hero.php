@@ -9,12 +9,13 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
- * Class Hero
- * @package VictoryCms\Core\Models
+ * Class Hero.
  */
 class Hero extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait;
+    use Authenticatable;
+    use CanResetPassword;
+    use EntrustUserTrait;
 
     /**
      * @var string

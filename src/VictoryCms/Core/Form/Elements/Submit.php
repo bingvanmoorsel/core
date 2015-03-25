@@ -1,13 +1,12 @@
 <?php namespace VictoryCms\Core\Form\Elements;
 
 /**
- * Class Submit
- * @package VictoryCms\Core\Form\Elements
+ * Class Submit.
  */
 class Submit extends Input
 {
     /**
-     * @param null $value
+     * @param null  $value
      * @param array $attributes
      */
     public function __construct($name = null, $value = null, array $attributes = [])
@@ -25,7 +24,7 @@ class Submit extends Input
     public function render()
     {
         return (string) view('resource.form.elements.submit', [
-            'attributes' => $this->buildAttributes()
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

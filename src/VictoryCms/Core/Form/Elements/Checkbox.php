@@ -4,8 +4,7 @@ use VictoryCms\Core\Form\Contracts\Behavior\Checkable;
 use VictoryCms\Core\Form\Contracts\Element;
 
 /**
- * Class Checkbox
- * @package VictoryCms\Core\Form\Elements
+ * Class Checkbox.
  */
 class Checkbox extends Input implements Checkable
 {
@@ -20,10 +19,10 @@ class Checkbox extends Input implements Checkable
     protected $initialState;
 
     /**
-     * @param string $name
-     * @param mixed $value
+     * @param string  $name
+     * @param mixed   $value
      * @param boolean $checked
-     * @param array $attributes
+     * @param array   $attributes
      */
     public function __construct($name, $value = 1, $checked = false, array $attributes = [])
     {
@@ -37,6 +36,8 @@ class Checkbox extends Input implements Checkable
 
     /**
      * @param Element $parent
+     *
+     * @return void
      */
     public function register(Element $parent)
     {
@@ -46,18 +47,19 @@ class Checkbox extends Input implements Checkable
         // input are missing, use the initial state of the element
         $this->checked = $this->determineIsChecked($this->initialState);
 
-        if($this->checked) {
+        if ($this->checked) {
             $this->setAttribute('checked', 'checked');
         }
     }
 
     /**
      * @param bool $default
+     *
      * @return bool|mixed
      */
     protected function determineIsChecked($default = false)
     {
-        if($this->getOldValue() == $this->initialValue) {
+        if ($this->getOldValue() == $this->initialValue) {
             return true;
         }
 
@@ -65,7 +67,7 @@ class Checkbox extends Input implements Checkable
     }
 
     /**
-     *
+     * @return bool
      */
     public function isChecked()
     {
@@ -78,7 +80,7 @@ class Checkbox extends Input implements Checkable
     public function render()
     {
         return (string) view('resource.form.elements.checkbox', [
-            'attributes' => $this->buildAttributes()
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

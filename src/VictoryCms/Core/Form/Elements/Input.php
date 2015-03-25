@@ -6,8 +6,7 @@ use VictoryCms\Core\Form\Traits\ChildTrait;
 use VictoryCms\Core\Form\Traits\PostingTrait;
 
 /**
- * Class Input
- * @package VictoryCms\Core\Form\Elements
+ * Class Input.
  */
 class Input extends Element implements InputContract
 {
@@ -27,7 +26,7 @@ class Input extends Element implements InputContract
     /**
      * @param array $type
      * @param $name
-     * @param null $value
+     * @param null  $value
      * @param array $attributes
      */
     public function __construct($type, $name, $value = null, array $attributes = [])
@@ -71,7 +70,7 @@ class Input extends Element implements InputContract
     public function render()
     {
         return (string) view('resource.form.elements.partials.input', [
-            'attributes' => $this->buildAttributes()
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

@@ -2,12 +2,9 @@
 
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Collection;
-use VictoryCms\Core\Scopes\Scope;
 
 /**
- * Class Victory
- * @package VictoryCms\Core
+ * Class Victory.
  */
 class Victory
 {
@@ -81,7 +78,6 @@ class Victory
     {
         return self::PACKAGE;
     }
-
 
     public function routes($name, Closure $closure)
     {

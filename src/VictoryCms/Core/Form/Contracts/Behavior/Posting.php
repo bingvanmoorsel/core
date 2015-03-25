@@ -1,8 +1,7 @@
 <?php namespace VictoryCms\Core\Form\Contracts\Behavior;
 
 /**
- * Interface Posting
- * @package VictoryCms\Core\Form\Contracts\Behavior
+ * Interface Posting.
  */
 interface Posting
 {

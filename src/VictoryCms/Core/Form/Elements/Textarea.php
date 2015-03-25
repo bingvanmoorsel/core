@@ -5,8 +5,7 @@ use VictoryCms\Core\Form\Traits\PostingTrait;
 use VictoryCms\Core\Form\Traits\ChildTrait;
 
 /**
- * Class Textarea
- * @package VictoryCms\Core\Form\Elements
+ * Class Textarea.
  */
 class Textarea extends Element
 {
@@ -17,8 +16,8 @@ class Textarea extends Element
 
     /**
      * @param string $name
-     * @param null $value
-     * @param array $attributes
+     * @param null   $value
+     * @param array  $attributes
      */
     public function __construct($name, $value = null, array $attributes = [])
     {
@@ -51,7 +50,7 @@ class Textarea extends Element
     {
         return (string) view('resource.form.elements.textarea', [
             'attributes' => $this->buildAttributes(),
-            'value'      => $this->getValue()
+            'value'      => $this->getValue(),
         ]);
     }
 }

@@ -7,13 +7,12 @@ use VictoryCms\Core\Composer\Installers\Plugin as PluginInstaller;
 use VictoryCms\Core\Composer\Installers\Package as PackageInstaller;
 
 /**
- * Class Plugin
- * @package VictoryCms\Core
+ * Class Plugin.
  */
 class Plugin implements PluginInterface
 {
     /**
-     * @param Composer $composer
+     * @param Composer    $composer
      * @param IOInterface $io
      */
     public function activate(Composer $composer, IOInterface $io)

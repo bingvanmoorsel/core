@@ -12,8 +12,7 @@ use VictoryCms\Core\CoreServiceProvider;
 use VictoryCms\Core\Victory;
 
 /**
- * Class Base
- * @package VictoryCms\Core\Composer\Installers
+ * Class Base.
  */
 abstract class Base extends LibraryInstaller
 {
@@ -29,9 +28,9 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param IOInterface $io
-     * @param Composer $composer
-     * @param string $type
-     * @param Filesystem $filesystem
+     * @param Composer    $composer
+     * @param string      $type
+     * @param Filesystem  $filesystem
      */
     public function __construct(IOInterface $io, Composer $composer, $type = 'library', Filesystem $filesystem = null)
     {
@@ -49,7 +48,7 @@ abstract class Base extends LibraryInstaller
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
 
-        $basePath = realpath($this->vendorDir . DIRECTORY_SEPARATOR . '..');
+        $basePath = realpath($this->vendorDir.DIRECTORY_SEPARATOR.'..');
 
         // Require the composer autoloader
         require $basePath.'/bootstrap/autoload.php';
@@ -69,7 +68,7 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $package
+     * @param PackageInterface             $package
      */
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
@@ -80,8 +79,8 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $initial
-     * @param PackageInterface $target
+     * @param PackageInterface             $initial
+     * @param PackageInterface             $target
      */
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
@@ -92,7 +91,7 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface $package
+     * @param PackageInterface             $package
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
@@ -104,7 +103,8 @@ abstract class Base extends LibraryInstaller
     /**
      * @param PackageInterface $package
      * @param $method
-     * @param array $parameters
+     * @param array            $parameters
+     *
      * @return mixed
      */
     protected function call(PackageInterface $package, $method, $parameters = [])
@@ -113,7 +113,7 @@ abstract class Base extends LibraryInstaller
 
         $this->io->write('['.get_class($provider).'] -> <info>'.$method.'</info>');
 
-        if(!method_exists($provider, $method)) {
+        if (!method_exists($provider, $method)) {
             return false;
         }
 
@@ -122,6 +122,7 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param PackageInterface $package
+     *
      * @return bool
      */
     protected function resolve(PackageInterface $package, $provider = 'PackageServiceProvider')
@@ -131,13 +132,13 @@ abstract class Base extends LibraryInstaller
         list($vendor, $project) = explode('/', $name);
 
         // Get the package namespace
-        $namespace = studly_case($vendor) . '\\' . studly_case($project);
+        $namespace = studly_case($vendor).'\\'.studly_case($project);
 
         // Build the provider class name
         $class = sprintf('%s\%s', $namespace, $provider);
 
         // Make sure the class exists
-        if(!class_exists($class)) {
+        if (!class_exists($class)) {
             require_once $this->vendorDir.'/'.$name.'/src/'.$namespace.'/'.$provider.'.php';
         }
 
