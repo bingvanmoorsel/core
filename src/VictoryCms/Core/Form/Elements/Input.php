@@ -70,7 +70,7 @@ class Input extends Element implements InputContract
     public function render()
     {
         return (string) view('victory.core::resource.form.elements.partials.input', [
-            'attributes' => $this->buildAttributes()
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

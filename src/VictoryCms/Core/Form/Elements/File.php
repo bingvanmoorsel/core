@@ -20,7 +20,7 @@ class File extends Input
     public function render()
     {
         return (string) view('victory.core::resource.form.elements.file', [
-            'attributes' => $this->buildAttributes()
+            'attributes' => $this->buildAttributes(),
         ]);
     }
 }

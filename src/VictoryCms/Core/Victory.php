@@ -24,9 +24,9 @@ class Victory
     protected $app;
 
     /**
-     * @var string
+     * @var
      */
-    protected $storagePath;
+    protected $installed;
 
     /**
      * @param Application $app
@@ -34,17 +34,14 @@ class Victory
     public function __construct(Application $app)
     {
         $this->app = $app;
-
-        $this->storagePath = $this->app->storagePath().'/victory';
-        $this->corePath    = $this->app->basePath().'/vendor/'.self::PACKAGE;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function version()
+    public function getPackages()
     {
-        return self::VERSION;
+        return $this->app['victory.packages'];
     }
 
     /**
@@ -52,33 +49,17 @@ class Victory
      */
     public function isInstalled()
     {
-        return file_exists($this->storagePath.'/installed');
+        if ($this->installed !== null) {
+            return $this->installed;
+        }
+
+        return $this->installed = file_exists(storage_path('victory/installed'));
     }
 
     /**
-     * @return string
+     * @param $name
+     * @param callable $closure
      */
-    public function storagePath()
-    {
-        return $this->storagePath;
-    }
-
-    /**
-     * @return string
-     */
-    public function corePath()
-    {
-        return $this->corePath;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPackageName()
-    {
-        return self::PACKAGE;
-    }
-
     public function routes($name, Closure $closure)
     {
         return \Route::group(['prefix' => 'victory/'.$name], $closure);

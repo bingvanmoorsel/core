@@ -5,7 +5,6 @@ use Composer\IO\IOInterface;
 use Composer\Util\Filesystem;
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
-use Composer\Repository\InstalledRepositoryInterface;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel;
 use VictoryCms\Core\CoreServiceProvider;
@@ -67,65 +66,28 @@ abstract class Base extends LibraryInstaller
     }
 
     /**
-     * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface             $package
-     */
-    public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
-    {
-        parent::install($repo, $package);
-
-        $this->call($package, 'install');
-    }
-
-    /**
-     * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface             $initial
-     * @param PackageInterface             $target
-     */
-    public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
-    {
-        parent::update($repo, $initial, $target);
-
-        $this->call($initial, 'update');
-    }
-
-    /**
-     * @param InstalledRepositoryInterface $repo
-     * @param PackageInterface             $package
-     */
-    public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
-    {
-        parent::uninstall($repo, $package);
-
-        $this->call($package, 'destroy');
-    }
-
-    /**
-     * @param PackageInterface $package
+     * @param $object
      * @param $method
      * @param array            $parameters
      *
      * @return mixed
      */
-    protected function call(PackageInterface $package, $method, $parameters = [])
+    protected function call($object, $method, $parameters = [])
     {
-        $provider = $this->resolve($package);
-
-        $this->io->write('['.get_class($provider).'] -> <info>'.$method.'</info>');
-
-        if (!method_exists($provider, $method)) {
+        if (!method_exists($object, $method)) {
             return false;
         }
 
-        return self::$app->call([$provider, $method], $parameters);
+        return self::$app->call([$object, $method], $parameters);
     }
 
     /**
      * @param PackageInterface $package
+     * @param string           $class
      *
-     * @return bool
+     * @return mixed
      */
-    protected function resolve(PackageInterface $package, $provider = 'PackageServiceProvider')
+    protected function resolve(PackageInterface $package, $class, $params = [])
     {
         $name = $package->getPrettyName();
 
@@ -135,13 +97,26 @@ abstract class Base extends LibraryInstaller
         $namespace = studly_case($vendor).'\\'.studly_case($project);
 
         // Build the provider class name
-        $class = sprintf('%s\%s', $namespace, $provider);
+        $class = sprintf('%s\%s', $namespace, $class);
 
         // Make sure the class exists
         if (!class_exists($class)) {
-            require_once $this->vendorDir.'/'.$name.'/src/'.$namespace.'/'.$provider.'.php';
+            $file = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $class);
+
+            require_once $this->vendorDir.'/'.$name.'/src/'.$file.'.php';
         }
 
-        return new $class(self::$app);
+        return $this->instantiate($class, $params);
+    }
+
+    /**
+     * @param $class
+     * @param array $params
+     *
+     * @return object
+     */
+    protected function instantiate($class, $params = [])
+    {
+        return (new \ReflectionClass($class))->newInstanceArgs($params);
     }
 }

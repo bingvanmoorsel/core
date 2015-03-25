@@ -20,7 +20,7 @@ class Hero extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @var string
      */
-    protected $table = 'victory_heroes';
+    protected $table = 'heroes';
 
     /**
      * @param $password

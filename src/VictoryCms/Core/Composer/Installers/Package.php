@@ -3,6 +3,7 @@
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use VictoryCms\Core\Models\Package as Model;
+use VictoryCms\Core\Providers\PackageServiceProvider;
 
 /**
  * Class Package.
@@ -13,6 +14,11 @@ class Package extends Base
      *
      */
     const SUPPORTS = 'victory-package';
+
+    /**
+     *
+     */
+    const PROVIDER = 'PackageServiceProvider';
 
     /**
      * @param string $type
@@ -32,7 +38,16 @@ class Package extends Base
     {
         parent::install($repo, $package);
 
-        $this->packageSave($package);
+        $this->process($package, function (PackageServiceProvider $provider, Model $model) use ($package) {
+
+            // Bind the release date of he package to the model
+            $model->released_at = $package->getReleaseDate()->format('Y-m-d H:i:s');
+
+            // Call the provider install hook
+            $this->call($provider, 'install');
+
+            $model->save();
+        });
     }
 
     /**
@@ -44,7 +59,13 @@ class Package extends Base
     {
         parent::update($repo, $initial, $target);
 
-        $this->packageSave($target);
+        $this->process($initial, function (PackageServiceProvider $provider, Model $model) {
+
+            // Call the provider update hook
+            $this->call($provider, 'update');
+
+            $model->save();
+        });
     }
 
     /**
@@ -55,37 +76,32 @@ class Package extends Base
     {
         parent::uninstall($repo, $package);
 
-        $this->packageDelete($package);
+        $this->process($package, function (PackageServiceProvider $provider, Model $model) {
+            $model->delete();
+        });
     }
 
     /**
      * @param PackageInterface $package
-     *
-     * @return mixed
+     * @param callable         $callback
      */
-    public function packageSave(PackageInterface $package)
+    public function process(PackageInterface $package, \Closure $callback = null)
     {
-        $record = Model::firstOrNew([
-            'name' => $package->getPrettyName(),
-        ]);
+        try {
+            $model = Model::firstOrNew([
+                'name' => $package->getPrettyName(),
+            ]);
 
-        $record->version = $package->getPrettyVersion();
-        $record->source  = $package->getSourceUrl();
+            $model->version = $package->getPrettyVersion();
+            $model->source  = $package->getSourceUrl();
 
-        // Format the release date
-        $record->released_at = $package->getReleaseDate()
-            ->format('Y-m-d H:i:s');
+            // Resolve the service provider
+            $provider = $this->resolve($package, self::PROVIDER, [self::app, $model]);
 
-        return $record->save();
-    }
-
-    /**
-     * @param PackageInterface $package
-     *
-     * @return mixed
-     */
-    public function packageDelete(PackageInterface $package)
-    {
-        return Model::where('name', $package->getPrettyName())->delete();
+            $callback = $callback->bindTo($this);
+            $callback($provider, $model);
+        } catch (\Exception $error) {
+            $this->io->writeError($error->getMessage());
+        }
     }
 }

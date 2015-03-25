@@ -10,7 +10,7 @@ class Package extends Model
     /**
      * @var string
      */
-    protected $table = 'victory_packages';
+    protected $table = 'packages';
 
     /**
      * @var bool

@@ -2,10 +2,8 @@
 
 use Artisan;
 use Illuminate\Bus\Dispatcher;
-use Illuminate\Support\ClassLoader;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
-use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class CoreServiceProvider.
@@ -44,18 +42,19 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->commands($this->commands);
 
+        $victory = new Victory($this->app);
+
         // Bind the main entry point of Victory CMS
-        $this->app->singleton('victory', function (Application $app) {
-            return new Victory($app);
+        $this->app->instance('victory', $victory);
+
+        $this->app->singleton('victory.packages', function () {
+            return Package::all();
         });
 
-        foreach ($this->providers as $provider) {
-            $this->app->register($provider);
-        }
-
-        // Autoload the workbench folder
-        if (is_dir($path = base_path('workbench'))) {
-            ClassLoader::addDirectories(compact($path));
+        if ($victory->isInstalled()) {
+            foreach ($this->providers as $provider) {
+                $this->app->register($provider);
+            }
         }
     }
 
@@ -76,7 +75,7 @@ class CoreServiceProvider extends ServiceProvider
         $providers = [];
 
         // Create the provider instances
-        foreach (Package::all() as $package) {
+        foreach ($victory->getPackages() as $package) {
 
             // Instantiate the package provider
             $providers[] = $provider = new $package->provider($this->app, $package);
@@ -116,7 +115,15 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function update()
     {
-        echo '[CORE UPDATE]';
+        return;
+    }
+
+    /**
+     *
+     */
+    public function destroy()
+    {
+        return;
     }
 
     /**

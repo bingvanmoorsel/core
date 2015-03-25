@@ -67,14 +67,29 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
     {
         /** @var Migrator $migrator */
         $migrator = $this->app->make('Illuminate\Database\Migrations\Migrator');
-
         $migrator->run($this->databasePath().DIRECTORY_SEPARATOR.'migrations', $pretend);
+    }
+
+    /**
+     * @param Package $model
+     */
+    public function setModel(Package $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return Package
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
      * @return string
      */
-    protected function databasePath()
+    public function databasePath()
     {
         return $this->basePath().DIRECTORY_SEPARATOR.'database';
     }
@@ -82,7 +97,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
     /**
      * @return string
      */
-    protected function resourcePath()
+    public function resourcePath()
     {
         return $this->basePath().DIRECTORY_SEPARATOR.'resources';
     }
@@ -90,7 +105,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
     /**
      * @return string
      */
-    protected function configPath()
+    public function configPath()
     {
         return $this->basePath().DIRECTORY_SEPARATOR.'config';
     }
@@ -98,7 +113,7 @@ abstract class PackageServiceProvider extends ServiceProvider implements Install
     /**
      * @return string
      */
-    protected function basePath()
+    public function basePath()
     {
         return base_path('vendor/'.$this->model->name);
     }

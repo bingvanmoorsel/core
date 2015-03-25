@@ -14,6 +14,11 @@ class Plugin extends Base
     const SUPPORTS = 'composer-plugin';
 
     /**
+     *
+     */
+    const PROVIDER = 'CoreServiceProvider';
+
+    /**
      * @param string $type
      *
      * @return bool
@@ -30,11 +35,13 @@ class Plugin extends Base
      */
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
-        if (!$this->isCore($initial)) {
+        if ($initial->getPrettyName() === self::NAME) {
             return;
         }
 
         parent::update($repo, $initial, $target);
+
+        $this->process($initial, 'update');
     }
 
     /**
@@ -43,31 +50,23 @@ class Plugin extends Base
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        if (!$this->isCore($package)) {
+        if ($package->getPrettyName() === self::NAME) {
             return;
         }
 
         parent::uninstall($repo, $package);
+
+        $this->process($package, 'destroy');
     }
 
     /**
      * @param PackageInterface $package
-     *
-     * @return bool
+     * @param $hook
      */
-    protected function isCore(PackageInterface $package)
+    protected function process(PackageInterface $package, $hook)
     {
-        return $package->getPrettyName() === self::NAME;
-    }
+        $provider = $this->resolve($package, self::PROVIDER, [self::app]);
 
-    /**
-     * @param PackageInterface $package
-     * @param string           $provider
-     *
-     * @return bool
-     */
-    protected function resolve(PackageInterface $package, $provider = 'CoreServiceProvider')
-    {
-        return parent::resolve($package, $provider);
+        $this->call($provider, $hook);
     }
 }
