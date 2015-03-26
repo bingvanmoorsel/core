@@ -56,6 +56,11 @@ class CoreServiceProvider extends ServiceProvider
                 $this->app->register($provider);
             }
         }
+
+        //publish public files to victory-cms folder
+        $this->publishes([
+            __DIR__.'/../../../public' => public_path('/victory-cms'),
+        ], 'public');
     }
 
     /**
@@ -90,17 +95,6 @@ class CoreServiceProvider extends ServiceProvider
                 $this->app->call([$provider, 'boot']);
             }
         }
-
-
-        //publish public files to victory-cms folder
-        $this->publishes([
-            __DIR__.'/../../../public' => public_path('/victory-cms'),
-        ], 'public');
-
-        // publish seed
-        $this->publishes([
-            __DIR__.'/../../../database/seeds' => base_path('database/seeds'),
-        ], 'public');
     }
 
     /**
@@ -118,9 +112,10 @@ class CoreServiceProvider extends ServiceProvider
             '--path' => 'vendor/victory-cms/core/database/migrations',
         ]);
 
-        Artisan::call('vendor:publish');
+        // Publishcing
+        Artisan::call('vendor:publish --provider="VictoryCms\Core\CoreServiceProvider"');
 
-        // TODO: fix for seeding on intsall.
+        // Seeding the database.
         Artisan::call('db:seed', [
             '--class' => 'VictoryCms\Core\Seeds\VictoryDatabaseSeeder',
         ]);
