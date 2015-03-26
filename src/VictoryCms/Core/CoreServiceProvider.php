@@ -113,7 +113,9 @@ class CoreServiceProvider extends ServiceProvider
         ]);
 
         // Publishcing
-        Artisan::call('vendor:publish --provider="VictoryCms\Core\CoreServiceProvider"');
+        Artisan::call('vendor:publish', [
+            '--provider="VictoryCms\Core\CoreServiceProvider"'
+        ]);
 
         // Seeding the database.
         Artisan::call('db:seed', [
