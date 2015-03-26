@@ -17,27 +17,19 @@ class RouteServiceProvider extends ServiceProvider
     {
         //        $router->whenRegex('/victory(?!\/login).*/i', 'victory.auth');
 
-        $router->filter('victory.auth', 'VictoryCms\Core\Filters\Authenticate');
+//        $router->filter('victory.auth', 'VictoryCms\Core\Filters\Authenticate');
         $router->when('victory*', 'victory.auth');
 
-        $router->get('victory', [
-            'as' => 'victory.auth.home',
-            'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@index',
-        ]);
+        $router->group([
+            'namespace' => 'VictoryCms\Core\Http\Controllers',
+            'prefix' => 'victory'
+        ], function(Router $router){
+            $router->get('/', ['as'   => 'victory.auth.home', 'uses' => 'LoginController@index']);
+            $router->get('login', ['as'   => 'victory.auth.login', 'uses' => 'LoginController@getLogin']);
+            $router->post('login', ['as' => 'victory.auth.login', 'uses' => 'LoginController@postLogin']);
+            $router->get('logout', ['as' => 'victory.auth.logout', 'uses' => 'LoginController@getLogout']);
 
-        $router->get('victory/login', [
-            'as' => 'victory.auth.login',
-            'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@getLogin',
-        ]);
-
-        $router->post('victory/login', [
-            'as' => 'victory.auth.login',
-            'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@postLogin',
-        ]);
-
-        $router->get('victory/logout', [
-            'as' => 'victory.auth.logout',
-            'uses' => 'VictoryCms\Core\Http\Controllers\LoginController@getLogout',
-        ]);
+            $router->get('test', 'PackageController@index');
+        });
     }
 }

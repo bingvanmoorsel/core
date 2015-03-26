@@ -2,13 +2,12 @@
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use VictoryCms\Core\Contracts\Behavior\Installer;
 use VictoryCms\Core\Models\Package;
 
 /**
  * Class PackageServiceProvider.
  */
-abstract class PackageServiceProvider extends ServiceProvider implements Installer
+abstract class PackageServiceProvider extends ServiceProvider
 {
     /**
      * @var Package
