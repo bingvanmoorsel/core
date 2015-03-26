@@ -1,8 +1,12 @@
 <?php namespace VictoryCms\Core\Providers;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
+use VictoryCms\Core\Seeds\VictoryDatabaseSeeder;
 
 /**
  * Class PackageServiceProvider.
@@ -62,11 +66,40 @@ abstract class PackageServiceProvider extends ServiceProvider
     /**
      * @param bool $pretend
      */
-    protected function migrate($pretend = false)
+    public function migrate($pretend = false)
     {
         /** @var Migrator $migrator */
         $migrator = $this->app->make('Illuminate\Database\Migrations\Migrator');
         $migrator->run($this->databasePath().DIRECTORY_SEPARATOR.'migrations', $pretend);
+    }
+
+    /**
+     *
+     */
+    public function publish($force = false)
+    {
+        $provider = get_called_class();
+
+        /** @var \Illuminate\Contracts\Console\Application $artisan */
+        $artisan = $this->app->make('artisan');
+
+        $artisan->call('vendor:publish', [
+            '--provider' => $provider,
+            '--force' => $force
+        ]);
+    }
+
+    /**
+     * @param string|array $seeder
+     */
+    public function seed($seeder)
+    {
+        $seeders = (array)$seeder;
+
+        /** @var Seeder $seeder */
+        foreach($seeders as $seeder) {
+            $seeder->run();
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 <form{{ attributes|raw }}>
     {% for element in elements %}
-        {{ element.render()|raw }}
+        {{ element|raw }}
     {% endfor %}
 </form>

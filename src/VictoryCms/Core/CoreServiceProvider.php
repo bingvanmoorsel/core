@@ -40,8 +40,6 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands($this->commands);
-
         $victory = new Victory($this->app);
 
         // Bind the main entry point of Victory CMS
@@ -51,10 +49,10 @@ class CoreServiceProvider extends ServiceProvider
             return Package::all();
         });
 
-        if ($victory->isInstalled()) {
-            foreach ($this->providers as $provider) {
-                $this->app->register($provider);
-            }
+        if(!$victory->isInstalled()) return;
+
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
         }
 
         //publish public files to victory-cms folder
@@ -73,7 +71,10 @@ class CoreServiceProvider extends ServiceProvider
             $this->app->call([$this, 'install']);
         }
 
+        $this->commands($this->commands);
+
         $this->loadViewsFrom(__DIR__.'/../../../resources/views/', 'victory.core');
+        $this->loadTranslationsFrom(__DIR__.'/../../../resources/lang/', 'victory.core');
 
         // Register and boot all the Victory packages
         // We simulate the Laravel registration process
