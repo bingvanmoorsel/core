@@ -1,4 +1,5 @@
 <?php namespace VictoryCms\Core\Seeds;
+
 use Illuminate\Database\Seeder;
 use VictoryCms\Core\Models\Hero;
 
@@ -6,7 +7,7 @@ class VictoryDatabaseSeeder extends Seeder {
 
     public function run()
     {
-        $this->call('HeroTableSeeder');
+        $this->call('VictoryCms\Core\Seeds\HeroTableSeeder');
     }
 }
 
