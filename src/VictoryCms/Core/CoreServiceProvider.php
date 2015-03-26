@@ -121,9 +121,9 @@ class CoreServiceProvider extends ServiceProvider
         Artisan::call('vendor:publish');
 
         // TODO: fix for seeding on intsall.
-        Artisan::call('db:seed', [
-            '--class' => 'VictoryDatabaseSeeder',
-        ]);
+//        Artisan::call('db:seed', [
+//            '--class' => 'VictoryDatabaseSeeder',
+//        ]);
 
         touch($storage.'/installed');
     }
