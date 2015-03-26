@@ -1,4 +1,4 @@
-<?php namespace VictoryCms\
+<?php
 use Illuminate\Database\Seeder;
 use VictoryCms\Core\Models\Hero;
 
