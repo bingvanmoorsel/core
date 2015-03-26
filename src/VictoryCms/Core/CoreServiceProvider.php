@@ -122,7 +122,7 @@ class CoreServiceProvider extends ServiceProvider
 
         // TODO: fix for seeding on intsall.
         Artisan::call('db:seed', [
-            '--class' => 'VictoryCms/Core/Seeds/VictoryDatabaseSeeder',
+            '--class' => 'VictoryCms\Core\Seeds\VictoryDatabaseSeeder',
         ]);
 
         touch($storage.'/installed');
