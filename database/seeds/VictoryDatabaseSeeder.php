@@ -17,7 +17,7 @@ class HeroTableSeeder extends Seeder
         $admin = new Hero();
         $admin->first_name = 'Admin';
         $admin->last_name = '';
-        $admin->email = 'test@admin.nl';
+        $admin->email = 'admin@admin.com';
         $admin->password = 'tobattle';
         $admin->save();
     }

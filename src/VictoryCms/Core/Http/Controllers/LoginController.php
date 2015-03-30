@@ -1,8 +1,14 @@
 <?php namespace VictoryCms\Core\Http\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Redirect;
 use VictoryCms\Core\Http\Requests\LoginRequest;
+use VictoryCms\Core\Resources\Form;
+use VictoryCms\Core\Resources\Form\Elements\Group;
+use VictoryCms\Core\Resources\Form\Elements\Label;
+use VictoryCms\Core\Resources\Form\Elements\Password;
+use VictoryCms\Core\Resources\Form\Elements\Submit;
+use VictoryCms\Core\Resources\Form\Elements\Text;
 
 /**
  * Class LoginController.
@@ -32,28 +38,47 @@ class LoginController extends Controller
      */
     public function getLogin()
     {
-        return view('victory.core::login.login');
+        $form = new Form(['method' => 'POST', 'route' => 'victory.auth.login']);
+
+        $group = new Group(function($group){
+            $group->add(new Label('email', 'Email'));
+            $group->add(new Text('email', null, ['class' => 'form-control']));
+        }, ['class' => 'form-group']);
+        $form->add($group);
+
+        $group = new Group(function($group){
+            $group->add(New Label('password', 'Password'));
+            $group->add(New Password('password', ['class' => 'form-control']));
+        }, ['class' => 'form-group']);
+        $form->add($group);
+
+        $form->add(New Submit('Login', 'Login', ['class' => 'btn btn-primary']));
+
+//        dd($form->render());
+
+        return view('victory.core::login.login', compact('form'));
     }
 
     /**
      * @param LoginRequest $request
      *
-     * @return mixed
+     * @return Response
      */
     public function postLogin(LoginRequest $request)
     {
-        \Auth::attempt(['email' => $request->input()['email'], 'password' => $request->input()['password']]);
+        if(!\Auth::attempt(['email' => $request->input()['email'], 'password' => $request->input()['password']]))
+            return \Redirect::back()->with('notification', 'Email and password combination does not exsists.')->withInput();
 
-        return Redirect::route('victory.auth.home');
+        return \Redirect::route('victory.auth.home');
     }
 
     /**
-     * @return mixed
+     * @return Response
      */
     public function getLogout()
     {
         \Auth::logout();
 
-        return Redirect::route('victory.auth.login');
+        return \Redirect::route('victory.auth.login');
     }
 }
