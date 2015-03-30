@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core\Traits;
 
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Seeder;
 
@@ -10,19 +11,30 @@ trait PackageTrait
 {
     /**
      * @param bool $pretend
+     *
+     * @return void
      */
     public function migrate($paths, $pretend = false)
     {
         /** @var Migrator $migrator */
-        $migrator = \App::make('Illuminate\Database\Migrations\Migrator');
+        $migrator = \App::make('migrator');
 
-        foreach ((array) $paths as $path) {
-            $migrator->run($path, $pretend);
+        /** @var MigrationRepositoryInterface $repository */
+        $repository = \App::make('migration.repository');
+
+        if(!$repository->repositoryExists())
+        {
+            $repository->createRepository();
         }
+
+        $migrator->runMigrationList($paths, $pretend);
     }
 
     /**
+     * @param null|string $tag
+     * @param bool $force
      *
+     * @return void
      */
     public function publish($tag = null, $force = false)
     {
@@ -40,6 +52,8 @@ trait PackageTrait
 
     /**
      * @param string|array $seeders
+     *
+     * @return void
      */
     public function seed($seeders)
     {
@@ -90,6 +104,8 @@ trait PackageTrait
     }
 
     /**
+     * @param string $path
+     *
      * @return string
      */
     abstract public function getBasePath($path = '');

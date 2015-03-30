@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core\Providers;
 
+use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Traits\PackageTrait;
@@ -34,9 +35,9 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param callable $callback
+     * @param Closure $callback
      */
-    public function routes(\Closure $callback)
+    public function routes(Closure $callback)
     {
         return $this->app['router']->group([
             'prefix' => 'victory/'.$this->model->name,
@@ -44,6 +45,7 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
+     * @return void
      */
     public function install()
     {
@@ -51,6 +53,7 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
+     * @return void
      */
     public function update()
     {
@@ -59,14 +62,20 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
+     * @return void
      */
     public function destroy()
     {
         return;
     }
 
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
     public function getBasePath($path = '')
     {
-        return base_path('vendor/'.$this->model->name.($path ? '/'.$path : $path));
+        return base_path('vendor/' . $this->model->name . ($path ? '/' . $path : $path));
     }
 }
