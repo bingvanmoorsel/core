@@ -8,6 +8,7 @@ use Composer\Installer\LibraryInstaller;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel;
 use VictoryCms\Core\CoreServiceProvider;
+use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Victory;
 
 /**
@@ -68,7 +69,7 @@ abstract class Base extends LibraryInstaller
     /**
      * @param $object
      * @param $method
-     * @param array            $parameters
+     * @param array $parameters
      *
      * @return mixed
      */

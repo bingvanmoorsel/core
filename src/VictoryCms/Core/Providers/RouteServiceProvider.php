@@ -1,7 +1,6 @@
 <?php namespace VictoryCms\Core\Providers;
 
 use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -22,8 +21,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $router->group([
             'namespace' => 'VictoryCms\Core\Http\Controllers',
-            'prefix' => 'victory'
-        ], function(Router $router){
+            'prefix' => 'victory',
+        ], function (Router $router) {
             $router->get('/', ['as'   => 'victory.auth.home', 'uses' => 'LoginController@index']);
             $router->get('login', ['as'   => 'victory.auth.login', 'uses' => 'LoginController@getLogin']);
             $router->post('login', ['as' => 'victory.auth.login', 'uses' => 'LoginController@postLogin']);

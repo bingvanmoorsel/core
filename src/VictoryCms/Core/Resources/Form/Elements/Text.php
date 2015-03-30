@@ -6,9 +6,9 @@
 class Text extends Input
 {
     /**
-     * @param array $name
-     * @param null  $value
-     * @param array $attributes
+     * @param string $name
+     * @param null   $value
+     * @param array  $attributes
      */
     public function __construct($name, $value = null, array $attributes = [])
     {

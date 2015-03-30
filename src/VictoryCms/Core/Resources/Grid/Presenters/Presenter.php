@@ -1,18 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 26-3-2015
- * Time: 13:40
- */
+<?php namespace VictoryCms\Core\Resources\Grid\Presenters;
 
-namespace VictoryCms\Core\Resources\Grid\Presenters;
 use VictoryCms\Core\Contracts\Resources\Grid\Presenter as PresenterContract;
 
-
 /**
- * Class Presenter
- * @package VictoryCms\Core\Resources\Grid\Filters
+ * Class Presenter.
  */
 abstract class Presenter implements PresenterContract
 {

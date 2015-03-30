@@ -2,7 +2,6 @@
 
 namespace VictoryCms\Core\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
 
 /**

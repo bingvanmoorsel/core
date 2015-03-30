@@ -1,15 +1,12 @@
-<?php
+<?php namespace VictoryCms\Core\Contracts\Resources\Grid;
+
 /**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 26-3-2015
- * Time: 13:43
+ * Interface Presenter.
  */
-
-namespace VictoryCms\Core\Contracts\Resources\Grid;
-
-
 interface Presenter
 {
+    /**
+     * @return mixed
+     */
     public function present();
 }

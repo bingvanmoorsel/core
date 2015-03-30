@@ -15,7 +15,6 @@ interface HasParentElement
 
     /**
      * @param Element $parent
-     * @return void
      */
     public function setParent(Element $parent);
 
@@ -26,7 +25,6 @@ interface HasParentElement
 
     /**
      * @param Form $form
-     * @return void
      */
     public function setForm(Form $form);
 }

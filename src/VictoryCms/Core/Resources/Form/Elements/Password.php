@@ -6,8 +6,8 @@
 class Password extends Input
 {
     /**
-     * @param array $name
-     * @param array $attributes
+     * @param string $name
+     * @param array  $attributes
      */
     public function __construct($name, array $attributes = [])
     {

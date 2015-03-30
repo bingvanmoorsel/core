@@ -10,8 +10,6 @@ interface Element extends CanRender, HasAttributes
 {
     /**
      * @param Element $parent
-     *
-     * @return void
      */
     public function register(Element $parent);
 }

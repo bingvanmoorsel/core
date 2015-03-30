@@ -36,7 +36,6 @@ class Radio extends Input implements IsCheckable
 
     /**
      * @param Element $parent
-     * @return void
      */
     public function register(Element $parent)
     {

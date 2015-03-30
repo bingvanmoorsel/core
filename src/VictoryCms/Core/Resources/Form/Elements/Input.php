@@ -41,7 +41,6 @@ class Input extends Element implements InputContract
 
     /**
      * @param ElementContract $parent
-     * @return void
      */
     public function register(ElementContract $parent)
     {

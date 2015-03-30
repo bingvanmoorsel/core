@@ -2,7 +2,6 @@
 
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Hero;
 use VictoryCms\Core\Providers\Guard\HeroGuard;
 

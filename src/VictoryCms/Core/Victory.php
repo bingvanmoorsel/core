@@ -34,7 +34,6 @@ class Victory
     public function __construct(Application $app)
     {
         $this->app = $app;
-
         $this->storagePath = storage_path('victory');
     }
 
@@ -55,7 +54,7 @@ class Victory
             return $this->installed;
         }
 
-        return $this->installed = file_exists(storage_path('victory/installed'));
+        return $this->installed = file_exists($this->storagePath.DIRECTORY_SEPARATOR.'victory');
     }
 
     /**
@@ -64,13 +63,15 @@ class Victory
      */
     public function routes($name, Closure $closure)
     {
-        return \Route::group(['prefix' => 'victory/'.$name], $closure);
+        return $this->app['router']->group([
+            'prefix' => 'victory/'.$name,
+        ], $closure);
     }
 
     /**
      * @return string
      */
-    public function storagePath()
+    public function getStoragePath()
     {
         return $this->storagePath;
     }

@@ -1,16 +1,13 @@
-<?php
+<?php namespace VictoryCms\Core\Resources\Grid\Presenters;
+
 /**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 26-3-2015
- * Time: 13:44
+ * Class Text.
  */
-
-namespace VictoryCms\Core\Resources\Grid\Presenters;
-
-
 class Text extends Presenter
 {
+    /**
+     * @return string
+     */
     public function present()
     {
         return (string) $this->value;

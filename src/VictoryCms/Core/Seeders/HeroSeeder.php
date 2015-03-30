@@ -1,17 +1,15 @@
-<?php
+<?php namespace VictoryCms\Core\Seeders;
+
 use Illuminate\Database\Seeder;
-use VictoryCms\Core\Models\Hero;
 
-class VictoryDatabaseSeeder extends Seeder
+/**
+ * Class HeroSeeder.
+ */
+class HeroSeeder extends Seeder
 {
-    public function run()
-    {
-        $this->call('HeroTableSeeder');
-    }
-}
-
-class HeroTableSeeder extends Seeder
-{
+    /**
+     *
+     */
     public function run()
     {
         $admin = new Hero();

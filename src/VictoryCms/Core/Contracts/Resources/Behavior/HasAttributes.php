@@ -7,7 +7,7 @@ interface HasAttributes
 {
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function setAttribute($key, $value);
 
@@ -18,7 +18,7 @@ interface HasAttributes
 
     /**
      * @param string $key
-     * @param null $default
+     * @param null   $default
      *
      * @return mixed
      */

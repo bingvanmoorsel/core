@@ -1,22 +1,25 @@
 <?php namespace VictoryCms\Core\Providers;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Database\Migrations\Migrator;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
-use VictoryCms\Core\Seeds\VictoryDatabaseSeeder;
+use VictoryCms\Core\Traits\PackageTrait;
 
 /**
  * Class PackageServiceProvider.
  */
 abstract class PackageServiceProvider extends ServiceProvider
 {
+    use PackageTrait;
+
     /**
      * @var Package
      */
     protected $model;
+
+    /**
+     * @var string
+     */
+    protected $basePath;
 
     /**
      * @param Application $app
@@ -26,7 +29,8 @@ abstract class PackageServiceProvider extends ServiceProvider
     {
         parent::__construct($app);
 
-        $this->model = $model;
+        $this->model    = $model;
+        $this->basePath = base_path('vendor/'.$this->model->name);
     }
 
     /**
@@ -40,113 +44,29 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     *
      */
     public function install()
     {
-        $this->migrate();
+        $this->update();
     }
 
     /**
-     *
      */
     public function update()
     {
-        $this->migrate();
+        $this->publish(null, true);
+        $this->migrate($this->getDatabasePath('migrations'));
     }
 
     /**
-     *
      */
     public function destroy()
     {
         return;
     }
 
-    /**
-     * @param bool $pretend
-     */
-    public function migrate($pretend = false)
+    public function getBasePath($path = '')
     {
-        /** @var Migrator $migrator */
-        $migrator = $this->app->make('Illuminate\Database\Migrations\Migrator');
-        $migrator->run($this->databasePath().DIRECTORY_SEPARATOR.'migrations', $pretend);
-    }
-
-    /**
-     *
-     */
-    public function publish($force = false)
-    {
-        $provider = get_called_class();
-
-        /** @var \Illuminate\Contracts\Console\Application $artisan */
-        $artisan = $this->app->make('artisan');
-
-        $artisan->call('vendor:publish', [
-            '--provider' => $provider,
-            '--force' => $force
-        ]);
-    }
-
-    /**
-     * @param string|array $seeder
-     */
-    public function seed($seeder)
-    {
-        $seeders = (array)$seeder;
-
-        /** @var Seeder $seeder */
-        foreach($seeders as $seeder) {
-            $seeder->run();
-        }
-    }
-
-    /**
-     * @param Package $model
-     */
-    public function setModel(Package $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * @return Package
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * @return string
-     */
-    public function databasePath()
-    {
-        return $this->basePath().DIRECTORY_SEPARATOR.'database';
-    }
-
-    /**
-     * @return string
-     */
-    public function resourcePath()
-    {
-        return $this->basePath().DIRECTORY_SEPARATOR.'resources';
-    }
-
-    /**
-     * @return string
-     */
-    public function configPath()
-    {
-        return $this->basePath().DIRECTORY_SEPARATOR.'config';
-    }
-
-    /**
-     * @return string
-     */
-    public function basePath()
-    {
-        return base_path('vendor/'.$this->model->name);
+        return base_path('vendor/'.$this->model->name.($path ? '/'.$path : $path));
     }
 }

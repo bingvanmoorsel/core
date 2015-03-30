@@ -3,32 +3,43 @@
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
 use VictoryCms\Core\Http\Requests\LoginRequest;
-use VictoryCms\Core\Models\Hero;
 
+/**
+ * Class LoginController.
+ */
 class LoginController extends Controller
 {
-    protected $auth, $user;
+    /**
+     * @var
+     */
+    protected $auth;
 
-    public function __construct()
-    {
-        //        $user = new Hero();
-//        $user->first_name = 'Bing';
-//        $user->last_name = 'van Moorsel';
-//        $user->email = 'bvanmoorsel@swis.nl';
-//        $user->password = 'test';
-//        $user->save();
-    }
+    /**
+     * @var
+     */
+    protected $user;
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('victory.core::login.home');
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function getLogin()
     {
         return view('victory.core::login.login');
     }
 
+    /**
+     * @param LoginRequest $request
+     *
+     * @return mixed
+     */
     public function postLogin(LoginRequest $request)
     {
         \Auth::attempt(['email' => $request->input()['email'], 'password' => $request->input()['password']]);
@@ -36,6 +47,9 @@ class LoginController extends Controller
         return Redirect::route('victory.auth.home');
     }
 
+    /**
+     * @return mixed
+     */
     public function getLogout()
     {
         \Auth::logout();

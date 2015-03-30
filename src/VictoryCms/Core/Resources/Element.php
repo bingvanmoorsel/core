@@ -26,7 +26,6 @@ abstract class Element implements Contract
 
     /**
      * @param Contract $parent
-     * @return void
      */
     public function register(Contract $parent)
     {

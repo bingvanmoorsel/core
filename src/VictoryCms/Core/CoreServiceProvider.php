@@ -1,15 +1,18 @@
 <?php namespace VictoryCms\Core;
 
-use Artisan;
-use Illuminate\Bus\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
+use VictoryCms\Core\Seeders\DatabaseSeeder;
+use VictoryCms\Core\Traits\PackageTrait;
 
 /**
  * Class CoreServiceProvider.
  */
 class CoreServiceProvider extends ServiceProvider
 {
+    use PackageTrait;
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -36,6 +39,21 @@ class CoreServiceProvider extends ServiceProvider
     ];
 
     /**
+     * @var string
+     */
+    protected $basePath;
+
+    /**
+     * @param Application $app
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+
+        $this->basePath = base_path('vendor/victory-cms/core');
+    }
+
+    /**
      * Register the service provider.
      */
     public function register()
@@ -49,23 +67,24 @@ class CoreServiceProvider extends ServiceProvider
             return Package::all();
         });
 
-        if(!$victory->isInstalled()) return;
+        if (!$victory->isInstalled()) {
+            return;
+        }
 
         foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
 
-        //publish public files to victory-cms folder
+        // publish public files to victory-cms folder
         $this->publishes([
-            __DIR__.'/../../../public' => public_path('/victory-cms'),
-        ], 'public');
+           $this->basePath.DIRECTORY_SEPARATOR.'public' => public_path('victory-cms/core'),
+        ], 'victory.core.public');
     }
 
     /**
-     * @param Victory    $victory
-     * @param Dispatcher $dispatcher
+     * @param Victory $victory
      */
-    public function boot(Victory $victory, Dispatcher $dispatcher)
+    public function boot(Victory $victory)
     {
         if (!$victory->isInstalled()) {
             $this->app->call([$this, 'install']);
@@ -73,8 +92,8 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->commands($this->commands);
 
-        $this->loadViewsFrom(__DIR__.'/../../../resources/views/', 'victory.core');
-        $this->loadTranslationsFrom(__DIR__.'/../../../resources/lang/', 'victory.core');
+        $this->loadViewsFrom($this->getResourcePath().DIRECTORY_SEPARATOR.'views', 'victory.core');
+        $this->loadTranslationsFrom($this->getResourcePath().DIRECTORY_SEPARATOR.'lang', 'victory.core');
 
         // Register and boot all the Victory packages
         // We simulate the Laravel registration process
@@ -99,47 +118,45 @@ class CoreServiceProvider extends ServiceProvider
     }
 
     /**
-     *
+     * @param Victory $victory
      */
     public function install(Victory $victory)
     {
-        $storage = $victory->storagePath();
+        $storagePath = $victory->getStoragePath();
 
-        if (!is_dir($storage)) {
-            mkdir($storage, 0777);
+        if (!is_dir($storagePath)) {
+            mkdir($storagePath, 0777);
         }
 
-        Artisan::call('migrate', [
-            '--path' => 'vendor/victory-cms/core/database/migrations',
-        ]);
+        $this->update();
 
-        // Publishcing
-        Artisan::call('vendor:publish', [
-            '--provider="VictoryCms\Core\CoreServiceProvider"'
-        ]);
+        $this->seed(DatabaseSeeder::class);
 
-        // Seeding the database.
-        Artisan::call('db:seed', [
-            '--class' => 'VictoryCms\Core\Seeds\VictoryDatabaseSeeder',
-        ]);
-
-        touch($storage.'/installed');
+        touch($storagePath.DIRECTORY_SEPARATOR.'installed');
     }
 
     /**
-     *
      */
     public function update()
     {
-        return;
+        $this->migrate('vendor/victory-cms/core/database/migrations');
+
+        $this->publish('victory.core.public', true);
     }
 
     /**
-     *
      */
     public function destroy()
     {
         return;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
     }
 
     /**

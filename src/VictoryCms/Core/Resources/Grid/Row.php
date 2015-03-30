@@ -1,13 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 26-3-2015
- * Time: 10:50
- */
-
-namespace VictoryCms\Core\Resources\Grid;
-
+<?php namespace VictoryCms\Core\Resources\Grid;
 
 use VictoryCms\Core\Resources\Element;
 use App\Resource\Contracts\Row as RowContract;
@@ -15,8 +6,7 @@ use VictoryCms\Core\Resources\Traits\HasChildElementsTrait;
 use VictoryCms\Core\Resources\Traits\HasParentElementTrait;
 
 /**
- * Class Row
- * @package VictoryCms\Core\Resources\Grid
+ * Class Row.
  */
 class Row extends Element implements RowContract
 {
@@ -27,6 +17,7 @@ class Row extends Element implements RowContract
 
     /**
      * @param Cell $cell
+     *
      * @return Cell
      */
     public function add(Cell $cell)
@@ -36,9 +27,7 @@ class Row extends Element implements RowContract
 
     public function populate($source)
     {
-
     }
-
 
     /**
      * @return string
@@ -47,7 +36,7 @@ class Row extends Element implements RowContract
     {
         return (string) view('victory.core::resource.grid.row', [
             'attributes' => $this->buildAttributes(),
-            'cells'      => $this->getElements()
+            'cells'      => $this->getElements(),
         ]);
     }
 }

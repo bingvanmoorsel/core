@@ -1,7 +1,6 @@
 <?php namespace VictoryCms\Core\Resources\Traits;
 
 use VictoryCms\Core\Contracts\Resources\Element;
-use VictoryCms\Core\Contracts\Resources\Form\Behavior\CanPost;
 
 /**
  * Class GroupTrait.

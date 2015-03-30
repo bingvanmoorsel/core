@@ -6,6 +6,7 @@
 class Submit extends Input
 {
     /**
+     * @param null  $name
      * @param null  $value
      * @param array $attributes
      */
