@@ -128,6 +128,8 @@ class CoreServiceProvider extends ServiceProvider
             mkdir($storagePath, 0777);
         }
 
+        $this->migrate('vendor/victory-cms/core/database/migrations');
+
         //$this->update();
 
         //$this->seed(DatabaseSeeder::class);
@@ -139,7 +141,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function update()
     {
-        $this->migrate('vendor/victory-cms/core/database/migrations');
+
 
         $this->publish('victory.core.public', true);
     }
