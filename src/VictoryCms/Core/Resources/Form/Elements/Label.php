@@ -29,14 +29,6 @@ class Label extends Element
     }
 
     /**
-     * @param Contract $parent
-     */
-    public function register(Contract $parent)
-    {
-        $this->setParent($parent);
-    }
-
-    /**
      * @return string
      */
     public function render()

@@ -30,6 +30,8 @@ class Textarea extends Element
 
     /**
      * @param ElementContract $parent
+     *
+     * @return void
      */
     public function register(ElementContract $parent)
     {

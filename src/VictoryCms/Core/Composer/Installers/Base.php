@@ -82,7 +82,7 @@ abstract class Base extends LibraryInstaller
             return;
         }
 
-        $this->io->write('[<info>Victory</info>] Calling '.get_class($object).'@'.$method.'');
+        $this->io->write('[<info>Victory</info>] Calling <warning>'.get_class($object).'@'.$method.'</warning>');
 
         return self::$app->call([$object, $method], $parameters);
     }

@@ -27,7 +27,7 @@ trait CanPostTrait
     protected $model;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {

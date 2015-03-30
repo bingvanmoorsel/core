@@ -130,7 +130,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->migrate($this->getDatabasePath('migrations'));
 
-        //$this->update();
+        $this->publish('victory.core.public', true);
 
         //$this->seed(DatabaseSeeder::class);
 
