@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core\Traits;
 
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Seeder;
@@ -37,10 +38,10 @@ trait PackageTrait
     {
         $provider = get_called_class();
 
-        /** @var \Illuminate\Contracts\Console\Application $artisan */
-        $artisan = \App::make('Illuminate\Contracts\Console\Application');
+        /** @var Kernel */
+        $kernel = \App::make('Illuminate\Contracts\Console\Kernel');
 
-        $artisan->call('vendor:publish', [
+        $kernel->call('vendor:publish', [
             '--provider' => $provider,
             '--force' => $force,
             '--tag' => $tag,
