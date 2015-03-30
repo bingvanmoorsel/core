@@ -55,7 +55,7 @@ trait PackageTrait
     {
         /** @var Seeder $seeder */
         foreach ((array) $seeders as $seeder) {
-            $seeder->run();
+            with(new $seeder)->run();
         }
     }
 
