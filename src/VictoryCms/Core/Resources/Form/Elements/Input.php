@@ -25,10 +25,10 @@ class Input extends Element implements InputContract
     protected $initialValue;
 
     /**
-     * @param array $type
-     * @param $name
-     * @param null  $value
-     * @param array $attributes
+     * @param string $type
+     * @param string $name
+     * @param null   $value
+     * @param array  $attributes
      */
     public function __construct($type, $name, $value = null, array $attributes = [])
     {
@@ -58,7 +58,7 @@ class Input extends Element implements InputContract
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getType()
     {

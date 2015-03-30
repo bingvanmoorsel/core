@@ -29,6 +29,11 @@ class Victory
     protected $installed;
 
     /**
+     * @var string
+     */
+    protected $storagePath;
+
+    /**
      * @param Application $app
      */
     public function __construct(Application $app)

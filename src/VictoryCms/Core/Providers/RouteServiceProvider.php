@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot(Router $router)
     {
-        //        $router->whenRegex('/victory(?!\/login).*/i', 'victory.auth');
+        $router->whenRegex('/victory(?!\/login).*/i', 'victory.auth');
 
 //        $router->filter('victory.auth', 'VictoryCms\Core\Filters\Authenticate');
         $router->when('victory*', 'victory.auth');

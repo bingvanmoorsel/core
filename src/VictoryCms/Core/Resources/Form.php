@@ -4,7 +4,6 @@ use VictoryCms\Core\Resources\Form\Elements\Hidden;
 use VictoryCms\Core\Resources\Traits\HasChildElementsTrait;
 use VictoryCms\Core\Contracts\Resources\Form as FormContract;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\SessionManager;
 
@@ -135,13 +134,6 @@ class Form extends Element implements FormContract
         $this->model = $model;
 
         return $this;
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function process(Request $request)
-    {
     }
 
     /**

@@ -6,9 +6,9 @@
 class Submit extends Input
 {
     /**
-     * @param null  $name
-     * @param null  $value
-     * @param array $attributes
+     * @param null|string $name
+     * @param null        $value
+     * @param array       $attributes
      */
     public function __construct($name = null, $value = null, array $attributes = [])
     {

@@ -1,6 +1,7 @@
 <?php namespace VictoryCms\Core\Seeders;
 
 use Illuminate\Database\Seeder;
+use VictoryCms\Core\Models\Hero;
 
 /**
  * Class HeroSeeder.
@@ -8,7 +9,6 @@ use Illuminate\Database\Seeder;
 class HeroSeeder extends Seeder
 {
     /**
-     *
      */
     public function run()
     {

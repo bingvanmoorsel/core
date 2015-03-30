@@ -8,7 +8,6 @@ use Composer\Installer\LibraryInstaller;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel;
 use VictoryCms\Core\CoreServiceProvider;
-use VictoryCms\Core\Models\Package;
 use VictoryCms\Core\Victory;
 
 /**
@@ -27,10 +26,10 @@ abstract class Base extends LibraryInstaller
     protected static $app;
 
     /**
-     * @param IOInterface $io
-     * @param Composer    $composer
-     * @param string      $type
-     * @param Filesystem  $filesystem
+     * @param IOInterface     $io
+     * @param Composer        $composer
+     * @param string          $type
+     * @param null|Filesystem $filesystem
      */
     public function __construct(IOInterface $io, Composer $composer, $type = 'library', Filesystem $filesystem = null)
     {
@@ -84,9 +83,10 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param PackageInterface $package
-     * @param string           $class
+     * @param $class
+     * @param array            $params
      *
-     * @return mixed
+     * @return object
      */
     protected function resolve(PackageInterface $package, $class, $params = [])
     {

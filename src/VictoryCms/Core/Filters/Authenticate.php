@@ -33,18 +33,16 @@ class Authenticate
      * @param Route   $route
      * @param Request $request
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @return null|\Symfony\Component\HttpFoundation\Response
      */
     public function filter(Route $route, Request $request)
     {
-        if (!$request->is('victory/login')) {
-            if ($this->auth->guest()) {
-                if ($request->ajax()) {
-                    return response('Unauthorized.', 401);
-                }
-
-                return $this->redirector->route('victory.auth.login');
+        if ($this->auth->guest()) {
+            if ($request->ajax()) {
+                return response('Unauthorized.', 401);
             }
+
+            return $this->redirector->route('victory.auth.login');
         }
     }
 }

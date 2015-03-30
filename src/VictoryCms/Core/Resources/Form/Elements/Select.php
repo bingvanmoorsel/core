@@ -69,7 +69,7 @@ class Select extends Element
             $source = $source->lists($value, $key);
         }
 
-        $this->options = $source;
+        $this->options['source'] = $source;
 
         return $this;
     }
