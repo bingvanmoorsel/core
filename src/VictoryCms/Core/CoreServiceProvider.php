@@ -130,7 +130,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->update();
 
-        $this->seed(DatabaseSeeder::class);
+        //$this->seed(DatabaseSeeder::class);
 
         touch($storagePath.DIRECTORY_SEPARATOR.'installed');
     }

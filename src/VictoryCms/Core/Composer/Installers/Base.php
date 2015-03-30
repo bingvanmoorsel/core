@@ -71,7 +71,7 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param $object
-     * @param $method
+     * @param string $method
      * @param array $parameters
      *
      * @return mixed
@@ -117,7 +117,7 @@ abstract class Base extends LibraryInstaller
     }
 
     /**
-     * @param $class
+     * @param string $class
      * @param array $params
      *
      * @return object
