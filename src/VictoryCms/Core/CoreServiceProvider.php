@@ -128,7 +128,7 @@ class CoreServiceProvider extends ServiceProvider
             mkdir($storagePath, 0777);
         }
 
-        $this->migrate('vendor/victory-cms/core/database/migrations');
+        $this->migrate($this->getDatabasePath('migrations'));
 
         //$this->update();
 
