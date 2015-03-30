@@ -1,5 +1,6 @@
 <?php namespace VictoryCms\Core\Composer\Installers;
 
+use Closure;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use VictoryCms\Core\Models\Package as Model;
@@ -77,13 +78,16 @@ class Package extends Base
         parent::uninstall($repo, $package);
 
         $this->process($package, function (PackageServiceProvider $provider, Model $model) {
+
+            $this->call($provider, 'destroy');
+
             $model->delete();
         });
     }
 
     /**
      * @param PackageInterface $package
-     * @param callable         $callback
+     * @param Closure         $callback
      */
     public function process(PackageInterface $package, \Closure $callback = null)
     {
@@ -99,7 +103,7 @@ class Package extends Base
             $provider = $this->resolve($package, self::PROVIDER, [self::$app, $model]);
 
             $callback = $callback->bindTo($this);
-            $callback($provider, $model);
+            $callback($provider, $model, $this->io);
         } catch (\Exception $error) {
             $this->io->writeError($error->getMessage());
         }

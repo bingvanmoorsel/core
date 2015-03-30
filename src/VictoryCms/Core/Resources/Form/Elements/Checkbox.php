@@ -9,12 +9,12 @@ use VictoryCms\Core\Contracts\Resources\Element;
 class Checkbox extends Input implements IsCheckable
 {
     /**
-     * @var
+     * @var boolean
      */
     protected $checked;
 
     /**
-     * @var
+     * @var boolean
      */
     protected $initialState;
 

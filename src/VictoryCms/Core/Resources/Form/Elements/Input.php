@@ -15,19 +15,19 @@ class Input extends Element implements InputContract
     use CanPostTrait;
 
     /**
-     * @var array
+     * @var string
      */
     protected $type;
 
     /**
-     * @var null
+     * @var mixed
      */
     protected $initialValue;
 
     /**
      * @param string $type
      * @param string $name
-     * @param null   $value
+     * @param mixed  $value
      * @param array  $attributes
      */
     public function __construct($type, $name, $value = null, array $attributes = [])

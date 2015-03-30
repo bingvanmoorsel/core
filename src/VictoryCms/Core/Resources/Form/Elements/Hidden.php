@@ -7,7 +7,7 @@ class Hidden extends Input
 {
     /**
      * @param string $name
-     * @param int    $value
+     * @param mixed  $value
      * @param array  $attributes
      */
     public function __construct($name, $value = 1, array $attributes = [])

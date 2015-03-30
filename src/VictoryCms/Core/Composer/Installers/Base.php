@@ -44,6 +44,8 @@ abstract class Base extends LibraryInstaller
      */
     protected function boot()
     {
+        $this->io->write('[<info>Victory</info>] Booting Laravel 5 framework');
+
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
 
@@ -59,6 +61,8 @@ abstract class Base extends LibraryInstaller
         $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
 
         $kernel->bootstrap();
+
+        $this->io->write('[<info>Victory</info>] Register core service provider');
 
         $app->register(CoreServiceProvider::class);
 
@@ -77,6 +81,8 @@ abstract class Base extends LibraryInstaller
         if (!method_exists($object, $method)) {
             return false;
         }
+
+        $this->io->write('Calling [<info>' . get_class($object) . '</info>] -> [<warning>' . $method . '</warning>]');
 
         return self::$app->call([$object, $method], $parameters);
     }
