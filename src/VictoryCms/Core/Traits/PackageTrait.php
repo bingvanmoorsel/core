@@ -41,7 +41,7 @@ trait PackageTrait
         $provider = get_called_class();
 
         /** @var \Illuminate\Contracts\Console\Application $artisan */
-        $artisan = \App::make('artisan');
+        $artisan = \App::make('Illuminate\Contracts\Console\Application');
 
         $artisan->call('vendor:publish', [
             '--provider' => $provider,
