@@ -44,7 +44,7 @@ abstract class Base extends LibraryInstaller
      */
     protected function boot()
     {
-        $this->io->write('[<info>Victory</info>] Booting Laravel 5 framework');
+        $this->io->write('[<info>Victory</info>] Booting Laravel ' . Application::VERSION . ' framework');
 
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
