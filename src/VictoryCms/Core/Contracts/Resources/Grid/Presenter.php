@@ -6,7 +6,7 @@
 interface Presenter
 {
     /**
-     * @return mixed
+     * @return string
      */
     public function present();
 }

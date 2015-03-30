@@ -156,7 +156,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function getBasePath($path = '')
     {
-        return $this->basePath . ($path ? '/'.$path : $path);
+        return $this->basePath.($path ? '/'.$path : $path);
     }
 
     /**

@@ -11,8 +11,6 @@ trait PackageTrait
 {
     /**
      * @param bool $pretend
-     *
-     * @return void
      */
     public function migrate($paths, $pretend = false)
     {
@@ -22,8 +20,7 @@ trait PackageTrait
         /** @var MigrationRepositoryInterface $repository */
         $repository = \App::make('migration.repository');
 
-        if(!$repository->repositoryExists())
-        {
+        if (!$repository->repositoryExists()) {
             $repository->createRepository();
         }
 
@@ -32,9 +29,7 @@ trait PackageTrait
 
     /**
      * @param null|string $tag
-     * @param bool $force
-     *
-     * @return void
+     * @param bool        $force
      */
     public function publish($tag = null, $force = false)
     {
@@ -52,8 +47,6 @@ trait PackageTrait
 
     /**
      * @param string|array $seeders
-     *
-     * @return void
      */
     public function seed($seeders)
     {

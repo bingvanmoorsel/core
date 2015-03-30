@@ -53,9 +53,9 @@ class Select extends Element
     }
 
     /**
-     * @param mixed  $source
-     * @param string $value
-     * @param string $key
+     * @param mixed       $source
+     * @param string|null $value
+     * @param string      $key
      *
      * @return $this
      */

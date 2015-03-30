@@ -20,7 +20,7 @@ class Button extends Input
     }
 
     /**
-     * @return \Illuminate\View\View
+     * @return string
      */
     public function render()
     {

@@ -2,6 +2,10 @@
 
 use Illuminate\Routing\Router;
 
+/**
+ * Class RouteServiceProvider
+ * @package VictoryCms\Core\Providers
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -12,6 +16,9 @@ class RouteServiceProvider extends ServiceProvider
         // TODO: Implement register() method.
     }
 
+    /**
+     * @param Router $router
+     */
     public function boot(Router $router)
     {
         $router->whenRegex('/victory(?!\/login).*/i', 'victory.auth');

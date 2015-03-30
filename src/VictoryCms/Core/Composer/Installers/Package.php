@@ -87,9 +87,9 @@ class Package extends Base
 
     /**
      * @param PackageInterface $package
-     * @param Closure         $callback
+     * @param Closure          $callback
      */
-    public function process(PackageInterface $package, \Closure $callback = null)
+    public function process(PackageInterface $package, \Closure $callback)
     {
         try {
             $model = Model::firstOrNew([

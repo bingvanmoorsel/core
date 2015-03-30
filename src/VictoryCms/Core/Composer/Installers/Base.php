@@ -44,7 +44,7 @@ abstract class Base extends LibraryInstaller
      */
     protected function boot()
     {
-        $this->io->write('[<info>Victory</info>] Booting Laravel ' . Application::VERSION . ' framework');
+        $this->io->write('[<info>Victory</info>] Booting Laravel '.Application::VERSION.' framework');
 
         // Make sure the vendor directory exists
         $this->initializeVendorDir();
@@ -72,7 +72,7 @@ abstract class Base extends LibraryInstaller
     /**
      * @param $object
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return mixed
      */
@@ -82,7 +82,7 @@ abstract class Base extends LibraryInstaller
             return;
         }
 
-        $this->io->write('[<info>Victory</info>] Calling ' . get_class($object) . '@' . $method . '');
+        $this->io->write('[<info>Victory</info>] Calling '.get_class($object).'@'.$method.'');
 
         return self::$app->call([$object, $method], $parameters);
     }
@@ -118,7 +118,7 @@ abstract class Base extends LibraryInstaller
 
     /**
      * @param string $class
-     * @param array $params
+     * @param array  $params
      *
      * @return object
      */

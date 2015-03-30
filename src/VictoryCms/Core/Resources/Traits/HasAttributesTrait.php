@@ -101,7 +101,7 @@ trait HasAttributesTrait
      * @param string $key
      * @param mixed  $value
      *
-     * @return string
+     * @return string|null
      */
     protected function buildAttribute($key, $value)
     {

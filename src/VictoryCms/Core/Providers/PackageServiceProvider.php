@@ -45,7 +45,6 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return void
      */
     public function install()
     {
@@ -53,7 +52,6 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return void
      */
     public function update()
     {
@@ -62,7 +60,6 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return void
      */
     public function destroy()
     {
@@ -76,6 +73,6 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     public function getBasePath($path = '')
     {
-        return base_path('vendor/' . $this->model->name . ($path ? '/' . $path : $path));
+        return base_path('vendor/'.$this->model->name.($path ? '/'.$path : $path));
     }
 }

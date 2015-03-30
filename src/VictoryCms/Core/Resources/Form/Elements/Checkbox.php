@@ -73,7 +73,7 @@ class Checkbox extends Input implements IsCheckable
     }
 
     /**
-     * @return \Illuminate\View\View
+     * @return string
      */
     public function render()
     {

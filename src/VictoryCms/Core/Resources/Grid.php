@@ -89,7 +89,7 @@ class Grid extends Element
         }
 
         if (!is_array($source) && !$source instanceof \Traversable) {
-            throw new \Exception('The data source is not traversable');
+            throw new \Exception('The source is not traversable');
         }
 
         foreach ($source as $record) {

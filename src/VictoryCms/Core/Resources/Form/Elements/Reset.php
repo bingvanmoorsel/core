@@ -6,9 +6,9 @@
 class Reset extends Input
 {
     /**
-     * @param string $name
-     * @param null   $value
-     * @param array  $attributes
+     * @param string|null $name
+     * @param null        $value
+     * @param array       $attributes
      */
     public function __construct($name = null, $value = null, array $attributes = [])
     {
