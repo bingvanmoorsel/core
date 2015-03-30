@@ -24,7 +24,9 @@ trait PackageTrait
             $repository->createRepository();
         }
 
-        $migrator->runMigrationList((array) $paths, $pretend);
+        foreach((array) $paths as $path) {
+            $migrator->run($path, $pretend);
+        }
     }
 
     /**
