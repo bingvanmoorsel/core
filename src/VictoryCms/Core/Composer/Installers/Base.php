@@ -79,10 +79,10 @@ abstract class Base extends LibraryInstaller
     protected function call($object, $method, $parameters = [])
     {
         if (!method_exists($object, $method)) {
-            return false;
+            return;
         }
 
-        $this->io->write('Calling [<info>' . get_class($object) . '</info>] -> [<warning>' . $method . '</warning>]');
+        $this->io->write('[<info>Victory</info>] Calling ' . get_class($object) . '@' . $method . '');
 
         return self::$app->call([$object, $method], $parameters);
     }
