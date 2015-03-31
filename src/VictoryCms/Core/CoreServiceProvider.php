@@ -1,8 +1,8 @@
 <?php namespace VictoryCms\Core;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
 use VictoryCms\Core\Models\Package;
+use VictoryCms\Core\Providers\ServiceProvider;
 use VictoryCms\Core\Seeders\DatabaseSeeder;
 use VictoryCms\Core\Traits\PackageTrait;
 
@@ -50,7 +50,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         parent::__construct($app);
 
-        $this->basePath = base_path('vendor/victory-cms/core');
+        $this->basePath = realpath(__DIR__ .str_repeat('../', 4));
     }
 
     /**
@@ -67,7 +67,7 @@ class CoreServiceProvider extends ServiceProvider
             return Package::all();
         });
 
-        if (!$victory->isInstalled()) {
+        if(!$victory->isInstalled()) {
             return;
         }
 
@@ -92,8 +92,8 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->commands($this->commands);
 
-        $this->loadViewsFrom($this->getResourcePath().DIRECTORY_SEPARATOR.'views', 'victory.core');
-        $this->loadTranslationsFrom($this->getResourcePath().DIRECTORY_SEPARATOR.'lang', 'victory.core');
+        $this->loadViewsFrom($this->getResourcePath('views'), 'victory.core');
+        $this->loadTranslationsFrom($this->getResourcePath('lang'), 'victory.core');
 
         // Register and boot all the Victory packages
         // We simulate the Laravel registration process

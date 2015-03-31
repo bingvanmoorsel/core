@@ -55,11 +55,11 @@ class Victory
      */
     public function isInstalled()
     {
-        if ($this->installed !== null) {
+        if ($this->installed) {
             return $this->installed;
         }
 
-        return $this->installed = file_exists($this->storagePath.DIRECTORY_SEPARATOR.'victory');
+        return $this->installed = file_exists($this->storagePath.DIRECTORY_SEPARATOR.'installed');
     }
 
     /**
@@ -74,10 +74,11 @@ class Victory
     }
 
     /**
+     * @param string $path
      * @return string
      */
-    public function getStoragePath()
+    public function getStoragePath($path = '')
     {
-        return $this->storagePath;
+        return $this->storagePath.($path ? '/'.$path : $path);
     }
 }
