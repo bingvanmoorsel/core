@@ -13,6 +13,8 @@ trait PackageTrait
 {
     /**
      * @param bool $pretend
+     *
+     * @return void
      */
     public function migrate($paths, $pretend = false)
     {
@@ -34,23 +36,27 @@ trait PackageTrait
     /**
      * @param null|string $tag
      * @param bool        $force
+     *
+     * @return void
      */
     public function publish($tag = null, $force = false)
     {
         $provider = get_called_class();
+
+        var_dump($provider);
 
         /** @var Kernel $artisan */
         $artisan = \App::make('Illuminate\Contracts\Console\Kernel');
 
         $artisan->call('vendor:publish', [
             '--provider' => $provider,
-            '--force' => $force,
-            '--tag' => $tag,
         ]);
     }
 
     /**
      * @param string|array $seeders
+     *
+     * @return void
      */
     public function seed($seeders)
     {

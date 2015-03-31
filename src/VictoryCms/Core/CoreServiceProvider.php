@@ -139,7 +139,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function update()
     {
-        $this->publish('victory.core.public', true);
+        $this->publish(null, true);
 
         $this->seed(DatabaseSeeder::class);
     }
