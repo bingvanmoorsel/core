@@ -130,9 +130,8 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->update();
 
-        \Artisan::call('db:seed', [
-            '--class' => DatabaseSeeder::class
-        ]);
+        // Seed the database
+        $this->seed(DatabaseSeeder::class);
 
         touch($storagePath.'/installed');
     }
@@ -142,10 +141,11 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function update()
     {
-        \Artisan::call('migrate', [
-            '--path' => $this->getDatabasePath('migrations')
-        ]);
+        // Migrate the victory tables
+        $this->migrate($this->getDatabasePath('migrations'));
 
+        // Publish the core assets
+        // @todo fix the local publish method
         \Artisan::call('vendor:publish', [
             '--provider' => self::class
         ]);
