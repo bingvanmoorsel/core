@@ -142,7 +142,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function update()
     {
-        \Artisan::call('vendor:publish', [
+        \Artisan::call('migrate', [
             '--path' => $this->getDatabasePath('migrations')
         ]);
 
