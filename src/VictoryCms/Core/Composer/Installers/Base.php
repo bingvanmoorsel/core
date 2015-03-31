@@ -51,6 +51,9 @@ abstract class Base extends LibraryInstaller
 
         $basePath = realpath($this->vendorDir.DIRECTORY_SEPARATOR.'..');
 
+        echo "Jup";
+        exit;
+
         // Require the composer autoloader
         require $basePath.'/bootstrap/autoload.php';
 
