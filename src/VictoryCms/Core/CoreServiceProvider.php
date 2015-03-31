@@ -86,6 +86,10 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(Victory $victory)
     {
+
+        echo "1";
+        exit;
+
         if (!$victory->isInstalled()) {
             $this->app->call([$this, 'install']);
         }
