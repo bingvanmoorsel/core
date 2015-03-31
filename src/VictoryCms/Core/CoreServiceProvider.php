@@ -77,7 +77,7 @@ class CoreServiceProvider extends ServiceProvider
 
         // publish public files to victory-cms folder
         $this->publishes([
-           $this->basePath.DIRECTORY_SEPARATOR.'public' => public_path('victory-cms/core'),
+            $this->getBasePath('public') => public_path('victory-cms/core'),
         ], 'victory.core.public');
     }
 
@@ -128,23 +128,31 @@ class CoreServiceProvider extends ServiceProvider
             mkdir($storagePath, 0777);
         }
 
-        $this->migrate($this->getDatabasePath('migrations'));
-
         $this->update();
 
-        touch($storagePath.DIRECTORY_SEPARATOR.'installed');
+        \Artisan::call('db:seed', [
+            '--class' => DatabaseSeeder::class
+        ]);
+
+        touch($storagePath.'/installed');
     }
 
     /**
+     * @return void
      */
     public function update()
     {
-        $this->publish(null, true);
+        \Artisan::call('vendor:publish', [
+            '--path' => $this->getDatabasePath('migrations')
+        ]);
 
-        $this->seed(DatabaseSeeder::class);
+        \Artisan::call('vendor:publish', [
+            '--provider' => self::class
+        ]);
     }
 
     /**
+     * @return void
      */
     public function destroy()
     {
