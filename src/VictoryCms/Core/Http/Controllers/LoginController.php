@@ -1,6 +1,7 @@
 <?php namespace VictoryCms\Core\Http\Controllers;
 
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use VictoryCms\Core\Http\Requests\LoginRequest;
 use VictoryCms\Core\Resources\Form;
 use VictoryCms\Core\Resources\Form\Elements\Group;
@@ -53,6 +54,7 @@ class LoginController extends Controller
             $group->add(new Text('email', null, ['class' => 'form-control']));
         }, ['class' => 'form-group']);
         $form->add($group);
+
 
         $group = new Group(function ($group) {
             $group->add(new Label('password', 'Password'));
