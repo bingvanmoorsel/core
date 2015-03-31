@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
             $router->post('login', ['as' => 'victory.auth.login', 'uses' => 'LoginController@postLogin']);
             $router->get('logout', ['as' => 'victory.auth.logout', 'uses' => 'LoginController@getLogout']);
 
-            $router->get('test', 'PackageController@index');
+            $router->resource('migrations', 'ExampleController');
         });
     }
 }

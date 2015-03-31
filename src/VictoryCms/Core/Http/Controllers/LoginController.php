@@ -8,6 +8,7 @@ use VictoryCms\Core\Resources\Form\Elements\Label;
 use VictoryCms\Core\Resources\Form\Elements\Password;
 use VictoryCms\Core\Resources\Form\Elements\Submit;
 use VictoryCms\Core\Resources\Form\Elements\Text;
+use VictoryCms\Core\Resources\Grid;
 
 /**
  * Class LoginController.
@@ -29,6 +30,14 @@ class LoginController extends Controller
      */
     public function index()
     {
+        $grid = new Grid([
+            'source' => \DB::table('migrations'),
+        ]);
+
+        echo($grid->render());
+
+        dd();
+
         return view('victory.core::login.home');
     }
 

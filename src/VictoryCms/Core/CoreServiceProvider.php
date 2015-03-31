@@ -60,7 +60,6 @@ class CoreServiceProvider extends ServiceProvider
     {
         $victory = new Victory($this->app);
 
-        // Bind the main entry point of Victory CMS
         $this->app->instance('victory', $victory);
 
         $this->app->singleton('victory.packages', function () {
@@ -74,11 +73,6 @@ class CoreServiceProvider extends ServiceProvider
         foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
-
-        // publish public files to victory-cms folder
-        $this->publishes([
-            $this->getBasePath('public') => public_path('victory-cms/core'),
-        ], 'victory.core.public');
     }
 
     /**
@@ -92,6 +86,11 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->commands($this->commands);
 
+        // publish public files to victory-cms folder
+        $this->publishes([
+            $this->getBasePath('public') => public_path('victory-cms/core'),
+        ], 'victory.core.public');
+
         $this->loadViewsFrom($this->getResourcePath('views'), 'victory.core');
         $this->loadTranslationsFrom($this->getResourcePath('lang'), 'victory.core');
 
@@ -99,7 +98,6 @@ class CoreServiceProvider extends ServiceProvider
         // We simulate the Laravel registration process
         $providers = [];
 
-        // Create the provider instances
         foreach ($victory->getPackages() as $package) {
 
             // Instantiate the package provider

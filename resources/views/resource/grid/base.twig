@@ -1,0 +1,12 @@
+<table{{ attributes|raw }}>
+    {% if elements %}
+    <tbody>
+        {% for row in elements %}
+            {{ row|raw }}
+        {% endfor %}
+    </tbody>
+    {% endif %}
+</table>
+{% if paginator %}
+    {{ paginator|raw }}
+{% endif %}

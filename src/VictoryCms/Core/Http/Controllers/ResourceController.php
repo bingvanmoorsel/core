@@ -1,26 +1,24 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jrantwijk
- * Date: 30-3-2015
- * Time: 15:09
- */
+<?php namespace VictoryCms\Core\Http\Controllers;
 
-namespace VictoryCms\Core\Http\Controllers;
+use VictoryCms\Core\Resources\Form;
+use VictoryCms\Core\Resources\Grid;
 
-
-class ResourceController
+abstract class ResourceController extends Controller
 {
-    protected $model;
+    protected $model = [];
 
     public function index()
     {
-
+        return view('victory.core::resource.index', [
+            'grid' => $this->grid()->render()
+        ]);
     }
 
     public function create()
     {
-
+        return view('victory.core::resource.create', [
+            'form' => $this->form()->render()
+        ]);
     }
 
     public function store()
@@ -41,5 +39,15 @@ class ResourceController
     public function destroy()
     {
 
+    }
+
+    public function grid()
+    {
+        return new Grid;
+    }
+
+    public function form()
+    {
+        return new Form;
     }
 }

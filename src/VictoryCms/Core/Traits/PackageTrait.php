@@ -41,9 +41,7 @@ trait PackageTrait
      */
     public function publish($tag = null, $force = false)
     {
-        $provider = get_called_class();
-
-        var_dump($provider);
+        $provider = get_class($this);
 
         /** @var Kernel $artisan */
         $artisan = \App::make('Illuminate\Contracts\Console\Kernel');

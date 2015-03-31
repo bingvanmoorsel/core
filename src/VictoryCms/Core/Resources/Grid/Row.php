@@ -1,14 +1,14 @@
 <?php namespace VictoryCms\Core\Resources\Grid;
 
 use VictoryCms\Core\Resources\Element;
-use App\Resource\Contracts\Row as RowContract;
+use VictoryCms\Core\Resources\Form\Elements\Checkbox;
 use VictoryCms\Core\Resources\Traits\HasChildElementsTrait;
 use VictoryCms\Core\Resources\Traits\HasParentElementTrait;
 
 /**
  * Class Row.
  */
-class Row extends Element implements RowContract
+class Row extends Element
 {
     use HasParentElementTrait;
     use HasChildElementsTrait {
@@ -25,8 +25,23 @@ class Row extends Element implements RowContract
         return $this->_add($cell);
     }
 
+    /**
+     * @param $source
+     *
+     * @return $this
+     */
     public function populate($source)
     {
+        if (method_exists($source, 'toArray')) {
+            $source = $source->toArray();
+        }
+
+        foreach ($source as $value) {
+            $cell = new Cell($value);
+            $this->add($cell);
+        }
+
+        return $this;
     }
 
     /**

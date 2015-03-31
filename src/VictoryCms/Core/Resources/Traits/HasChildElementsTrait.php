@@ -25,6 +25,20 @@ trait HasChildElementsTrait
     }
 
     /**
+     * @param Element $element
+     *
+     * @return Element
+     */
+    public function prepend(Element $element)
+    {
+        $element->register($this);
+
+        array_unshift($this->elements, $element);
+
+        return $element;
+    }
+
+    /**
      * @return array
      */
     public function getElements()
