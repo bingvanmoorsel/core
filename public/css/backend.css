@@ -5058,8 +5058,7 @@ button.close {
   margin-right: -5px; }
 
 .victory-form__datepicker-container {
-  position: relative;
-  display: inline; }
+  position: relative; }
 
 body, html {
   height: 100%;

@@ -4,5 +4,11 @@ $(document).ready(function(){
 
     });
 
+    $('.victory-form__priceformat').priceFormat({
+        prefix: '',
+        centsSeparator: ',',
+        thousandsSeparator: '.'
+    });
+
     console.log('victory!');
 });
