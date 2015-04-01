@@ -5074,8 +5074,10 @@ a {
   text-decoration: none; }
 
 .victory__content-wrapper {
-  float: left;
-  padding-top: 60px; }
+  margin-top: 60px;
+  margin-left: 5px;
+  background-color: #fff;
+  padding: 20px; }
 
 .victory__login-wrapper {
   height: 100%;
