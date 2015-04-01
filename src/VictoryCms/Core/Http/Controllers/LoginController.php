@@ -31,14 +31,6 @@ class LoginController extends Controller
      */
     public function index()
     {
-        $grid = new Grid([
-            'source' => \DB::table('migrations'),
-        ]);
-
-        echo($grid->render());
-
-        dd();
-
         return view('victory.core::login.home');
     }
 
